@@ -30,6 +30,9 @@
 - 新增校验脚本测试：`tests/validate_mock_run.test.js`。
 - 验证测试通过，并通过 CLI 校验 `runs/mock_paper_001`。
 - 新增 agent 任务文件：`_project/agent_tasks/TASK_DICTIONARIES_V1.md`，用于另一台电脑设计 V1 字典。
+- 新增 mock raw_parse normalizer：`src/parsing/normalize_mock_raw_parse.js`。
+- 新增 normalizer 测试：`tests/normalize_mock_raw_parse.test.js`。
+- 验证 normalizer 测试、mock run 测试和 CLI 校验均通过。
 
 ### Context
 

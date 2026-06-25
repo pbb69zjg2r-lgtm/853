@@ -6,7 +6,7 @@
 
 V2 项目已建立隔离目录和项目管理层。
 
-当前仍处于设计和项目组织阶段。最小目录骨架、contracts 样板、mock run 样例和最小 mock 校验脚本已生成，但尚未实现真实业务 pipeline。
+当前仍处于设计和项目组织阶段。最小目录骨架、contracts 样板、mock run 样例、mock source normalizer 和最小 mock 校验脚本已生成，但尚未实现真实业务 pipeline。
 
 项目管理正文统一维护在 `_project/`，根目录的 `PROJECT_STATUS.md`、`DECISIONS.md`、`NEXT_STEPS.md` 仅作为兼容入口。
 
@@ -33,10 +33,11 @@ D:\codex新\v2_lit_review
 - 已实现 `tests/validate_mock_run.test.js`。
 - 已验证测试和 CLI 校验通过。
 - 已创建另一台电脑 agent 任务：`_project/agent_tasks/TASK_DICTIONARIES_V1.md`。
+- 已实现 `src/parsing/normalize_mock_raw_parse.js` 和测试，用于明确 `raw_parse -> source_blocks/document_structure` 边界。
 
 ## 下一步建议
 
-下一步建议先等待或并行跟进另一台电脑 agent 的字典设计任务；本机可以继续讨论真实文献前的最小 pipeline，但不要和字典任务产生冲突。
+下一步建议先等待或并行跟进另一台电脑 agent 的字典设计任务；本机可以继续讨论 MinerU adapter 的真实输入输出边界，不要和字典任务产生冲突。
 
 当前校验脚本已经检查：
 

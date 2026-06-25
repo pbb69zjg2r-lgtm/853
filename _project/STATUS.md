@@ -6,7 +6,7 @@
 
 ```text
 阶段：V2 设计确认完成，项目管理层已建立
-代码状态：已生成最小目录骨架，并实现最小 mock run 校验脚本
+代码状态：已生成最小目录骨架，并实现 mock source normalizer 与最小 mock run 校验脚本
 运行状态：已生成 mock run 样例，尚未运行真实 demo
 可信输出：尚无真实 review_export.json；已有 mock review_export.json 样例
 ```
@@ -38,11 +38,13 @@ D:\codex新\v2_lit_review
 - 已实现 `src/validation/validate_mock_run.js`。
 - 已新增 `tests/validate_mock_run.test.js`。
 - 已验证 mock run 校验脚本可通过测试和 CLI 运行。
+- 已实现 `src/parsing/normalize_mock_raw_parse.js`，用于明确 `raw_parse -> source_blocks/document_structure` 的统一边界。
+- 已新增 `tests/normalize_mock_raw_parse.test.js`。
 - 已创建给另一台电脑 agent 的字典设计任务：`_project/agent_tasks/TASK_DICTIONARIES_V1.md`。
 
 ## 尚未开始
 
-- 尚未实现文件链路。
+- 尚未实现真实文件链路。
 - 尚未接入 MinerU。
 - 尚未接入真实 LLM。
 - 尚未生成真实 `review_workspace`。
@@ -56,4 +58,4 @@ D:\codex新\v2_lit_review
 
 ## 当前建议
 
-下一步建议把 mock 校验扩展为更通用的 stage contract validator，或先讨论是否需要进入真实文献前的最小 pipeline。不要一开始接入真实 LLM。
+下一步建议讨论 MinerU adapter 的真实输入输出边界，或把 mock normalizer 接入一个最小 pipeline 命令。不要一开始接入真实 LLM。

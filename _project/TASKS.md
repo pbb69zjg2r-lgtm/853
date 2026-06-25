@@ -11,6 +11,7 @@
 - 另一台电脑 agent 执行：`_project/agent_tasks/TASK_DICTIONARIES_V1.md`。
 - 评估是否把 mock 校验扩展为通用 stage contract validator。
 - 讨论真实文献前的最小 pipeline 范围。
+- 讨论 MinerU adapter 的真实输入输出边界。
 - 再评估是否接入真实 MinerU 和 LLM。
 
 ## Done
@@ -31,6 +32,8 @@
 - 编写最小 mock 链路校验脚本：`src/validation/validate_mock_run.js`。
 - 编写校验脚本测试：`tests/validate_mock_run.test.js`。
 - 验证校验脚本通过测试和 CLI 运行。
+- 编写 mock raw_parse normalizer：`src/parsing/normalize_mock_raw_parse.js`。
+- 编写 normalizer 测试：`tests/normalize_mock_raw_parse.test.js`。
 
 ## Blocked
 
