@@ -1,0 +1,65 @@
+{
+  "schema_version": "0.1.0",
+  "contract_version": "2026-06-26",
+  "paper_id": "mock_paper_001",
+  "generated_at": "2026-06-26T00:00:00+08:00",
+  "input_files": {
+    "draft_entries": "06_draft/draft_entries.jsonl",
+    "evidence_units": "03_evidence/evidence_units.jsonl",
+    "source_blocks": "02_source/source_blocks.jsonl"
+  },
+  "summary": {
+    "total_entries": 1,
+    "entries_ready_for_review": 1,
+    "entries_needing_context_retry": 0,
+    "entries_rejected_before_review": 0
+  },
+  "entry_reports": [
+    {
+      "entry_id": "DE001",
+      "pack_id": "CP001",
+      "status": "ready_for_review",
+      "schema_checks": [{"check": "required_fields", "passed": true}],
+      "evidence_checks": [
+        {"check": "evidence_ids_exist", "passed": true, "evidence_ids": ["E001", "E002"]},
+        {"check": "source_blocks_exist", "passed": true, "source_block_ids": ["SB001", "SB002"]}
+      ],
+      "logic_checks": [
+        {
+          "check": "claim_strength",
+          "passed": true,
+          "note": "Claim is phrased as association rather than proven causality."
+        }
+      ],
+      "conflict_checks": [],
+      "claim_checks": [
+        {
+          "claim_text": "Local hyperthermia is associated with increased UCP1 expression.",
+          "source_entry_id": "DE001",
+          "evidence_ids": ["E001"],
+          "support_level": "supported",
+          "risk_flags": [],
+          "reason": "E001 directly reports increased UCP1 expression.",
+          "review_required": true
+        },
+        {
+          "claim_text": "Local hyperthermia is associated with increased mitochondrial marker genes.",
+          "source_entry_id": "DE001",
+          "evidence_ids": ["E002"],
+          "support_level": "supported",
+          "risk_flags": ["do_not_claim_functional_improvement"],
+          "reason": "E002 supports marker increase but not functional improvement.",
+          "review_required": true
+        }
+      ],
+      "missing_context": ["dose", "duration", "sample_size"],
+      "review_questions": [
+        "Does the evidence support marker increase only, or a stronger browning conclusion?",
+        "Should mitochondrial marker increase be described without claiming improved mitochondrial function?"
+      ],
+      "recommended_action": "accept_for_review"
+    }
+  ],
+  "global_issues": [],
+  "review_queue": ["DE001"]
+}

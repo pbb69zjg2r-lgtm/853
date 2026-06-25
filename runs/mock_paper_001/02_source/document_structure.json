@@ -1,0 +1,17 @@
+{
+  "schema_version": "0.1.0",
+  "contract_version": "2026-06-26",
+  "paper_id": "mock_paper_001",
+  "title": "Local hyperthermia and adipose tissue browning",
+  "sections": [
+    {
+      "section_id": "SEC001",
+      "title": "Results",
+      "page_start": 1,
+      "page_end": 1,
+      "source_block_ids": ["SB001", "SB002"]
+    }
+  ],
+  "figures": [],
+  "tables": []
+}

@@ -1,0 +1,149 @@
+schema_version: "0.1.0"
+contract_version: "2026-06-26"
+description: "Field registry. Prompts, validation, review UI, and exports should reference this file."
+
+common:
+  schema_version:
+    type: string
+    required: true
+  contract_version:
+    type: string
+    required: true
+  paper_id:
+    type: string
+    required: true
+
+source_block:
+  block_id:
+    type: string
+    required: true
+  paper_id:
+    type: string
+    required: true
+  page:
+    type: integer
+    required: false
+  section:
+    type: string
+    required: false
+  text:
+    type: string
+    required: true
+  char_start:
+    type: integer
+    required: false
+  char_end:
+    type: integer
+    required: false
+
+evidence_unit:
+  evidence_id:
+    type: string
+    required: true
+  paper_id:
+    type: string
+    required: true
+  source:
+    type: object
+    required: true
+  evidence_text:
+    type: string
+    required: true
+  evidence_type:
+    type: enum
+    dictionary: evidence_type
+    required: true
+  entities:
+    type: array
+    required: false
+  condition:
+    type: object
+    required: false
+  measurement:
+    type: object
+    required: false
+  result:
+    type: object
+    required: false
+  statistics:
+    type: object
+    required: false
+  quality:
+    type: object
+    required: true
+  review_hint:
+    type: string
+    required: false
+
+context_pack:
+  pack_id:
+    type: string
+    required: true
+  paper_id:
+    type: string
+    required: true
+  task_type:
+    type: string
+    required: true
+  anchor_evidence_ids:
+    type: array
+    required: true
+  related_evidence_ids:
+    type: array
+    required: false
+  source_block_ids:
+    type: array
+    required: true
+  missing_context:
+    type: array
+    required: false
+  expected_output:
+    type: string
+    required: true
+
+draft_entry:
+  entry_id:
+    type: string
+    required: true
+  paper_id:
+    type: string
+    required: true
+  pack_id:
+    type: string
+    required: true
+  main_claim:
+    type: string
+    required: true
+  structured_fields:
+    type: object
+    required: true
+  evidence_links:
+    type: array
+    required: true
+  status:
+    type: enum
+    dictionary: draft_entry_status
+    required: true
+
+review_export:
+  export_id:
+    type: string
+    required: true
+  project_id:
+    type: string
+    required: true
+  paper_id:
+    type: string
+    required: true
+  reviewed_entries:
+    type: array
+    required: true
+  reviewed_evidence:
+    type: array
+    required: true
+  review_decisions:
+    type: array
+    required: true
+  audit_log:
+    type: array
+    required: false

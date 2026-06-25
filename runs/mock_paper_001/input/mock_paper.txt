@@ -1,0 +1,9 @@
+Mock paper input.
+
+Title: Local hyperthermia and adipose tissue browning
+
+This is not a real paper. It is a minimal text fixture used to test V2 stage contracts and traceability.
+
+Results: Local hyperthermia increased UCP1 expression in inguinal white adipose tissue.
+
+Results: Mitochondrial marker genes were also increased after local hyperthermia treatment.

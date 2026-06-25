@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1.0",
+  "contract_version": "2026-06-26",
+  "paper_id": "mock_paper_001",
+  "reviewer_id": "manual_reviewer",
+  "review_status": "completed_mock",
+  "decisions": [
+    {
+      "decision_id": "RD001",
+      "target_type": "entry",
+      "target_id": "DE001",
+      "decision": "modified",
+      "original_value": "Local hyperthermia is associated with increased UCP1 expression and mitochondrial marker genes in adipose tissue.",
+      "final_value": "Local hyperthermia is associated with increased UCP1 expression and increased mitochondrial marker genes in adipose tissue.",
+      "reason": "Keep the claim at marker-association level and avoid stronger mechanism or treatment language.",
+      "evidence_ids": ["E001", "E002"],
+      "timestamp": "2026-06-26T00:00:00+08:00"
+    }
+  ],
+  "reviewed_evidence": [
+    {
+      "evidence_id": "E001",
+      "decision": "accepted",
+      "reason": "Directly supports increased UCP1 expression.",
+      "reviewer_notes": ""
+    },
+    {
+      "evidence_id": "E002",
+      "decision": "partial",
+      "reason": "Supports marker gene increase but not functional mitochondrial improvement.",
+      "reviewer_notes": "Avoid overstatement."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "0.1.0",
+  "contract_version": "2026-06-26",
+  "paper_id": "mock_paper_001",
+  "relations": [
+    {
+      "relation_id": "R001",
+      "source_evidence_id": "E001",
+      "target_evidence_id": "E002",
+      "relation_type": "context_for",
+      "relation_group": "core",
+      "status": "candidate",
+      "scope": "same_section",
+      "basis": ["shared intervention: local hyperthermia"],
+      "confidence": 0.7,
+      "reason": "Both evidence units describe results after local hyperthermia treatment.",
+      "verification_status": "needs_review",
+      "review_required": true,
+      "details": {}
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+schema_version: "0.1.0"
+contract_version: "2026-06-26"
+description: "Central dictionaries for V2 literature evidence extraction."
+
+evidence_type:
+  - experimental_result
+  - method_detail
+  - figure_caption
+  - table_caption
+  - background
+  - limitation
+  - statistical_result
+
+relation_type:
+  core:
+    - supports
+    - contradicts
+    - duplicates
+    - limits
+    - context_for
+  advanced:
+    - extends
+    - replicates
+    - refines
+    - causal_chain
+
+relation_status:
+  - candidate
+  - verified
+  - rejected
+  - needs_review
+  - human_confirmed
+
+draft_entry_status:
+  - draft
+  - needs_verification
+  - needs_review
+  - rejected
+  - human_confirmed
+
+review_decision:
+  - accepted
+  - modified
+  - rejected
+  - needs_recheck
+
+reviewed_evidence_decision:
+  - accepted
+  - rejected
+  - needs_recheck
+  - partial
+
+recommended_action:
+  - accept_for_review
+  - needs_human_review
+  - needs_context_retry
+  - needs_evidence_fix
+  - reject_before_review
+
+alignment_status:
+  - aligned
+  - partial
+  - failed
+  - not_attempted
+
+llm_profile:
+  - cheap
+  - strong
+  - none
