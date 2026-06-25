@@ -41,6 +41,7 @@ D:\codex新\v2_lit_review
 - 已实现 `src/parsing/normalize_mock_raw_parse.js`，用于明确 `raw_parse -> source_blocks/document_structure` 的统一边界。
 - 已新增 `tests/normalize_mock_raw_parse.test.js`。
 - 已创建给另一台电脑 agent 的字典设计任务：`_project/agent_tasks/TASK_DICTIONARIES_V1.md`。
+- 已创建 `_project/AI_HANDOFF_PROMPT.md`，用于交接给另一个 AI。
 
 ## 尚未开始
 

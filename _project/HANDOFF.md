@@ -12,6 +12,8 @@ V2 项目已建立隔离目录和项目管理层。
 
 根目录已新增 `AGENTS.md`，用于提示后续 agent 开工前先读 `_project/00_START_HERE.md`。
 
+如需交给另一个 AI / agent，请让它先读 `_project/AI_HANDOFF_PROMPT.md`。
+
 ## 当前目录
 
 ```text

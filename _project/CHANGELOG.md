@@ -33,6 +33,7 @@
 - 新增 mock raw_parse normalizer：`src/parsing/normalize_mock_raw_parse.js`。
 - 新增 normalizer 测试：`tests/normalize_mock_raw_parse.test.js`。
 - 验证 normalizer 测试、mock run 测试和 CLI 校验均通过。
+- 新增 `_project/AI_HANDOFF_PROMPT.md`，用于把项目交给另一个 AI 时恢复上下文和约束边界。
 
 ### Context
 
