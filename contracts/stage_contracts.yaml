@@ -29,13 +29,24 @@ stages:
     producer: "src/evidence"
     inputs:
       - "02_source/source_blocks.jsonl"
-      - "02_source/document_structure.json"
       - "contracts/*"
     outputs:
       - "03_evidence/evidence_units.jsonl"
     failure_log: "logs/failures.jsonl"
     trusted_output: false
     human_edit_allowed: false
+
+  evidence_consensus:
+    producer: "src/evidence"
+    inputs:
+      - "03_evidence/evidence_units_run*.jsonl"
+      - "contracts/*"
+    outputs:
+      - "03_evidence/evidence_units.jsonl"
+    failure_log: "logs/failures.jsonl"
+    trusted_output: false
+    human_edit_allowed: false
+    description: "Multi-run majority-vote consensus. Optional — run 3x evidence_units with --run N, then run this to produce final evidence_units.jsonl."
 
   context_packs:
     producer: "src/context"
@@ -80,12 +91,9 @@ stages:
       - "06_draft/draft_entries.jsonl"
       - "03_evidence/evidence_units.jsonl"
       - "07_verification/verifier_report.json"
-      - "02_source/source_blocks.jsonl"
       - "contracts/*"
     outputs:
-      - "08_review/review.html"
       - "08_review/review_state.json"
-      - "08_review/review_preview.json"
     failure_log: "logs/failures.jsonl"
     trusted_output: false
     human_edit_allowed: true
@@ -97,7 +105,6 @@ stages:
       - "08_review/review_state.json"
       - "03_evidence/evidence_units.jsonl"
       - "06_draft/draft_entries.jsonl"
-      - "07_verification/verifier_report.json"
       - "contracts/*"
     outputs:
       - "09_export/review_export.json"

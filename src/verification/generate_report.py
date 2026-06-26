@@ -1,223 +1,341 @@
-"""generate_report.py — Quality verification report for draft entries.
+"""
+Verifier report generation (step 7 of V2 pipeline).
 
-Checks evidence linkage, field completeness, entity coverage, and consistency.
-No LLM — fully deterministic rules-based validation.
+Pure logic — no LLM. Checks draft entries and evidence units for:
+- Entry-level completeness and consistency
+- Cross-entry conflicts
+- Evidence coverage gaps
+- Schema compliance
+- Actionable recommendations
 
-Input:  06_draft/draft_entries.jsonl, 03_evidence/evidence_units.jsonl,
-        04_relations/evidence_relations.json
-Output: 07_verification/verifier_report.json
+Read-only: does not modify upstream outputs.
+
+Usage:
+    python generate_report.py <run_dir> <paper_id>
 """
 
 import json
+import os
 import sys
-from collections import Counter, defaultdict
-from pathlib import Path
+from collections import defaultdict
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+from src.core.contracts import stage_input_paths, stage_output_paths
+from src.validation.validate_stage import validate_record
 
 
-def load_jsonl(path: Path) -> list[dict]:
-    with open(path, encoding="utf-8") as f:
-        return [json.loads(line) for line in f]
+# ---------------------------------------------------------------------------
+# Data loading
+# ---------------------------------------------------------------------------
+
+def load_jsonl(path):
+    records = []
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                records.append(json.loads(line))
+    return records
 
 
-def load_json(path: Path):
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
+# ---------------------------------------------------------------------------
+# Entry-level checks
+# ---------------------------------------------------------------------------
 
-
-def check_evidence_linkage(draft: dict, ev_map: dict) -> list[str]:
-    """Verify all evidence_links point to existing evidence units."""
+def check_entry(entry):
+    """Check a single draft entry. Returns list of issues."""
     issues = []
-    links = draft.get("evidence_links", [])
-    unique_links = list(dict.fromkeys(links))  # dedup preserving order
-    for eid in unique_links:
-        if eid not in ev_map:
-            issues.append(f"Broken evidence link: {eid}")
+
+    # Schema validation
+    errs, _ = validate_record(entry, "draft_entry")
+    for e in errs:
+        issues.append({"entry_id": entry.get("entry_id", "?"), "severity": "error", "field": "schema", "detail": e})
+
+    # Main claim: not too short, not a placeholder
+    claim = entry.get("main_claim", "")
+    if len(claim) < 30:
+        issues.append({"entry_id": entry["entry_id"], "severity": "warning", "field": "main_claim", "detail": f"Claim too short ({len(claim)} chars)"})
+    if claim.startswith("[Mock]") or claim.startswith("(LLM failed"):
+        issues.append({"entry_id": entry["entry_id"], "severity": "error", "field": "main_claim", "detail": "Claim is a placeholder/mock value"})
+
+    # Evidence links: should have at least 1
+    links = entry.get("evidence_links", [])
+    if not links:
+        issues.append({"entry_id": entry["entry_id"], "severity": "warning", "field": "evidence_links", "detail": "No evidence links"})
+
+    # Review questions: should have 3-5
+    questions = entry.get("review_questions", [])
+    if len(questions) < 2:
+        issues.append({"entry_id": entry["entry_id"], "severity": "warning", "field": "review_questions", "detail": f"Only {len(questions)} review question(s)"})
+
+    # Uncertainty map: should have all required sub-fields
+    umap = entry.get("uncertainty_map", {})
+    for key in ["evidence_consistency", "statistical_confidence", "gaps", "alternative_interpretations", "requires_follow_up"]:
+        if key not in umap:
+            issues.append({"entry_id": entry["entry_id"], "severity": "warning", "field": f"uncertainty_map.{key}", "detail": "Missing field"})
+
+    # Structured fields: should not be empty
+    sf = entry.get("structured_fields", {})
+    if not sf:
+        issues.append({"entry_id": entry["entry_id"], "severity": "warning", "field": "structured_fields", "detail": "Empty structured_fields"})
+
+    # Status should be draft or needs_review (not a final review status)
+    status = entry.get("status", "")
+    if status not in ("draft", "needs_review"):
+        issues.append({"entry_id": entry["entry_id"], "severity": "error", "field": "status", "detail": f"Invalid status: {status}"})
+
     return issues
 
 
-def check_field_completeness(draft: dict) -> list[str]:
-    """Check required fields are non-empty."""
+# ---------------------------------------------------------------------------
+# Cross-entry checks
+# ---------------------------------------------------------------------------
+
+def check_cross_entries(entries):
+    """Check for conflicts and overlaps between entries. Returns list of issues."""
     issues = []
-    if not draft.get("main_claim", "").strip():
-        issues.append("main_claim is empty")
-    if not draft.get("structured_fields"):
-        issues.append("structured_fields is empty or missing")
-    if not draft.get("evidence_links"):
-        issues.append("evidence_links is empty")
+
+    # Check for entries with identical or near-identical claims
+    claims = [(e["entry_id"], e.get("main_claim", "")) for e in entries]
+    for i in range(len(claims)):
+        for j in range(i + 1, len(claims)):
+            # Simple overlap check: shared words ratio
+            words_i = set(claims[i][1].lower().split())
+            words_j = set(claims[j][1].lower().split())
+            if words_i and words_j:
+                overlap = len(words_i & words_j) / min(len(words_i), len(words_j))
+                if overlap > 0.8:
+                    issues.append({
+                        "severity": "warning",
+                        "detail": f"High claim overlap ({overlap:.0%}) between {claims[i][0]} and {claims[j][0]}",
+                    })
+
+    # Check for contradicting polarities across entries of the same type
+    by_type = defaultdict(list)
+    for e in entries:
+        by_type[e.get("evidence_type", "")].append(e)
+
+    # Check evidence link overlap
+    for etype, group in by_type.items():
+        if len(group) < 2:
+            continue
+        for i in range(len(group)):
+            for j in range(i + 1, len(group)):
+                links_i = set(l.get("evidence_id", "") for l in group[i].get("evidence_links", []))
+                links_j = set(l.get("evidence_id", "") for l in group[j].get("evidence_links", []))
+                shared = links_i & links_j
+                if len(shared) >= 2:
+                    issues.append({
+                        "severity": "info",
+                        "detail": f"{group[i]['entry_id']} and {group[j]['entry_id']} share {len(shared)} evidence links — possible topic overlap",
+                    })
+
     return issues
 
 
-def check_entity_coverage(draft: dict, ev_map: dict) -> list[str]:
-    """Check that at least some entities from linked evidence appear in main_claim."""
-    links = list(dict.fromkeys(draft.get("evidence_links", [])))  # dedup
-    claim = draft.get("main_claim", "").lower()
-    if not claim or not links:
-        return []
+# ---------------------------------------------------------------------------
+# Evidence coverage checks
+# ---------------------------------------------------------------------------
 
-    all_entities = set()
-    for eid in links:
-        eu = ev_map.get(eid)
-        if eu:
-            for e in eu.get("entities", []):
-                name = e.get("name", "").strip().lower()
-                if name:
-                    all_entities.add(name)
-
-    if not all_entities:
-        return []
-
-    found = [name for name in all_entities if name in claim]
-    if not found:
-        return [f"No entities from evidence appear in main_claim (expected: {sorted(all_entities)[:5]}...)"]
-    return []
-
-
-def check_relation_consistency(drafts: list[dict], relations: list[dict]) -> list[str]:
-    """Check that relations are reflected in draft evidence links."""
+def check_evidence_coverage(draft_entries, evidence_units):
+    """Check that all evidence units are referenced. Returns list of issues."""
     issues = []
-    related_pairs = set()
-    for r in relations:
-        related_pairs.add((r["source_evidence_id"], r["target_evidence_id"]))
-        related_pairs.add((r["target_evidence_id"], r["source_evidence_id"]))
 
-    # Count drafts that share evidence links (co-citation = implicit relation)
-    co_cited = 0
-    for i, d1 in enumerate(drafts):
-        for d2 in drafts[i+1:]:
-            links1 = set(d1.get("evidence_links", []))
-            links2 = set(d2.get("evidence_links", []))
-            shared = links1 & links2
-            if shared:
-                co_cited += 1
+    all_evidence_ids = set(u["evidence_id"] for u in evidence_units)
+    linked_ids = set()
 
-    if co_cited < len(drafts) * 0.3:
-        issues.append(f"Low cross-reference: only {co_cited} draft pairs share evidence links")
-    return issues
+    for entry in draft_entries:
+        for link in entry.get("evidence_links", []):
+            eid = link.get("evidence_id", "")
+            if eid:
+                linked_ids.add(eid)
 
-
-def generate_report(paper_dir: Path, paper_id: str) -> dict:
-    draft_path = paper_dir / "06_draft" / "draft_entries.jsonl"
-    evidence_path = paper_dir / "03_evidence" / "evidence_units.jsonl"
-    relations_path = paper_dir / "04_relations" / "evidence_relations.json"
-
-    drafts = load_jsonl(draft_path)
-    evidence_units = load_jsonl(evidence_path)
-    relations = load_json(relations_path)
-
-    ev_map = {eu["evidence_id"]: eu for eu in evidence_units}
-
-    # Per-draft checks
-    entry_results = []
-    total_issues = 0
-    issue_types = Counter()
-
-    for draft in drafts:
-        entry_issues = []
-
-        issues = check_evidence_linkage(draft, ev_map)
-        if issues:
-            entry_issues.extend(issues)
-            issue_types["broken_link"] += len(issues)
-
-        issues = check_field_completeness(draft)
-        if issues:
-            entry_issues.extend(issues)
-            for i in issues:
-                issue_types[f"field_{i.split()[0]}"] += 1
-
-        issues = check_entity_coverage(draft, ev_map)
-        if issues:
-            entry_issues.extend(issues)
-            issue_types["entity_coverage"] += len(issues)
-
-        entry_results.append({
-            "entry_id": draft["entry_id"],
-            "pack_id": draft.get("pack_id", ""),
-            "issues": entry_issues,
-            "issue_count": len(entry_issues),
-            "status": "ok" if not entry_issues else "needs_review",
+    uncovered = all_evidence_ids - linked_ids
+    if uncovered:
+        issues.append({
+            "severity": "warning",
+            "detail": f"{len(uncovered)} evidence units not linked to any draft entry: {sorted(uncovered)[:10]}{'...' if len(uncovered) > 10 else ''}",
         })
-        total_issues += len(entry_issues)
 
-    # Cross-draft checks
-    relation_issues = check_relation_consistency(drafts, relations)
-    if relation_issues:
-        issue_types["relation_consistency"] += len(relation_issues)
+    # Check for evidence used by too many entries (possible over-reliance)
+    usage_count = defaultdict(list)
+    for entry in draft_entries:
+        for link in entry.get("evidence_links", []):
+            eid = link.get("evidence_id", "")
+            if eid:
+                usage_count[eid].append(entry["entry_id"])
 
-    # Summary stats
-    entries_ok = sum(1 for e in entry_results if e["status"] == "ok")
-    entries_flagged = len(entry_results) - entries_ok
+    for eid, entries_using in usage_count.items():
+        if len(entries_using) > 3:
+            issues.append({
+                "severity": "info",
+                "detail": f"Evidence {eid} used by {len(entries_using)} entries: {entries_using}",
+            })
 
-    # Evidence type coverage in drafts
-    evidence_used = set()
-    for d in drafts:
-        for eid in d.get("evidence_links", []):
-            evidence_used.add(eid)
-    evidence_unused = [eid for eid in ev_map if eid not in evidence_used]
+    # Check evidence not found in evidence_units
+    for entry in draft_entries:
+        for link in entry.get("evidence_links", []):
+            eid = link.get("evidence_id", "")
+            if eid and eid not in all_evidence_ids:
+                issues.append({
+                    "severity": "error",
+                    "detail": f"{entry['entry_id']} links to non-existent evidence {eid}",
+                })
+
+    coverage_pct = len(linked_ids) / len(all_evidence_ids) * 100 if all_evidence_ids else 0
+    issues.append({
+        "severity": "info",
+        "detail": f"Evidence coverage: {len(linked_ids)}/{len(all_evidence_ids)} ({coverage_pct:.0f}%)",
+    })
+
+    return issues
+
+
+# ---------------------------------------------------------------------------
+# Schema issues
+# ---------------------------------------------------------------------------
+
+def check_schema(draft_entries, evidence_units):
+    """Check schema compliance across all records. Returns list of issues."""
+    issues = []
+
+    # Validate draft entries
+    for entry in draft_entries:
+        errs, warns = validate_record(entry, "draft_entry")
+        for e in errs:
+            issues.append({"severity": "error", "detail": f"Draft {entry.get('entry_id', '?')}: {e}"})
+
+    # Validate evidence units
+    for unit in evidence_units:
+        errs, warns = validate_record(unit, "evidence_unit")
+        for e in errs:
+            issues.append({"severity": "error", "detail": f"Evidence {unit.get('evidence_id', '?')}: {e}"})
+
+    return issues
+
+
+# ---------------------------------------------------------------------------
+# Recommendations
+# ---------------------------------------------------------------------------
+
+def generate_recommendations(entry_issues, cross_issues, coverage_issues, schema_issues):
+    """Generate human-readable recommendations from all issues."""
+    recs = []
+
+    error_count = sum(1 for i in entry_issues if i.get("severity") == "error")
+    error_count += sum(1 for i in schema_issues if i.get("severity") == "error")
+
+    warn_count = sum(1 for i in entry_issues if i.get("severity") == "warning")
+    warn_count += sum(1 for i in coverage_issues if i.get("severity") == "warning")
+
+    if error_count > 0:
+        recs.append(f"Fix {error_count} error(s) before human review — check schema validation and placeholder claims.")
+    if warn_count > 0:
+        recs.append(f"Review {warn_count} warning(s) — focus on short claims, missing review questions, and empty structured_fields.")
+
+    # Specific checks
+    uncovered = [i for i in coverage_issues if "not linked" in i.get("detail", "")]
+    if uncovered:
+        recs.append("Some evidence units are not referenced by any draft entry. Consider: (a) adding them to existing entries, (b) creating new entries, or (c) marking them as background-only.")
+
+    if not cross_issues:
+        recs.append("No cross-entry conflicts detected. Entries appear to cover distinct topics.")
+    else:
+        recs.append(f"{len(cross_issues)} cross-entry issue(s) found. Check for overlapping claims and over-used evidence.")
+
+    # Status
+    if error_count == 0 and warn_count <= 3:
+        recs.append("Overall: ready for human review.")
+    elif error_count == 0:
+        recs.append("Overall: minor warnings only. Can proceed to review with notes.")
+    else:
+        recs.append("Overall: errors present. Fix before starting human review.")
+
+    return recs
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+def generate_report(run_dir, paper_id):
+    """Generate verifier report from draft entries and evidence units."""
+    inputs = stage_input_paths("verifier_report", run_dir)
+    draft_path = inputs["draft_entries.jsonl"]
+    evidence_path = inputs["evidence_units.jsonl"]
+
+    drafts = load_jsonl(draft_path) if os.path.exists(draft_path) else []
+    evidence = load_jsonl(evidence_path) if os.path.exists(evidence_path) else []
+
+    print(f"Loaded {len(drafts)} draft entries, {len(evidence)} evidence units")
+
+    # Run all checks
+    entry_results = []
+    all_entry_issues = []
+    for entry in drafts:
+        issues = check_entry(entry)
+        all_entry_issues.extend(issues)
+        entry_results.append({
+            "entry_id": entry.get("entry_id"),
+            "issue_count": len(issues),
+            "issues": issues,
+            "verdict": "OK" if not any(i["severity"] == "error" for i in issues) else "HAS_ERRORS",
+        })
+
+    cross_issues = check_cross_entries(drafts)
+    coverage_issues = check_evidence_coverage(drafts, evidence)
+    schema_issues = check_schema(drafts, evidence)
+    recommendations = generate_recommendations(all_entry_issues, cross_issues, coverage_issues, schema_issues)
 
     report = {
-        "report_id": f"{paper_id}_VR001",
-        "paper_id": paper_id,
-        "generated_at": __import__("datetime").datetime.now().isoformat(),
-        "summary": {
-            "total_draft_entries": len(drafts),
-            "entries_ok": entries_ok,
-            "entries_flagged": entries_flagged,
-            "total_issues": total_issues,
-            "issue_breakdown": dict(issue_types.most_common()),
-            "evidence_units_total": len(evidence_units),
-            "evidence_units_used": len(evidence_used),
-            "evidence_units_unused": len(evidence_unused),
-            "relations_total": len(relations),
-        },
-        "cross_draft_issues": relation_issues,
         "entry_results": entry_results,
-        "unused_evidence_ids": evidence_unused,
-        "recommendations": [],
+        "cross_entry_issues": cross_issues,
+        "evidence_coverage_issues": coverage_issues,
+        "schema_issues": schema_issues,
+        "recommendations": recommendations,
     }
 
-    # Generate recommendations
-    recs = report["recommendations"]
-    if evidence_unused:
-        recs.append(f"{len(evidence_unused)} evidence units not linked to any draft entry — review for coverage gaps")
-    if entries_flagged > len(drafts) * 0.5:
-        recs.append("Over 50% entries flagged — consider re-running draft generation with improved prompts")
-    if issue_types.get("entity_coverage", 0) > len(drafts) * 0.3:
-        recs.append("High entity coverage issues — main_claims may be too generic, review prompt")
-    if issue_types.get("broken_link", 0) > 0:
-        recs.append("Broken evidence links detected — check evidence_links dedup and ID consistency")
+    # Summary
+    total_errors = sum(1 for i in all_entry_issues if i.get("severity") == "error")
+    total_warnings = sum(1 for i in all_entry_issues if i.get("severity") == "warning")
+    ok_count = sum(1 for r in entry_results if r["verdict"] == "OK")
+
+    print(f"\n=== Report Summary ===")
+    print(f"Entries: {ok_count}/{len(drafts)} OK")
+    print(f"Entry issues: {total_errors} error(s), {total_warnings} warning(s)")
+    print(f"Cross-entry issues: {len(cross_issues)}")
+    print(f"Coverage issues: {len(coverage_issues)}")
+    print(f"Schema issues: {len(schema_issues)}")
+    print(f"Recommendations: {len(recommendations)}")
 
     return report
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python src/verification/generate_report.py <paper_run_dir> [paper_id]")
+    if len(sys.argv) < 3:
+        print(__doc__)
         sys.exit(1)
 
-    paper_dir = Path(sys.argv[1]).resolve()
-    paper_id = sys.argv[2] if len(sys.argv) > 2 else paper_dir.parent.name
+    run_dir = sys.argv[1]
+    paper_id = sys.argv[2]
 
-    report = generate_report(paper_dir, paper_id)
+    print(f"=== Verifier Report ===")
+    print(f"Run dir: {run_dir}")
+    print(f"Paper ID: {paper_id}")
+    print()
 
-    out_dir = paper_dir / "07_verification"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / "verifier_report.json"
+    report = generate_report(run_dir, paper_id)
+
+    outputs = stage_output_paths("verifier_report", run_dir)
+    out_path = outputs["verifier_report.json"]
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
 
-    s = report["summary"]
-    print(f"  Draft entries: {s['total_draft_entries']}")
-    print(f"  OK: {s['entries_ok']}, Flagged: {s['entries_flagged']}")
-    print(f"  Total issues: {s['total_issues']}")
-    print(f"  Issue breakdown: {s['issue_breakdown']}")
-    print(f"  Evidence used: {s['evidence_units_used']}/{s['evidence_units_total']}")
-    print(f"  Evidence unused: {s['evidence_units_unused']}")
-    if report["recommendations"]:
-        print(f"\n  Recommendations:")
-        for r in report["recommendations"]:
-            print(f"  - {r}")
-    print(f"  Output: {out_path}")
+    print(f"\nOutput: {out_path}")
+    print("Done.")
 
 
 if __name__ == "__main__":

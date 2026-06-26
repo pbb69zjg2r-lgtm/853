@@ -8,11 +8,14 @@
 
 ## Pending
 
-- Build `src/core/contracts.py` to load `contracts/*.yaml` from one place.
-- Replace the old hard-coded validator with a contracts-driven validator.
-- Rewrite `prompts/evidence_extraction.txt` and `src/evidence/extract_evidence.py` to emit the confirmed `evidence_unit` structure.
-- Rewrite `src/context/build_context_packs.py` so it no longer requires `04_relations/evidence_relations.json` in the pre-review flow.
-- Rewrite `src/export/build_export.py` so `review_export.json` is generated only after all entries are approved/rejected.
+- ~~Build `src/core/contracts.py` to load `contracts/*.yaml` from one place.~~
+- ~~Replace the old hard-coded validator with a contracts-driven validator.~~
+- ~~Rewrite `prompts/evidence_extraction.txt` and `src/evidence/extract_evidence.py` to emit the confirmed `evidence_unit` structure.~~
+- ~~Rewrite `src/context/build_context_packs.py` so it no longer requires `04_relations/evidence_relations.json` in the pre-review flow.~~
+- ~~Rewrite `src/export/build_export.py` so `review_export.json` is generated only after all entries are approved/rejected.~~
+- ~~Rewrite `src/drafting/generate_drafts.py` with new prompt and schema.~~
+- ~~Rewrite `src/verification/generate_report.py` with new field checks.~~
+- ~~Update review HTML to reference new evidence_unit fields (source_trace.quote, polarity, experimental_model).~~
 
 - 人工审核 real_paper_001 的 11 条 + real_paper_002 的 5 条 draft entries
 - 审核完成后跑 `build_export.py` 生成最终 review_export.json
@@ -22,6 +25,21 @@
 
 ## Done
 
+- **去耦合审计（20 问题全部修复）** — 4 HIGH + 12 MEDIUM + 4 LOW，contracts 路径统一、枚举值字典引用、提示词动态注入、死代码清理、review.html 审核字段完善
+- **format_prompt() 动态注入** — 提示词中 `{{DETECTION_CATEGORY}}` 等占位符运行时替换为字典值，改字典自动同步提示词
+- 真实的 LLM 验证通过：S3 20 units (4 batches) + S6 5 drafts mock
+
+- **Built `src/core/contracts.py`** — unified contracts loader API: `get_dictionary()`, `get_required_fields()`, `get_stage_outputs()`, `get_enum_field_values()`, `load_contracts()`, etc. Works with all 4 contracts YAML files.
+- **Built `src/validation/validate_stage.py`** — contracts-driven validator. Validates JSON/JSONL files against field schemas (required fields, enum values, types, nested objects, array items, forbidden fields). Supports single file, single stage, or `--all` stages.
+- **Rewrote `prompts/evidence_extraction.txt`** — new prompt with 7 evidence types, decision tree for each, INCLUDES/EXCLUDES rules, type-specific `structured_fields`, 15 new fields, verbatim quote requirement.
+- **Rewrote `src/evidence/extract_evidence.py`** — batch source blocks by section, call DeepSeek API, parse JSONL response, auto-fill evidence_id/paper_id/review_coverage/normalization_status, validate against contracts, mock mode support.
+- **Rewrote `src/evidence/consensus_evidence.py`** — Jaccard similarity graph matching, Union-Find connected components, min-runs filtering, entity union deduplication, canonical unit selection.
+- **Rewrote `src/context/build_context_packs.py`** — context packs WITHOUT relations dependency. Groups by evidence_type → entity overlap (Union-Find) → discriminative entity type merge (assay_method/drug/disease/metabolite). Anchor selection by confidence + entity count + statistics. Missing context detection.
+- **Rewrote `prompts/draft_generation.txt`** — Chinese prompt for draft entry synthesis from context packs. 7 type-specific structured_fields, evidence_links, experimental_model_summary, review_questions, uncertainty_map.
+- **Rewrote `src/drafting/generate_drafts.py`** — LLM batch generation (max 4 packs/batch, by evidence_type). Parse failure auto-retry per pack. Mock mode support.
+- **Rewrote `src/verification/generate_report.py`** — pure-logic quality check. Entry completeness, cross-entry overlap detection, evidence coverage gaps, schema validation, actionable recommendations.
+- **Rewrote `src/export/build_export.py`** — trusted export builder. Only includes approved/rejected entries. Excludes draft/pending. Validates forbidden fields (normalized_entity_id, graph_edges, etc.). Builds review_audit with coverage summary.
+- **Updated `src/review/review.html`** — fixed legacy field references: `source_text` → `source_trace.quote`, `task_type` → `evidence_type`, added polarity and experimental_model display.
 - Added `_project/LEGACY_MAP.md` to separate current contracts-first truth from legacy runnable code and old run outputs.
 
 - 创建 V2 隔离目录

@@ -6,8 +6,12 @@ Output: 01_raw_parse/raw_parse.json
 """
 
 import json
+import os
 import sys
 from pathlib import Path
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from src.core.contracts import stage_output_paths
 
 # All known MinerU BlockTypes from official docs
 MINERU_TYPES = {
@@ -108,10 +112,11 @@ def main():
     run_dir = Path(sys.argv[1]).resolve()
     paper_id = sys.argv[2] if len(sys.argv) > 2 else run_dir.parent.name
 
-    input_dir = run_dir / "01_raw_parse"
-    output_dir = input_dir  # raw_parse.json goes next to MinerU outputs
+    outputs = stage_output_paths("raw_parse", str(run_dir))
+    output_path = Path(outputs["raw_parse.json"])
+    input_dir = output_path.parent
 
-    build_raw_parse(input_dir, output_dir, paper_id)
+    build_raw_parse(input_dir, output_path.parent, paper_id)
 
 
 if __name__ == "__main__":

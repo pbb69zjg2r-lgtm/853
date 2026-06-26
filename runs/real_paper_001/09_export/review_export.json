@@ -1,1518 +1,1256 @@
 {
-  "export_id": "real_paper_001_EXPORT",
+  "package_id": "real_paper_001_export_20260626",
   "paper_id": "real_paper_001",
-  "generated_at": "2026-06-26T10:23:27.241632",
-  "summary": {
-    "total_entries": 11,
-    "approved": 0,
-    "rejected": 0,
-    "flagged": 0,
-    "draft": 11,
-    "total_evidence_units": 66,
-    "verifier_ok": 11,
-    "verifier_flagged": 0
-  },
-  "reviewed_entries": [
+  "stage": "review_export",
+  "schema_version": "0.1.0",
+  "normalization_status": "not_normalized",
+  "reviewed_entries": [],
+  "reviewed_evidence_units": [
     {
-      "entry_id": "real_paper_001_D0001",
-      "task_type": "summarize_theme",
-      "main_claim": "FCCP诱导的线粒体产热通过氧消耗反应（ORR）激活HSF1，该过程不依赖于ROS、pH变化或蛋白毒性应激，而是依赖于氧气、质子和电子的充足供应。",
+      "evidence_id": "E0001",
+      "paper_id": "real_paper_001",
+      "evidence_type": "thermogenesis_modulation",
+      "claim": "Local hyperthermia therapy (LHT) at 41°C induces thermogenesis in mouse and human adipocytes.",
       "structured_fields": {
-        "synthesized_summary": "本研究发现，线粒体质子载体FCCP通过诱导线粒体中的放氧消耗反应（ORR）产生热量，从而激活热休克因子1（HSF1）。HSF1的激活表现为核内焦点形成、磷酸化修饰以及热休克基因的转录上调。该过程不依赖于ROS、pH变化或蛋白毒性应激，而是严格依赖于氧气供应和线粒体电子传递链的完整性。其他质子载体（如BAM15和CCCP）也能诱导类似效应，表明该机制在哺乳动物细胞中具有保守性。",
-        "key_findings": [
-          "FCCP诱导的HSF1焦点形成不依赖于ROS、pH变化和蛋白毒性应激，而是归因于线粒体产热。",
-          "FCCP诱导的HSF1焦点形成依赖于氧气供应，在低氧条件下显著减少。",
-          "抑制线粒体电子传递链复合物III或IV会显著降低FCCP诱导的HSF1焦点形成。",
-          "FCCP处理导致HSF1发生磷酸化修饰，并在凝胶电泳中迁移变慢。",
-          "FCCP介导的热量生成激活HSF1结合热休克反应基因，上调热休克蛋白（HSPs）的转录水平。",
-          "其他线粒体质子载体（BAM15、CCCP）也能成功促进HSF1焦点形成。",
-          "线粒体产热可调节细胞内热传感蛋白（如HSF1）的活性。",
-          "HSF1可作为线粒体与细胞核之间的关键信号转导分子。"
+        "intervention": "local hyperthermia therapy (LHT) at 41°C",
+        "target": "beige adipocytes",
+        "modulation_direction": "increases",
+        "effect_size_reported": null,
+        "thermogenic_marker": "heat production, UCP1 expression"
+      },
+      "raw_entities": [
+        {
+          "raw_name": "beige adipocytes",
+          "entity_type": "phenotype",
+          "role": "target"
+        },
+        {
+          "raw_name": "UCP1",
+          "entity_type": "protein",
+          "role": "readout"
+        }
+      ],
+      "experimental_model": {
+        "model_level": "tissue",
+        "model_name": "iWAT",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "inguinal white adipose tissue",
+        "in_vivo_or_in_vitro": "in_vivo"
+      },
+      "condition_context": {
+        "temperature": "41°C ± 0.5°C",
+        "duration": "10 min"
+      },
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0036",
+          "real_paper_001_SB0037"
         ],
-        "entities": [
-          "FCCP",
+        "quote": "We injected mice with PEG-PDA hydrogel (termed PDA) subcutaneously in bilateral inguinal white adipose tissues (iWATs), then illuminated one side of iWATs with non-invasive, non-harmful NIR laser to achieve homogeneous hyperthermia in iWAT (LHT) at 41°C ± 0.5°C for 10 min... Strikingly, compared with pretreatment, LHT on iWAT resulted in significantly enhanced heat production in iWAT compared with Sham iWAT of the same mouse (Figure 1D). Molecular analysis in iWAT showed increased mRNA levels of brown gene programs, as well as increased UCP1 protein levels in LHT group (Figures 1E and 1F).",
+        "page": 3,
+        "section": "S09",
+        "figure_or_table": "Figure 1D, 1E, 1F"
+      },
+      "polarity": "positive",
+      "statistics": {},
+      "measurement": {
+        "method": "FLIR thermal imaging",
+        "measured_variable": "heat production (temperature change)",
+        "measured_value": "significantly enhanced"
+      },
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
+    },
+    {
+      "evidence_id": "E0002",
+      "paper_id": "real_paper_001",
+      "evidence_type": "mechanism_pathway",
+      "claim": "HSF1 binds to the HSE region of the A2b1 promoter and enhances A2b1 transcription upon hyperthermia treatment.",
+      "structured_fields": {
+        "pathway_name": "HSF1-A2B1 transcriptional axis",
+        "key_nodes": [
           "HSF1",
-          "BAM15",
-          "CCCP",
-          "antimycin A",
-          "sodium azide",
-          "ROS",
-          "HSPs",
-          "线粒体产热",
-          "氧消耗反应 (ORR)"
+          "A2B1",
+          "HSE"
         ],
-        "confidence_assessment": "高。证据来自多个独立实验（焦点形成、Western blot、抑制剂实验、不同质子载体验证），且结论一致，机制阐述清晰。"
+        "upstream_trigger": "hyperthermia (HT)",
+        "downstream_effect": "enhanced A2b1 transcription",
+        "mechanism_type": "transcriptional"
       },
-      "linked_evidence": [
+      "raw_entities": [
         {
-          "evidence_id": "real_paper_001_E0024",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "we could not observe significant foci formation of HSF1 compared to FCCP-treated cells",
-          "entities": [
-            {
-              "name": "GTPP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            }
-          ],
-          "modulation": {
-            "drug": "GTPP",
-            "target": "HSF1",
-            "direction": "increases",
-            "effect_description": "GTPP does not induce significant HSF1 foci formation compared to FCCP"
-          },
-          "statistics": null
+          "raw_name": "HSF1",
+          "entity_type": "protein",
+          "role": "regulator"
         },
         {
-          "evidence_id": "real_paper_001_E0025",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "FCCP induced HSF1 foci formation is independent of ROS, pH changes, and proteotoxic stress. Instead, this can be attributed to mitochondrial thermogenesis.",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "ROS",
-              "type": "metabolite"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "A2b1",
+          "entity_type": "gene",
+          "role": "target"
         },
         {
-          "evidence_id": "real_paper_001_E0028",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "HSF1 foci were not formed by FCCP in precooled cells at 32 °C for 2 h, which supports that FCCP-induced foci formation event is a temperature-related process",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "HSE",
+          "entity_type": "pathway",
+          "role": "mediator"
         },
         {
-          "evidence_id": "real_paper_001_E0032",
-          "evidence_type": "thermogenesis_modulation",
-          "source_text": "HSF1-EGFP foci formation was also successfully promoted by other mitochondrial protonophores such as BAM15 and CCCP (carbonyl cyanide 3-chlorophenylhydrazone) (Figure S5A−D).",
-          "entities": [
-            {
-              "name": "BAM15",
-              "type": "drug"
-            },
-            {
-              "name": "CCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": {
-            "drug": "CCCP",
-            "target": "HSF1",
-            "direction": "increases",
-            "effect_description": "CCCP promotes HSF1-EGFP foci formation"
-          },
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0036",
-          "evidence_type": "thermogenesis_modulation",
-          "source_text": "we observed only 1−2 HSF1 foci per cell within 10 min of FCCP treatment; however, these foci subsequently disappeared in the span of 30 min (Figure 4C; light blue dots). In contrast, under normoxic baseline conditions (20% O2) Figure 3C), approximately 10 foci per cell formed within 10 min following FCCP treatment (Figure 4C; dark blue dots). This finding highlights that oxygen supplementation is a prerequisite for HSF1 activation by mitochondrial thermogenesis.",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": {
-            "drug": "FCCP",
-            "target": "HSF1",
-            "direction": "decreases",
-            "effect_description": "Under hypoxia (1% O2), FCCP treatment yields only 1-2 HSF1 foci per cell that disappear within 30 min, compared to ~10 foci per cell under normoxia (20% O2)"
-          },
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0038",
-          "evidence_type": "thermogenesis_modulation",
-          "source_text": "cells stably expressing HSF1-EGFP were treated with antimycin A or sodium azide, which inhibit electron flow in the Oxidative Phosphorylation (OXPHOS) complexes III and IV, respectively (Figure 4A). As a result, we observed that HSF1 foci formation was highly reduced upon coincubation of cells with OXPHOS inhibitors and FCCP (Figure 4D).",
-          "entities": [
-            {
-              "name": "antimycin A",
-              "type": "drug"
-            },
-            {
-              "name": "sodium azide",
-              "type": "drug"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "OXPHOS",
-              "type": "pathway"
-            }
-          ],
-          "modulation": {
-            "drug": "antimycin A",
-            "target": "OXPHOS complex III",
-            "direction": "decreases",
-            "effect_description": "Antimycin A (OXPHOS complex III inhibitor) co-treatment with FCCP highly reduces HSF1 foci formation"
-          },
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0039",
-          "evidence_type": "thermogenesis_modulation",
-          "source_text": "cells stably expressing HSF1-EGFP were treated with antimycin A or sodium azide, which inhibit electron flow in the Oxidative Phosphorylation (OXPHOS) complexes III and IV, respectively (Figure 4A). As a result, we observed that HSF1 foci formation was highly reduced upon coincubation of cells with OXPHOS inhibitors and FCCP (Figure 4D).",
-          "entities": [
-            {
-              "name": "antimycin A",
-              "type": "drug"
-            },
-            {
-              "name": "sodium azide",
-              "type": "drug"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "OXPHOS",
-              "type": "pathway"
-            }
-          ],
-          "modulation": {
-            "drug": "sodium azide",
-            "target": "OXPHOS complex IV",
-            "direction": "decreases",
-            "effect_description": "Sodium azide (OXPHOS complex IV inhibitor) co-treatment with FCCP highly reduces HSF1 foci formation"
-          },
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0041",
-          "evidence_type": "detection_method",
-          "source_text": "As shown in the HSF1 Western blot results (Figure S6A), HSF1 molecules moved more slowly in the gel when treated with FCCP, similar to when the heat shock is induced externally.",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "Western blot",
-              "type": "assay_method"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0047",
-          "evidence_type": "thermogenesis_modulation",
-          "source_text": "mitochondrial thermogenesis induced by FCCP treatment induces phosphorylation on HSF1",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": {
-            "drug": "FCCP",
-            "target": "HSF1",
-            "direction": "increases",
-            "effect_description": "FCCP treatment induces mitochondrial thermogenesis and HSF1 phosphorylation"
-          },
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0048",
-          "evidence_type": "thermogenesis_modulation",
-          "source_text": "FCCP-mediated heat generation activates HSF1 to bind to heat shock response genes, leading to increase in the transcriptional level of HSPs similar to external heat shock conditions",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "HSPs",
-              "type": "protein"
-            }
-          ],
-          "modulation": {
-            "drug": "FCCP",
-            "target": "HSF1",
-            "direction": "increases",
-            "effect_description": "FCCP-mediated heat generation activates HSF1 binding to heat shock response genes and increases HSP transcription"
-          },
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0049",
-          "evidence_type": "thermogenesis_modulation",
-          "source_text": "HSF1 foci formation is reversible by controlling the oxygen consumption in the mitochondria",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": {
-            "drug": null,
-            "target": "mitochondrial oxygen consumption",
-            "direction": "restores_normal",
-            "effect_description": "controlling mitochondrial oxygen consumption reversibly modulates HSF1 foci formation"
-          },
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0050",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "mitochondrial thermogenesis induced by FCCP treatment induces phosphorylation on HSF1",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0051",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "mitochondrial thermogenesis by FCCP may facilitate the transcriptional activity of HSF1 in the nucleus through a similar mechanism by the heat applied externally",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0052",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "FCCP-mediated heat generation activates HSF1 to bind to heat shock response genes, leading to increase in the transcriptional level of HSPs similar to external heat shock conditions",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "HSPs",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0053",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "mitochondrial thermogenesis can modulate the activity of intracellular thermosensing proteins, such as HSF1, in live cells",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0056",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "HSF1 can sense mitochondrial misfolding stress and mediated mitochondrial protein unfolded response (UPRmt) in the nucleus",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "UPRmt",
-              "type": "pathway"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0058",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "mitochondrial generated heat can also activate HSF1",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0059",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "HSF1 is a key protein acting as a master message-transducer between the mitochondria and the nucleus",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0061",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "every component (i.e., protons, oxygen, and electrons) in this reaction is crucial for sufficient mitochondrial thermogenesis and the subsequent upregulation of HSF1",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0065",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "our current study demonstrated that mitochondrial-generated heat is sufficient to activate HSF1 independent of pH, ROS, and proteotoxic stress.",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "hyperthermia",
+          "entity_type": "phenotype",
+          "role": "upstream"
         }
       ],
-      "review_status": "draft",
-      "review_notes": "",
-      "reviewed_at": null
+      "experimental_model": {
+        "model_level": "cell",
+        "model_name": "C3H10T1/2-derived beige adipocytes",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "beige adipocyte",
+        "in_vivo_or_in_vitro": "in_vitro"
+      },
+      "condition_context": {
+        "temperature": "hyperthermia (HT)",
+        "duration": "not specified"
+      },
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0122"
+        ],
+        "quote": "ChIP-seq analysis revealed specific enrichment of HSF1 binding on the A2b1 promoter region, while in silico prediction revealed a classic heat-shock-factor-binding element (HSE) within this region... Subsequent ChIP assay confirmed specific HSF1 binding on the predicted HSE region of A2b1 promoter... this HSF1 binding is largely enhanced upon HT... As shown in luciferase assay, overexpression of active form HSF1 significantly induced A2b1 transcriptional activation, while this activation was lost by mutating the HSE site (mHSE) on the A2b1 promoter.",
+        "page": 9,
+        "section": "S12",
+        "figure_or_table": "Figures 4B, 4C"
+      },
+      "polarity": "positive",
+      "statistics": {},
+      "measurement": {
+        "method": "ChIP-seq, ChIP, luciferase assay",
+        "measured_variable": "HSF1 binding and A2b1 transcriptional activation",
+        "measured_value": "enhanced binding and activation upon HT"
+      },
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
     },
     {
-      "entry_id": "real_paper_001_D0002",
-      "task_type": "summarize_theme",
-      "main_claim": "FCCP诱导的线粒体产热通过激活HSF1并使其定位至染色质，启动经典热休克反应，该过程不依赖于ROS或新蛋白合成。",
+      "evidence_id": "E0003",
+      "paper_id": "real_paper_001",
+      "evidence_type": "mechanism_pathway",
+      "claim": "A2B1 levels are positively associated with beige fat function, increasing upon browning stimuli and decreasing under conditions that suppress browning.",
       "structured_fields": {
-        "synthesized_summary": "本研究证实，FCCP诱导的线粒体产热足以激活HSF1，使其在细胞核内形成焦点并定位至染色质，启动经典热休克反应，包括核应激颗粒的形成和热休克基因表达上调。该过程不依赖于ROS（NAC共处理影响极小）和新蛋白合成（CHX或嘌呤霉素存在下仍可发生）。其他质子载体（BAM15、CCCP）也能诱导HSF1焦点形成，表明该机制在哺乳动物细胞中保守。",
-        "key_findings": [
-          "FCCP诱导的线粒体产热使HSF1在细胞核内形成焦点，并定位至染色质。",
-          "激活的HSF1上调与热应激反应相关的基因表达。",
-          "FCCP诱导的HSF1焦点形成与外部热休克条件下的模式相当。",
-          "FCCP诱导的HSF1焦点形成不受ROS清除剂NAC的显著影响，表明ROS不是主要因素。",
-          "FCCP诱导的HSF1焦点形成可在新蛋白合成被阻断（CHX或嘌呤霉素）的条件下发生。",
-          "其他质子载体（BAM15、CCCP）也能成功诱导HSF1焦点形成。",
-          "HSF1激活需要充足的氧气供应。",
-          "线粒体产热产生的热量可传递至周围空间和邻近细胞器。"
+        "pathway_name": "A2B1 in beige fat activation",
+        "key_nodes": [
+          "A2B1",
+          "Pgc1a",
+          "Ucp1"
         ],
-        "entities": [
-          "FCCP",
+        "upstream_trigger": "CL316,243 treatment, cold stimulation",
+        "downstream_effect": "regulation of beige fat function",
+        "mechanism_type": "transcriptional"
+      },
+      "raw_entities": [
+        {
+          "raw_name": "A2B1",
+          "entity_type": "protein",
+          "role": "target"
+        },
+        {
+          "raw_name": "CL316,243",
+          "entity_type": "drug",
+          "role": "activator"
+        },
+        {
+          "raw_name": "cold stimulation",
+          "entity_type": "phenotype",
+          "role": "upstream"
+        },
+        {
+          "raw_name": "Pgc1a",
+          "entity_type": "gene",
+          "role": "downstream"
+        },
+        {
+          "raw_name": "Ucp1",
+          "entity_type": "gene",
+          "role": "downstream"
+        }
+      ],
+      "experimental_model": {
+        "model_level": "tissue",
+        "model_name": "iWAT",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "inguinal white adipose tissue",
+        "in_vivo_or_in_vitro": "in_vivo"
+      },
+      "condition_context": {
+        "temperature": "cold exposure",
+        "duration": "not specified"
+      },
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0123"
+        ],
+        "quote": "we found that A2b1 levels are tightly associated with beige fat function, as A2b1 showed increased expressions in iWAT in conditions that promoting white fat browning, including CL316,243 treatment and cold stimulation (Figure 4F), while conversely, A2b1 was downregulated in iWAT in scenarios that suppressing beige fat function, i.e., diet- (HFD) or genetic-(ob/ob) induced obese mice, aging mice, as well as mice under thermoneutral environment (Figure 4F).",
+        "page": 9,
+        "section": "S12",
+        "figure_or_table": "Figure 4F"
+      },
+      "polarity": "positive",
+      "statistics": {},
+      "measurement": {
+        "method": "qPCR",
+        "measured_variable": "A2b1 mRNA levels",
+        "measured_value": "increased with browning stimuli, decreased with suppressing conditions"
+      },
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
+    },
+    {
+      "evidence_id": "E0004",
+      "paper_id": "real_paper_001",
+      "evidence_type": "mechanism_pathway",
+      "claim": "A2B1 knockdown decreases brown fat gene programs in beige adipocytes, and HT-induced enhancement of Pgc1a and Ucp1 expression is partially dependent on A2B1.",
+      "structured_fields": {
+        "pathway_name": "HSF1-A2B1 axis in beige fat activation",
+        "key_nodes": [
+          "A2B1",
+          "Pgc1a",
+          "Ucp1",
+          "HSF1"
+        ],
+        "upstream_trigger": "hyperthermia (HT)",
+        "downstream_effect": "brown fat gene program expression",
+        "mechanism_type": "transcriptional"
+      },
+      "raw_entities": [
+        {
+          "raw_name": "A2B1",
+          "entity_type": "protein",
+          "role": "mediator"
+        },
+        {
+          "raw_name": "Pgc1a",
+          "entity_type": "gene",
+          "role": "downstream"
+        },
+        {
+          "raw_name": "Ucp1",
+          "entity_type": "gene",
+          "role": "downstream"
+        },
+        {
+          "raw_name": "HSF1",
+          "entity_type": "protein",
+          "role": "upstream"
+        },
+        {
+          "raw_name": "hyperthermia",
+          "entity_type": "phenotype",
+          "role": "upstream"
+        }
+      ],
+      "experimental_model": {
+        "model_level": "cell",
+        "model_name": "beige adipocytes",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "beige adipocyte",
+        "in_vivo_or_in_vitro": "in_vitro"
+      },
+      "condition_context": {
+        "temperature": "hyperthermia (HT)",
+        "duration": "not specified"
+      },
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0123"
+        ],
+        "quote": "Functionally, A2B1 knockdown (siA2B1) decreased brown fat gene programs in beige adipocytes (Figure 4H). More importantly, HT-induced enhancement in Pgc1a and Ucp1 expressions are at least partially dependent on A2B1 (Figure 4I).",
+        "page": 9,
+        "section": "S12",
+        "figure_or_table": "Figures 4H, 4I"
+      },
+      "polarity": "positive",
+      "statistics": {},
+      "measurement": {
+        "method": "siRNA knockdown, qPCR",
+        "measured_variable": "brown fat gene programs, Pgc1a and Ucp1 expression",
+        "measured_value": "decreased upon A2B1 knockdown; HT-induced increase partially dependent on A2B1"
+      },
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
+    },
+    {
+      "evidence_id": "E0005",
+      "paper_id": "real_paper_001",
+      "evidence_type": "thermogenesis_modulation",
+      "claim": "Fat-specific A2B1 overexpression in mice iWAT decreases body weight, fat mass, and adipocyte size, increases oxygen consumption, enhances cold tolerance, and improves insulin sensitivity and hepatic steatosis under HFD.",
+      "structured_fields": {
+        "intervention": "AAV A2B1 delivery in iWAT",
+        "target": "A2B1",
+        "modulation_direction": "increases",
+        "effect_size_reported": "significant decrease in body weights, fat mass, adipose tissue weights; increased oxygen consumption",
+        "thermogenic_marker": "oxygen consumption, cold tolerance, brown gene programs, PGC1 and UCP1 protein levels"
+      },
+      "raw_entities": [
+        {
+          "raw_name": "A2B1",
+          "entity_type": "protein",
+          "role": "target"
+        },
+        {
+          "raw_name": "AAV A2B1",
+          "entity_type": "drug",
+          "role": "activator"
+        },
+        {
+          "raw_name": "HFD",
+          "entity_type": "phenotype",
+          "role": "condition"
+        },
+        {
+          "raw_name": "UCP1",
+          "entity_type": "protein",
+          "role": "readout"
+        },
+        {
+          "raw_name": "PGC1",
+          "entity_type": "protein",
+          "role": "readout"
+        }
+      ],
+      "experimental_model": {
+        "model_level": "animal",
+        "model_name": "C57BL/6 mice",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "inguinal white adipose tissue (iWAT)",
+        "in_vivo_or_in_vitro": "in_vivo"
+      },
+      "condition_context": {
+        "dose": "AAV A2B1 injection",
+        "duration": "HFD feeding period",
+        "temperature": "not specified"
+      },
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0126"
+        ],
+        "quote": "When subjected to HFD, mice with fat-A2B1 overexpression showed significant decrease in body weights, fat mass, and adipose tissue weights with smaller adipocyte sizes (Figures 5A and 5B). They also featured increased oxygen consumption, enhanced resistance to cold challenge, as well as improved insulin sensitivity and hepatic steatosis (Figures 5C–5E and S6B). ... AAV A2B1 group exhibited enhanced levels of brown gene programs, as well as increased PGC1 and UCP1 protein level in iWAT compared with AAV GFP group (Figure 5F).",
+        "page": 10,
+        "section": "S13",
+        "figure_or_table": "Figures 5A-5F, S6B"
+      },
+      "polarity": "positive",
+      "statistics": {},
+      "measurement": {
+        "method": "metabolic cage, cold tolerance test, GTT, ITT, histology, Western blot",
+        "measured_variable": "body weight, fat mass, oxygen consumption, cold tolerance, insulin sensitivity, brown gene programs, PGC1 and UCP1 protein",
+        "measured_value": "decreased body weight and fat mass; increased oxygen consumption and cold tolerance; improved insulin sensitivity; increased brown gene programs and PGC1/UCP1 protein"
+      },
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
+    },
+    {
+      "evidence_id": "E0006",
+      "paper_id": "real_paper_001",
+      "evidence_type": "thermogenesis_modulation",
+      "claim": "Fat-specific A2B1 knockdown in mice iWAT increases body weight and adiposity, decreases oxygen consumption, impairs cold tolerance, and worsens insulin resistance and hepatic steatosis under HFD.",
+      "structured_fields": {
+        "intervention": "AAV shA2B1 delivery in iWAT",
+        "target": "A2B1",
+        "modulation_direction": "decreases",
+        "effect_size_reported": "increased body weights and adiposity; decreased oxygen consumption; impaired cold tolerance",
+        "thermogenic_marker": "oxygen consumption, cold tolerance, brown gene programs, PGC1 and UCP1 protein levels"
+      },
+      "raw_entities": [
+        {
+          "raw_name": "A2B1",
+          "entity_type": "protein",
+          "role": "target"
+        },
+        {
+          "raw_name": "AAV shA2B1",
+          "entity_type": "drug",
+          "role": "inhibitor"
+        },
+        {
+          "raw_name": "HFD",
+          "entity_type": "phenotype",
+          "role": "condition"
+        },
+        {
+          "raw_name": "UCP1",
+          "entity_type": "protein",
+          "role": "readout"
+        },
+        {
+          "raw_name": "PGC1",
+          "entity_type": "protein",
+          "role": "readout"
+        }
+      ],
+      "experimental_model": {
+        "model_level": "animal",
+        "model_name": "C57BL/6 mice",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "inguinal white adipose tissue (iWAT)",
+        "in_vivo_or_in_vitro": "in_vivo"
+      },
+      "condition_context": {
+        "dose": "AAV shA2B1 injection",
+        "duration": "HFD feeding period",
+        "temperature": "not specified"
+      },
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0127"
+        ],
+        "quote": "AAV shA2B1 mice showed increased body weights and adiposity, decreased oxygen consumption, impaired cold tolerance, as well as more severe insulin resistance and hepatic steatosis compared with AAV shNC mice (Figures 5G–5K and S6E)... A2B1 ablation in iWAT suppressed brown gene programs, as well as PGC1 and UCP1 protein levels, in AAV shA2B1 mice compared with control (Figure 5L).",
+        "page": 10,
+        "section": "S13",
+        "figure_or_table": "Figures 5G-5L, S6E"
+      },
+      "polarity": "negative",
+      "statistics": {},
+      "measurement": {
+        "method": "metabolic cage, cold tolerance test, GTT, ITT, histology, Western blot",
+        "measured_variable": "body weight, adiposity, oxygen consumption, cold tolerance, insulin resistance, brown gene programs, PGC1 and UCP1 protein",
+        "measured_value": "increased body weight and adiposity; decreased oxygen consumption and cold tolerance; worsened insulin resistance; suppressed brown gene programs and PGC1/UCP1 protein"
+      },
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
+    },
+    {
+      "evidence_id": "E0007",
+      "paper_id": "real_paper_001",
+      "evidence_type": "thermogenesis_modulation",
+      "claim": "A2B1 haploinsufficient mice (A2B1 HET) show increased adipocyte sizes in iWAT, impaired insulin sensitivity, suppressed brown gene programs, and impaired thermogenic capacity upon cold challenge.",
+      "structured_fields": {
+        "intervention": "A2B1 haploinsufficiency (genetic)",
+        "target": "A2B1",
+        "modulation_direction": "decreases",
+        "effect_size_reported": "approximately 50% reduction in A2b1 level in adipose tissues",
+        "thermogenic_marker": "brown gene programs, Pgc1a and Ucp1 expression, core temperature upon cold challenge"
+      },
+      "raw_entities": [
+        {
+          "raw_name": "A2B1",
+          "entity_type": "protein",
+          "role": "target"
+        },
+        {
+          "raw_name": "A2B1 HET",
+          "entity_type": "phenotype",
+          "role": "model"
+        },
+        {
+          "raw_name": "Pgc1a",
+          "entity_type": "gene",
+          "role": "readout"
+        },
+        {
+          "raw_name": "Ucp1",
+          "entity_type": "gene",
+          "role": "readout"
+        }
+      ],
+      "experimental_model": {
+        "model_level": "animal",
+        "model_name": "A2B1 haploinsufficient mice (A2B1 HET)",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "inguinal white adipose tissue (iWAT)",
+        "in_vivo_or_in_vitro": "in_vivo"
+      },
+      "condition_context": {
+        "temperature": "cold challenge",
+        "duration": "not specified"
+      },
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0128"
+        ],
+        "quote": "A2B1 HET mice featured increased adipocyte sizes in iWAT and impaired insulin sensitivity (Figures S6J–S6L), in accordance with suppressed brown gene programs in iWAT in these mice (Figure S6N). They also exhibited impaired thermogenic capacity as evident by more profound drops in core temperatures and blunted ability to induce Pgc1a and Ucp1 expression in iWAT upon cold challenge (Figure S6O).",
+        "page": 10,
+        "section": "S13",
+        "figure_or_table": "Figures S6J-S6O"
+      },
+      "polarity": "negative",
+      "statistics": {},
+      "measurement": {
+        "method": "histology, GTT, qPCR, cold tolerance test",
+        "measured_variable": "adipocyte size, insulin sensitivity, brown gene programs, core temperature, Pgc1a and Ucp1 expression",
+        "measured_value": "increased adipocyte size; impaired insulin sensitivity; suppressed brown gene programs; more profound drops in core temperature; blunted Pgc1a and Ucp1 induction"
+      },
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
+    },
+    {
+      "evidence_id": "E0008",
+      "paper_id": "real_paper_001",
+      "evidence_type": "mechanism_pathway",
+      "claim": "A2B1 overexpression in iWAT of HSF1 FKO mice alleviates metabolic impairments and rescues decreased expression of thermogenic genes caused by HSF1 deficiency.",
+      "structured_fields": {
+        "pathway_name": "HSF1-A2B1 axis",
+        "key_nodes": [
           "HSF1",
-          "BAM15",
-          "CCCP",
-          "NAC",
-          "CHX",
-          "puromycin",
-          "menadione",
-          "ROS",
-          "线粒体产热"
+          "A2B1",
+          "Pgc1a",
+          "Ucp1"
         ],
-        "confidence_assessment": "高。证据包括免疫荧光、Western blot、抑制剂实验、不同质子载体验证，且排除了ROS和新蛋白合成的干扰，结论可靠。"
+        "upstream_trigger": "A2B1 overexpression",
+        "downstream_effect": "rescue of metabolic impairments and thermogenic gene expression",
+        "mechanism_type": "transcriptional"
       },
-      "linked_evidence": [
+      "raw_entities": [
         {
-          "evidence_id": "real_paper_001_E0007",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "mitochondrial heat that reached the nucleus initiated the classical heat shock response, including the formation of nuclear stress granules and the localization of heat shock factor 1 (HSF1) to chromatin",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "HSF1",
+          "entity_type": "protein",
+          "role": "upstream"
         },
         {
-          "evidence_id": "real_paper_001_E0008",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "activated HSF1 increases the level of gene expression associated with the response to thermal stress in mammalian cells",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "A2B1",
+          "entity_type": "protein",
+          "role": "mediator"
         },
         {
-          "evidence_id": "real_paper_001_E0011",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "the mitochondrial-generated heat induced by FCCP can be transferred to the surrounding space and proximal organelles",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "Pgc1a",
+          "entity_type": "gene",
+          "role": "downstream"
         },
         {
-          "evidence_id": "real_paper_001_E0012",
-          "evidence_type": "detection_method",
-          "source_text": "Confocal images of endogenous HSF1 (anti-HSF1) and Histone H3 (anti-Histone H3) activation in MCF10A cells incubated with either FCCP (100 μM, 1 h) or menadione (30 μM, 30 min) or subjected to heat shock (43 °C, 1 h) and with or without cotreatment with NAC (5 mM, 1 h).",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "Histone H3",
-              "type": "protein"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "menadione",
-              "type": "drug"
-            },
-            {
-              "name": "NAC",
-              "type": "drug"
-            },
-            {
-              "name": "MCF10A",
-              "type": "phenotype"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0013",
-          "evidence_type": "thermogenesis_modulation",
-          "source_text": "FCCP (100 μM, 1 h) ... induced mitochondrial thermogenesis",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            }
-          ],
-          "modulation": {
-            "drug": "FCCP",
-            "target": null,
-            "direction": "increases",
-            "effect_description": "FCCP treatment induces mitochondrial thermogenesis"
-          },
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0014",
-          "evidence_type": "detection_method",
-          "source_text": "we checked endogenous HSF1 localization by immunofluorescence imaging following treatment with FCCP",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "immunofluorescence imaging",
-              "type": "assay_method"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0015",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "Under the FCCP treatment condition (100 μM, 1 h), endogenous HSF1 foci formation was clearly observed in the nucleus, and this pattern was comparable to that of HSF1 foci formation under external heat shock conditions",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            }
-          ],
-          "modulation": {
-            "drug": "FCCP",
-            "target": "HSF1",
-            "direction": "increases",
-            "effect_description": "FCCP induces HSF1 nuclear foci formation"
-          },
-          "statistics": {
-            "p_value": null,
-            "fold_change": null,
-            "sample_size": null,
-            "effect_size": null,
-            "confidence_interval": null
-          }
-        },
-        {
-          "evidence_id": "real_paper_001_E0016",
-          "evidence_type": "detection_method",
-          "source_text": "nuclear pH remained within the physiological range under FCCP treatment, as measured by pHluorin2",
-          "entities": [
-            {
-              "name": "pHluorin2",
-              "type": "assay_method"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0018",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "the ROS production induced by FCCP was very low in all submitochondrial spaces compared to the well-established ROS-generating agent menadione",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "menadione",
-              "type": "drug"
-            },
-            {
-              "name": "ROS",
-              "type": "metabolite"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0019",
-          "evidence_type": "detection_method",
-          "source_text": "Streptavidin (SA) Western blot results of APEX-mediated biotinylating activity measurements after menadione (30 μM, 30 min) or FCCP (100 μM, 1 h) treatment",
-          "entities": [
-            {
-              "name": "Streptavidin",
-              "type": "protein"
-            },
-            {
-              "name": "APEX",
-              "type": "assay_method"
-            },
-            {
-              "name": "menadione",
-              "type": "drug"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0020",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "HSF1 foci formation was induced by menadione without heat induction; however, the level of this ROS-induced HSF1 foci formation was much lower than that of FCCP",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "menadione",
-              "type": "drug"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "ROS",
-              "type": "metabolite"
-            }
-          ],
-          "modulation": {
-            "drug": "menadione",
-            "target": "HSF1",
-            "direction": "increases",
-            "effect_description": "Menadione induces HSF1 foci formation via ROS, but less than FCCP"
-          },
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0021",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "menadione was significantly quenched by cotreatment with ROS quenching agent N-acetylcysteine (NAC, 5 mM)",
-          "entities": [
-            {
-              "name": "menadione",
-              "type": "drug"
-            },
-            {
-              "name": "N-acetylcysteine",
-              "type": "drug"
-            },
-            {
-              "name": "ROS",
-              "type": "metabolite"
-            }
-          ],
-          "modulation": {
-            "drug": "N-acetylcysteine",
-            "target": "ROS",
-            "direction": "decreases",
-            "effect_description": "NAC quenches menadione-induced ROS"
-          },
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0022",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "FCCP-driven HSF1 foci formation was minimally affected by cotreatment with the same concentration of NAC (5 mM), suggesting that ROS is unlikely attributed to HSF1 foci formation by FCCP",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "N-acetylcysteine",
-              "type": "drug"
-            },
-            {
-              "name": "ROS",
-              "type": "metabolite"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0023",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "HSF1 foci formation can be induced by FCCP treatment even under the condition of new protein synthesis being blocked by cycloheximide (CHX) or puromycin",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "cycloheximide",
-              "type": "drug"
-            },
-            {
-              "name": "puromycin",
-              "type": "drug"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0026",
-          "evidence_type": "detection_method",
-          "source_text": "we investigated the potential use of HSF1 foci formation as a real-time recording system that responds to heat conducted from mitochondria",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0031",
-          "evidence_type": "thermogenesis_modulation",
-          "source_text": "HSF1-EGFP foci formation was also successfully promoted by other mitochondrial protonophores such as BAM15 and CCCP (carbonyl cyanide 3-chlorophenylhydrazone) (Figure S5A−D).",
-          "entities": [
-            {
-              "name": "BAM15",
-              "type": "drug"
-            },
-            {
-              "name": "CCCP",
-              "type": "drug"
-            },
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": {
-            "drug": "BAM15",
-            "target": "HSF1",
-            "direction": "increases",
-            "effect_description": "BAM15 promotes HSF1-EGFP foci formation"
-          },
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0033",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "These observations suggest that HSF1 activation via mitochondrial thermogenesis is conserved in mammalian cells.",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0037",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "This finding highlights that oxygen supplementation is a prerequisite for HSF1 activation by mitochondrial thermogenesis.",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0040",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "Overall, here we confirmed that every component (i.e., proton, oxygen, and electrons) in the exothermic mitochondrial ORR is required for generating sufficient mitochondrial heat that can activate HSF1.",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "ORR",
-              "type": "pathway"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0057",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "HSF1 can be activated by mitochondrial ROS and protect cells under the mitochondrial stress conditions",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "ROS",
-              "type": "metabolite"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "Ucp1",
+          "entity_type": "gene",
+          "role": "downstream"
         }
       ],
-      "review_status": "draft",
-      "review_notes": "",
-      "reviewed_at": null
+      "experimental_model": {
+        "model_level": "animal",
+        "model_name": "HSF1 FKO mice",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "inguinal white adipose tissue (iWAT)",
+        "in_vivo_or_in_vitro": "in_vivo"
+      },
+      "condition_context": {
+        "dose": "AAV A2B1 injection",
+        "duration": "HFD feeding period",
+        "temperature": "not specified"
+      },
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0132"
+        ],
+        "quote": "A2B1 overexpression in fat largely alleviated the metabolic impairments of HSF1 FKO mice (Figures 6A–6G). Furthermore, ectopic expression of A2B1 in iWAT of HSF1 FKO mice rescued the decreased expression of thermogenic genes in HSF1 FKO mice (Figure 6H).",
+        "page": 10,
+        "section": "S14",
+        "figure_or_table": "Figures 6A-6H"
+      },
+      "polarity": "positive",
+      "statistics": {},
+      "measurement": {
+        "method": "metabolic parameter analysis, qPCR",
+        "measured_variable": "metabolic parameters, thermogenic gene expression",
+        "measured_value": "alleviated metabolic impairments; rescued thermogenic gene expression"
+      },
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
     },
     {
-      "entry_id": "real_paper_001_D0003",
-      "task_type": "summarize_theme",
-      "main_claim": "线粒体产热由放能的氧消耗反应（ORR）驱动，该过程依赖于线粒体内充足的氧气、质子和电子供应，并可能在所有活跃呼吸的细胞中发生。",
+      "evidence_id": "E0009",
+      "paper_id": "real_paper_001",
+      "evidence_type": "thermogenesis_modulation",
+      "claim": "LHT induces beige fat activation via the HSF1-A2B1 transcriptional axis as a strategy against obesity.",
       "structured_fields": {
-        "synthesized_summary": "本研究提出，线粒体产热由线粒体复合物IV上的放能氧消耗反应（ORR: 1/2 O2 + 2H+ + 2e- → H2O）驱动。该反应依赖于线粒体内充足的氧气、质子和电子供应。质子载体诱导的线粒体产热因此依赖于良好的氧气供应和高效的电子传递。作者预期该ORR驱动的产热模型可能建立线粒体呼吸与产热之间的新联系，并在所有活跃呼吸的细胞中发生。由于HSF1焦点形成已在多种侵袭性人类肿瘤中观察到，进一步研究线粒体ORR-HSF1轴或线粒体热信号在癌症中的作用将具有重要意义。",
-        "key_findings": [
-          "线粒体产热由放能的氧消耗反应（ORR）驱动。",
-          "ORR驱动的线粒体产热依赖于线粒体内充足的氧气、质子和电子供应。",
-          "质子载体诱导的线粒体产热依赖于良好的氧气供应和高效的电子传递。",
-          "ORR驱动的产热模型可能建立线粒体呼吸与产热之间的新联系。",
-          "活跃呼吸的细胞可能经历细胞内温度升高并激活HSF1信号通路。",
-          "HSF1焦点形成在多种侵袭性人类肿瘤中被观察到，线粒体ORR-HSF1轴可能在癌症研究中具有重要意义。"
-        ],
-        "entities": [
-          "线粒体产热",
-          "氧消耗反应 (ORR)",
-          "HSF1",
-          "线粒体复合物IV",
-          "质子载体"
-        ],
-        "confidence_assessment": "中等。核心机制（ORR驱动产热）有热力学数据支持，但关于其在所有活跃呼吸细胞中的普遍性及在癌症中的意义仍属预期和推测，需要更多实验验证。"
+        "intervention": "local hyperthermia therapy (LHT)",
+        "target": "HSF1-A2B1 transcriptional axis",
+        "modulation_direction": "increases",
+        "effect_size_reported": null,
+        "thermogenic_marker": "beige fat activation"
       },
-      "linked_evidence": [
+      "raw_entities": [
         {
-          "evidence_id": "real_paper_001_E0034",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "Mitochondrial thermogenesis, induced by exothermic ORR (1/2 O2 + 2H+ + 2e- → H2O), relies on the abundant availability of reactants (H+, O2, and electrons) within the mitochondria. Consequently, protonophore-induced mitochondrial thermogenesis is contingent upon a well-maintained oxygen supply and efficient electron transport in the mitochondria.",
-          "entities": [
-            {
-              "name": "ORR",
-              "type": "pathway"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "LHT",
+          "entity_type": "drug",
+          "role": "activator"
         },
         {
-          "evidence_id": "real_paper_001_E0062",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "We also anticipate that our ORR-driven thermogenesis model can establish a new connection between mitochondrial respiration and mitochondrial thermogenesis, potentially in all actively respiring cells.",
-          "entities": [
-            {
-              "name": "ORR",
-              "type": "pathway"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "HSF1",
+          "entity_type": "protein",
+          "role": "target"
         },
         {
-          "evidence_id": "real_paper_001_E0063",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "we expect that these actively respiring cells may experience an increased intracellular temperature and could activate the HSF1 signaling pathway, possibly due to active ORR-driven mitochondrial thermogenesis.",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "ORR",
-              "type": "pathway"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "A2B1",
+          "entity_type": "protein",
+          "role": "target"
         },
         {
-          "evidence_id": "real_paper_001_E0064",
-          "evidence_type": "disease_association",
-          "source_text": "Since HSF1 foci formations have been observed in several aggressive human tumors, it would be intriguing to further investigate this mito-ORR and HSF1 axis or mitochondrial heat signaling in cancer research.",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "cancer",
-              "type": "disease"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "beige fat",
+          "entity_type": "tissue",
+          "role": "readout"
+        },
+        {
+          "raw_name": "obesity",
+          "entity_type": "disease",
+          "role": "target"
         }
       ],
-      "review_status": "draft",
-      "review_notes": "",
-      "reviewed_at": null
+      "experimental_model": {
+        "model_level": "animal",
+        "model_name": "C57BL/6J",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "inguinal white adipose tissue (iWAT)",
+        "in_vivo_or_in_vitro": "in_vivo"
+      },
+      "condition_context": {
+        "dose": "41±0.5°C for 10 min",
+        "duration": "chronic treatment every three days",
+        "temperature": "41±0.5°C local hyperthermia",
+        "oxygen_condition": null,
+        "co_treatment": null
+      },
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0213"
+        ],
+        "quote": "The major finding of this work signifies LHT as a promising strategy against obesity by inducing beige fat activation via the HSF1-A2B1 transcriptional axis.",
+        "page": 15,
+        "section": "S17",
+        "figure_or_table": null
+      },
+      "polarity": "positive",
+      "statistics": {},
+      "measurement": {},
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
     },
     {
-      "entry_id": "real_paper_001_D0004",
-      "task_type": "summarize_theme",
-      "main_claim": "FCCP通过诱导线粒体解偶联和放能的氧消耗反应（ORR）产生热量，该热量可传递至内质网和整个细胞，并激活热休克基因表达。",
+      "evidence_id": "E0010",
+      "paper_id": "real_paper_001",
+      "evidence_type": "detection_method",
+      "claim": "ChIP-seq was performed using SimpleChIP Plus Enzymatic Chromatin IP Kit with anti-HSF1 antibody in differentiated beige adipocytes.",
       "structured_fields": {
-        "synthesized_summary": "本研究证实，FCCP通过诱导线粒体解偶联（TMRE实验证实膜电位降低）和放能的氧消耗反应（ORR: 1/2 O2 + 2H+ + 2e- → H2O, ΔHf° = -286 kJ/mol）产生热量。该热量不仅局限于线粒体，还可传递至内质网（ERthermAC探针检测到ER温度升高）和整个细胞（FDV探针检测到细胞质温度升至38.9-40.0°C）。此外，FCCP处理可激活HSPD1/HSPE1启动子，RNA-seq分析显示61个基因在FCCP处理和外部热休克条件下具有正相关的转录激活模式。",
-        "key_findings": [
-          "FCCP诱导线粒体解偶联，降低线粒体膜电位。",
-          "FCCP诱导的线粒体产热主要来源于放能的氧消耗反应（ORR）。",
-          "FCCP处理导致内质网温度升高。",
-          "FCCP处理导致整个细胞质温度升高至38.9-40.0°C。",
-          "FCCP处理可激活HSPD1/HSPE1启动子。",
-          "RNA-seq分析显示61个基因在FCCP处理和外部热休克条件下具有正相关的转录激活模式。"
-        ],
-        "entities": [
-          "FCCP",
-          "线粒体解偶联",
-          "氧消耗反应 (ORR)",
-          "TMRE",
-          "ERthermAC (ETAC)",
-          "FDV",
-          "HSPD1",
-          "HSPE1"
-        ],
-        "confidence_assessment": "高。证据包括多种检测方法（TMRE、ERthermAC、FDV、荧光素酶报告基因、RNA-seq），从不同层面验证了线粒体产热及其效应，结论一致。"
+        "method_name": "ChIP-seq",
+        "detection_category": "biochemical_assay",
+        "target_analyte": "HSF1-bound DNA fragments",
+        "sensitivity": null,
+        "novelty": "established"
       },
-      "linked_evidence": [
+      "raw_entities": [
         {
-          "evidence_id": "real_paper_001_E0001",
-          "evidence_type": "detection_method",
-          "source_text": "We confirmed that FCCP induced the mitochondrial uncoupling process by measuring the reduced mitochondrial membrane potential using the TMRE assay (Figure S1A,B).",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "TMRE",
-              "type": "assay_method"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "HSF1",
+          "entity_type": "protein",
+          "role": "target"
         },
         {
-          "evidence_id": "real_paper_001_E0002",
-          "evidence_type": "detection_method",
-          "source_text": "To verify whether other subcellular organelles are afected by heat produced by ORR, we measured that endoplasmic reticulum (ER) temperature was increased by the FCCP treatment with an ER-localized temperature-measuring fluorescent probe, ERthermAC (ETAC) (Figure S1C,D).",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "ERthermAC",
-              "type": "assay_method"
-            },
-            {
-              "name": "ETAC",
-              "type": "assay_method"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "SimpleChIP Plus Enzymatic Chromatin IP Kit",
+          "entity_type": "assay_method",
+          "role": "readout"
         },
         {
-          "evidence_id": "real_paper_001_E0003",
-          "evidence_type": "detection_method",
-          "source_text": "Using a fluorescent polymeric thermometer (FDV) which is evenly distributed in the entire cellular area, we also observed that the fluorescence emission intensity ratio (FI580/FI515) of FDV corresponded to the ratio at the range from 38.9 to 40.0 °C under the FCCP treatment (Figure S1E,F).",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "FDV",
-              "type": "assay_method"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "C3H10T1/2-derived beige adipocytes",
+          "entity_type": "phenotype",
+          "role": "readout"
         },
         {
-          "evidence_id": "real_paper_001_E0004",
-          "evidence_type": "thermogenesis_modulation",
-          "source_text": "FCCP (100 μM, 1 h) ... induced mitochondrial thermogenesis",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            }
-          ],
-          "modulation": {
-            "drug": "FCCP",
-            "target": null,
-            "direction": "increases",
-            "effect_description": "FCCP treatment induces mitochondrial thermogenesis"
-          },
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0005",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "the exothermic oxygen reduction reaction (ΔH ° = −286 kJ/mol) is the main source of the protonophoreinduced mitochondrial thermogenesis",
-          "entities": [
-            {
-              "name": "oxygen reduction reaction",
-              "type": "pathway"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0009",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "FCCP is a weak acid that facilitates reversible proton import from the mitochondrial intermembrane space (IMS) to the matrix, which in turn uncouples the electron transport chain and inhibits ATP synthesis",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "ATP",
-              "type": "metabolite"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0010",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "this event can induce a highly exothermic oxygen reduction reaction (ORR) at mitochondrial complex IV (1/2 O2 + 2 H+ + 2 e- → H2O, ΔHf° = -286 kJ/mol) by providing essential protons for the reaction",
-          "entities": [
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "oxygen reduction reaction",
-              "type": "pathway"
-            },
-            {
-              "name": "complex IV",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0044",
-          "evidence_type": "detection_method",
-          "source_text": "We confirmed with the luciferase assay system that the HSPD1/HSPE1 promoter...can be activated under both external heat shock and FCCP treatment conditions",
-          "entities": [
-            {
-              "name": "HSPD1",
-              "type": "gene"
-            },
-            {
-              "name": "HSPE1",
-              "type": "gene"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            },
-            {
-              "name": "luciferase assay",
-              "type": "assay_method"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0045",
-          "evidence_type": "detection_method",
-          "source_text": "RNA-seq analysis further revealed that 61 genes in the Common-GAIN regions have a positive correlative transcription activation pattern between FCCP-treated and external heat shock conditions",
-          "entities": [
-            {
-              "name": "RNA-seq",
-              "type": "assay_method"
-            },
-            {
-              "name": "FCCP",
-              "type": "drug"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        },
-        {
-          "evidence_id": "real_paper_001_E0060",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "the exothermic enthalpy change of this oxygen consumption reaction (ΔHf° = -286 kJ/mol) to the mitochondrial thermogenesis and suggests that this is likely the primary thermogenic reaction in mitochondria",
-          "entities": [
-            {
-              "name": "oxygen reduction reaction",
-              "type": "pathway"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "immortalized beige adipocytes",
+          "entity_type": "phenotype",
+          "role": "readout"
         }
       ],
-      "review_status": "draft",
-      "review_notes": "",
-      "reviewed_at": null
+      "experimental_model": {
+        "model_level": "cell",
+        "model_name": "C3H10T1/2-derived beige adipocytes",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "beige adipocyte",
+        "in_vivo_or_in_vitro": "in_vitro"
+      },
+      "condition_context": {},
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0293"
+        ],
+        "quote": "For ChIP-seq, ChIP assays were first performed using a SimpleChIP Plus Enzymatic Chromatin IP Kit (CST, 9003) according to manufacturer’s instructions. In brief, differentiated C3H10T1/2-derived beige adipocytes or immortalized beige adipocytes were cross-linked by 1% formaldehyde for 10 min and stopped by glycine. The extracted chromatin was digested and fragmented into 200 to 1000 bp, which was then immunoprecipitated by ChIP grade antibodies anti-HSF1 (CST, 4356S) or normal IgG (CST, 2729) using Magnetic Beads.",
+        "page": 27,
+        "section": "S50",
+        "figure_or_table": null
+      },
+      "polarity": "neutral",
+      "statistics": {},
+      "measurement": {},
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
     },
     {
-      "entry_id": "real_paper_001_D0005",
-      "task_type": "summarize_detection_method",
-      "main_claim": "磷酸化HSF1特异性抗体和ChIP-seq可用于检测线粒体热信号引发的HSF1激活及基因组结合事件。",
+      "evidence_id": "E0011",
+      "paper_id": "real_paper_001",
+      "evidence_type": "detection_method",
+      "claim": "RNA immunoprecipitation (RIP) assay was performed with HNRNPA2B1 antibody in differentiated beige or brown adipocytes.",
       "structured_fields": {
-        "method_name": "磷酸化HSF1检测与ChIP-seq",
-        "detection_category": "分子检测",
-        "what_it_measures": "检测HSF1在丝氨酸326位点的磷酸化状态以及HSF1在全基因组范围内的结合位点，从而监测线粒体热对细胞内生物学事件的影响。",
-        "advantages": "能够直接检测HSF1的激活状态（磷酸化）和基因组结合模式，提供线粒体热信号转导的直接证据。",
-        "limitations": null
+        "method_name": "RNA immunoprecipitation (RIP)",
+        "detection_category": "biochemical_assay",
+        "target_analyte": "HNRNPA2B1-bound RNAs",
+        "sensitivity": null,
+        "novelty": "established"
       },
-      "linked_evidence": [
+      "raw_entities": [
         {
-          "evidence_id": "real_paper_001_E0042",
-          "evidence_type": "detection_method",
-          "source_text": "we used an antibody specific to phosphorylated HSF1 at serine-326 for direct detection",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "phospho-HSF1 Ser326 antibody",
-              "type": "assay_method"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "HNRNPA2B1",
+          "entity_type": "protein",
+          "role": "target"
         },
         {
-          "evidence_id": "real_paper_001_E0043",
-          "evidence_type": "detection_method",
-          "source_text": "we mapped the genome-wide binding of HSF1 using chromatin immunoprecipitation sequencing (ChIP-seq)",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            },
-            {
-              "name": "ChIP-seq",
-              "type": "assay_method"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "Magna RIP RNA-Binding Protein Immunoprecipitation Kit",
+          "entity_type": "assay_method",
+          "role": "readout"
         },
         {
-          "evidence_id": "real_paper_001_E0046",
-          "evidence_type": "detection_method",
-          "source_text": "we used HSF1 as a molecular sensor to monitor how mitochondrial heat affects intracellular biological events",
-          "entities": [
-            {
-              "name": "HSF1",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
-        }
-      ],
-      "review_status": "draft",
-      "review_notes": "",
-      "reviewed_at": null
-    },
-    {
-      "entry_id": "real_paper_001_D0006",
-      "task_type": "summarize_detection_method",
-      "main_claim": "利用HSF1-EGFP稳定细胞系和实时共聚焦显微镜可动态记录线粒体解偶联剂FCCP诱导的HSF1 foci形成。",
-      "structured_fields": {
-        "method_name": "HSF1-EGFP实时荧光成像",
-        "detection_category": "细胞成像",
-        "what_it_measures": "通过慢病毒感染构建稳定表达HSF1-EGFP的U2OS细胞系，利用GFP荧光实时记录FCCP处理后HSF1 foci的形成动态，并检测长时间缺氧条件下HSF1 foci是否形成。",
-        "advantages": "能够实时、动态地观察HSF1在细胞核内的聚集（foci形成），反映HSF1的激活状态，且可区分不同刺激（如FCCP vs. 缺氧）的差异。",
-        "limitations": "长时间缺氧（超过2小时）条件下无法检测到HSF1 foci形成，可能受限于检测灵敏度或HSF1激活的动力学特性。"
-      },
-      "linked_evidence": [
-        {
-          "evidence_id": "real_paper_001_E0027",
-          "evidence_type": "detection_method",
-          "source_text": "we prepared a stable cell line expressing HSF1-EGFP by lentiviral infection",
-          "entities": [
-            {
-              "name": "HSF1-EGFP",
-              "type": "assay_method"
-            },
-            {
-              "name": "lentiviral infection",
-              "type": "assay_method"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "immortalized beige adipocytes",
+          "entity_type": "phenotype",
+          "role": "readout"
         },
         {
-          "evidence_id": "real_paper_001_E0029",
-          "evidence_type": "detection_method",
-          "source_text": "Real-time fluorescence recording of HSF1-EGFP in U2OS HSF1-EGFP-expressing stable cells",
-          "entities": [
-            {
-              "name": "HSF1-EGFP",
-              "type": "assay_method"
-            },
-            {
-              "name": "U2OS",
-              "type": "phenotype"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "brown adipocytes",
+          "entity_type": "phenotype",
+          "role": "readout"
+        }
+      ],
+      "experimental_model": {
+        "model_level": "cell",
+        "model_name": "immortalized beige adipocytes",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "beige adipocyte",
+        "in_vivo_or_in_vitro": "in_vitro"
+      },
+      "condition_context": {},
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0295"
+        ],
+        "quote": "RNA immunoprecipitation (RIP) assay was performed with Magna RIP RNA-Binding Protein Immunoprecipitation Kit (Millipore 17-700) according to manufacturer’s instructions. Briefly, fully differentiated immortalized beige or brown adipocytes were washed with ice-cold PBS and resuspended in RIPA lysis buffer (containing RNase inhibitor, Millipore, CS203219). The extract was pre cleared with Sepharose beads and subjected to immunoprecipitation with HNRNPA2B1 antibody (Abcam, ab31645).",
+        "page": 27,
+        "section": "S51",
+        "figure_or_table": null
+      },
+      "polarity": "neutral",
+      "statistics": {},
+      "measurement": {},
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
+    },
+    {
+      "evidence_id": "E0012",
+      "paper_id": "real_paper_001",
+      "evidence_type": "detection_method",
+      "claim": "Luciferase reporter assay was performed in HEK293T cells using dual luciferase reporter assay kit.",
+      "structured_fields": {
+        "method_name": "Dual luciferase reporter assay",
+        "detection_category": "biochemical_assay",
+        "target_analyte": "luciferase activity",
+        "sensitivity": null,
+        "novelty": "established"
+      },
+      "raw_entities": [
+        {
+          "raw_name": "HEK293T",
+          "entity_type": "cell",
+          "role": "readout"
         },
         {
-          "evidence_id": "real_paper_001_E0030",
-          "evidence_type": "detection_method",
-          "source_text": "Utilizing the GFP fluorescence, we recorded the HSF1-EGFP foci formation at 37°C immediately following FCCP treatment by real-time confocal microscopy (Figure 3B; supplemental movie 1 and movie 2).",
-          "entities": [
-            {
-              "name": "HSF1-EGFP",
-              "type": "protein"
-            },
-            {
-              "name": "real-time confocal microscopy",
-              "type": "assay_method"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "Renilla luciferase",
+          "entity_type": "protein",
+          "role": "readout"
         },
         {
-          "evidence_id": "real_paper_001_E0035",
-          "evidence_type": "detection_method",
-          "source_text": "Using a real-time confocal microscope, we could not detect HSF1 foci formation under prolonged hypoxia of over 2 h (Figure 4C; gray dots)",
-          "entities": [
-            {
-              "name": "HSF1-EGFP",
-              "type": "protein"
-            },
-            {
-              "name": "real-time confocal microscope",
-              "type": "assay_method"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "dual luciferase reporter assay kit",
+          "entity_type": "assay_method",
+          "role": "readout"
         }
       ],
-      "review_status": "draft",
-      "review_notes": "",
-      "reviewed_at": null
+      "experimental_model": {
+        "model_level": "cell",
+        "model_name": "HEK293T",
+        "species": "Homo sapiens",
+        "tissue_or_cell_type": "embryonic kidney",
+        "in_vivo_or_in_vitro": "in_vitro"
+      },
+      "condition_context": {},
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0297"
+        ],
+        "quote": "HEK293T cells (ATCC) were transfected with indicated plasmids and luciferase reporter together with Renilla luciferase control reporter by EZ-Trans transfection reagent. Cells were collected with passive lysis buffer (Promega, E1960) and luciferase assays were performed using a dual luciferase reporter assay kit (Promega, E1960)",
+        "page": 27,
+        "section": "S52",
+        "figure_or_table": null
+      },
+      "polarity": "neutral",
+      "statistics": {},
+      "measurement": {},
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
     },
     {
-      "entry_id": "real_paper_001_D0007",
-      "task_type": "summarize_detection_method",
-      "main_claim": "基于ROS依赖的工程化抗坏血酸过氧化物酶（APEX）反应系统可用于检测线粒体产热相关的活性氧信号。",
+      "evidence_id": "E0013",
+      "paper_id": "real_paper_001",
+      "evidence_type": "detection_method",
+      "claim": "Histological analysis of adipose and liver tissues was performed by H&E staining and adipocyte size quantification by ImageJ.",
       "structured_fields": {
-        "method_name": "ROS依赖的APEX反应系统",
-        "detection_category": "生化检测",
-        "what_it_measures": "利用工程化抗坏血酸过氧化物酶（APEX）催化ROS依赖的反应，检测线粒体产热过程中产生的活性氧（ROS）信号。",
-        "advantages": "具有ROS特异性，可实时或原位检测线粒体来源的ROS信号，适用于线粒体产热相关研究。",
-        "limitations": null
+        "method_name": "H&E staining and ImageJ quantification",
+        "detection_category": "biochemical_assay",
+        "target_analyze": "adipose and liver tissue morphology",
+        "sensitivity": null,
+        "novelty": "established"
       },
-      "linked_evidence": [
+      "raw_entities": [
         {
-          "evidence_id": "real_paper_001_E0017",
-          "evidence_type": "detection_method",
-          "source_text": "we employed our recently developed system based on the ROS-dependent engineered ascorbate peroxidase (APEX) reaction",
-          "entities": [
-            {
-              "name": "APEX",
-              "type": "assay_method"
-            },
-            {
-              "name": "ascorbate peroxidase",
-              "type": "protein"
-            }
-          ],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "H&E staining",
+          "entity_type": "assay_method",
+          "role": "readout"
+        },
+        {
+          "raw_name": "ImageJ",
+          "entity_type": "assay_method",
+          "role": "readout"
+        },
+        {
+          "raw_name": "adipose tissue",
+          "entity_type": "tissue",
+          "role": "readout"
+        },
+        {
+          "raw_name": "liver",
+          "entity_type": "tissue",
+          "role": "readout"
         }
       ],
-      "review_status": "draft",
-      "review_notes": "",
-      "reviewed_at": null
+      "experimental_model": {
+        "model_level": "tissue",
+        "model_name": "mouse adipose and liver",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "adipose and liver",
+        "in_vivo_or_in_vitro": "ex_vivo"
+      },
+      "condition_context": {},
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0299"
+        ],
+        "quote": "Dissected adipose and liver tissues were fixed in 10% neutral buffered formalin (Sigma-Aldrich, HT501128-4L) and embedded in paraffin. 5 m tissue sections were stained with Hematoxylin and eosin (Beyotime, C0105S) according to manufacturer’s instructions The images were acquired by optical microscope (Nikon) using a 20x objective. Adipocyte sizes were quantified by ImageJ",
+        "page": 27,
+        "section": "S53",
+        "figure_or_table": null
+      },
+      "polarity": "neutral",
+      "statistics": {},
+      "measurement": {},
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
     },
     {
-      "entry_id": "real_paper_001_D0008",
-      "task_type": "summarize_mechanism_pathway",
-      "main_claim": "线粒体产生的热量可作为细胞内信号，通过非分子相互作用的机制引起蛋白质构象改变。",
+      "evidence_id": "E0014",
+      "paper_id": "real_paper_001",
+      "evidence_type": "detection_method",
+      "claim": "PDA-PEG hydrogel was prepared via spontaneous oxidative polymerization of dopamine under alkaline condition.",
       "structured_fields": {
-        "pathway_name": "线粒体产热信号通路",
-        "steps": [
-          "线粒体产生热量",
-          "热量作为细胞内信号",
-          "热量引起蛋白质构象改变（无需中间分子相互作用）"
-        ],
-        "key_entities": [
-          "线粒体",
-          "蛋白质"
-        ],
-        "upstream_activators": null,
-        "downstream_effects": [
-          "蛋白质构象改变"
-        ]
+        "method_name": "PDA-PEG hydrogel preparation",
+        "detection_category": "other",
+        "target_analyte": "PDA-PEG hydrogel",
+        "sensitivity": null,
+        "novelty": "established"
       },
-      "linked_evidence": [
+      "raw_entities": [
         {
-          "evidence_id": "real_paper_001_E0054",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "mitochondria generated heat could act as an intracellular signal that may lead to protein conformational alterations without intermediate molecular interactions",
-          "entities": [],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "PDA-PEG hydrogel",
+          "entity_type": "drug",
+          "role": "readout"
+        },
+        {
+          "raw_name": "dopamine",
+          "entity_type": "metabolite",
+          "role": "substrate"
+        },
+        {
+          "raw_name": "4-arm-PEG-SH",
+          "entity_type": "drug",
+          "role": "substrate"
         }
       ],
-      "review_status": "draft",
-      "review_notes": "",
-      "reviewed_at": null
+      "experimental_model": {
+        "model_level": "unknown",
+        "model_name": null,
+        "species": null,
+        "tissue_or_cell_type": null,
+        "in_vivo_or_in_vitro": "in_vitro"
+      },
+      "condition_context": {},
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0301"
+        ],
+        "quote": "The PDA-PEG hydrogel (PDA) was prepared as previously reported (Wang et al., 2017). Briefly, PDA nanoparticles were prepared via a spontaneous oxidative polymerization of dopamine under alkaline condition. Subsequently, 0.5 mL PDA nanoparticles (50 mg/mL and 0.5 mL 4-arm-PEG-SH (100 mg/mL) both in aqueous solution were mixed and blended on a Vortex mixer for 5 m. The mixture was kept at 4°C without disturbance or immediately used for injection",
+        "page": 27,
+        "section": "S54",
+        "figure_or_table": null
+      },
+      "polarity": "neutral",
+      "statistics": {},
+      "measurement": {},
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
     },
     {
-      "entry_id": "real_paper_001_D0009",
-      "task_type": "summarize_mechanism_pathway",
-      "main_claim": "细胞内产生的热量被视为一种独特的信号，可促进细胞稳态的后续变化。",
+      "evidence_id": "E0015",
+      "paper_id": "real_paper_001",
+      "evidence_type": "detection_method",
+      "claim": "siRNA transfection was performed in differentiated adipocytes using Lipofectamine2000.",
       "structured_fields": {
-        "pathway_name": "细胞内产热信号通路",
-        "steps": [
-          "细胞内产生热量",
-          "热量作为独特信号",
-          "促进细胞稳态变化"
-        ],
-        "key_entities": null,
-        "upstream_activators": null,
-        "downstream_effects": [
-          "细胞稳态变化"
-        ]
+        "method_name": "siRNA transfection",
+        "detection_category": "other",
+        "target_analyte": "gene expression",
+        "sensitivity": null,
+        "novelty": "established"
       },
-      "linked_evidence": [
+      "raw_entities": [
         {
-          "evidence_id": "real_paper_001_E0066",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "It provides supporting evidence to consider intracellularly generated heat as a distinct signal that promotes subsequent changes in cell homeostasis.",
-          "entities": [],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "Lipofectamine2000",
+          "entity_type": "drug",
+          "role": "readout"
+        },
+        {
+          "raw_name": "siRNA",
+          "entity_type": "drug",
+          "role": "inhibitor"
         }
       ],
-      "review_status": "draft",
-      "review_notes": "",
-      "reviewed_at": null
+      "experimental_model": {
+        "model_level": "cell",
+        "model_name": "differentiated adipocytes",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "adipocyte",
+        "in_vivo_or_in_vitro": "in_vitro"
+      },
+      "condition_context": {},
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0303"
+        ],
+        "quote": "siRNA was designed and synthesized by GenePharma (Shanghai, China). siRNA was transfected into differentiated adipocytes using Lipofectamine2000 Transfection Reagent (Thermo Fisher, 11668030) according to the manufacturer’s protocol. The gene expression analysis was determined by RT-qPCR after 48 h.",
+        "page": 27,
+        "section": "S55",
+        "figure_or_table": null
+      },
+      "polarity": "neutral",
+      "statistics": {},
+      "measurement": {},
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
     },
     {
-      "entry_id": "real_paper_001_D0010",
-      "task_type": "summarize_mechanism_pathway",
-      "main_claim": "线粒体产生的热量可传导至其他细胞器，包括细胞核。",
+      "evidence_id": "E0016",
+      "paper_id": "real_paper_001",
+      "evidence_type": "detection_method",
+      "claim": "RNA stability assay was performed using actinomycin D treatment and RT-qPCR to measure mRNA half-life.",
       "structured_fields": {
-        "pathway_name": "线粒体热量传导通路",
-        "steps": [
-          "线粒体产生热量",
-          "热量传导至其他细胞器",
-          "热量到达细胞核"
-        ],
-        "key_entities": [
-          "线粒体",
-          "细胞核"
-        ],
-        "upstream_activators": null,
-        "downstream_effects": null
+        "method_name": "RNA stability assay with actinomycin D",
+        "detection_category": "biochemical_assay",
+        "target_analyte": "mRNA half-life",
+        "sensitivity": null,
+        "novelty": "established"
       },
-      "linked_evidence": [
+      "raw_entities": [
         {
-          "evidence_id": "real_paper_001_E0006",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "this heat is conducted to other cellular organelles, including the nucleus",
-          "entities": [],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "actinomycin D",
+          "entity_type": "drug",
+          "role": "inhibitor"
+        },
+        {
+          "raw_name": "RT-qPCR",
+          "entity_type": "assay_method",
+          "role": "readout"
+        },
+        {
+          "raw_name": "Hnrnpa2b1",
+          "entity_type": "gene",
+          "role": "target"
         }
       ],
-      "review_status": "draft",
-      "review_notes": "",
-      "reviewed_at": null
+      "experimental_model": {
+        "model_level": "cell",
+        "model_name": "immortalized beige adipocytes",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "beige adipocyte",
+        "in_vivo_or_in_vitro": "in_vitro"
+      },
+      "condition_context": {
+        "dose": "5 g/ml",
+        "duration": "indicated time points"
+      },
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0305"
+        ],
+        "quote": "Differentiated immortalized beige adipocytes were transfected with siNC or siRNA against Hnrnpa2b1 or adenovirus mediated Hnrnpa2b1 overexpression (Hanbio biotechnology, Shanghai, China) for two days. Cells were treated with 5 g/ml actinomycin D (Sigma-Aldrich, SBR00013) and harvested at indicated time points. The total RNA was isolated and analyzed by RT-gPCR. The degradation rate of mRNA K_d was estimated by: ln(C_t/C_0) = -K_d t, where t is the time as actinomycin D treatment for transcription inhibition. C is the mRNA concentration. The mRNA half-life t_1/2 is calculated by: t_1/2 = ln2/K_d",
+        "page": 27,
+        "section": "S56",
+        "figure_or_table": null
+      },
+      "polarity": "neutral",
+      "statistics": {},
+      "measurement": {},
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.95
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
     },
     {
-      "entry_id": "real_paper_001_D0011",
-      "task_type": "summarize_mechanism_pathway",
-      "main_claim": "线粒体热量可作为全局逆行信号，在时空上影响众多蛋白质。",
+      "evidence_id": "E0017",
+      "paper_id": "real_paper_001",
+      "evidence_type": "thermogenesis_modulation",
+      "claim": "Hyperthermia therapy (41°C) for 0.5, 1, or 2 h increased Ucp1 mRNA levels in C3H10T1/2-derived beige adipocytes after 12 h rest.",
       "structured_fields": {
-        "pathway_name": "线粒体热量逆行信号通路",
-        "steps": [
-          "线粒体产生热量",
-          "热量作为全局逆行信号",
-          "热量在时空上影响众多蛋白质"
-        ],
-        "key_entities": [
-          "线粒体",
-          "蛋白质"
-        ],
-        "upstream_activators": null,
-        "downstream_effects": [
-          "影响众多蛋白质的时空分布或功能"
-        ]
+        "intervention": "hyperthermia therapy (41°C)",
+        "target": "Ucp1",
+        "modulation_direction": "increases",
+        "effect_size_reported": null,
+        "thermogenic_marker": "Ucp1 mRNA"
       },
-      "linked_evidence": [
+      "raw_entities": [
         {
-          "evidence_id": "real_paper_001_E0055",
-          "evidence_type": "mechanism_pathway",
-          "source_text": "mitochondrial heat can be a global retrograde signal that spatiotemporally affects numerous proteins",
-          "entities": [],
-          "modulation": null,
-          "statistics": null
+          "raw_name": "Ucp1",
+          "entity_type": "gene",
+          "role": "readout"
+        },
+        {
+          "raw_name": "hyperthermia therapy",
+          "entity_type": "drug",
+          "role": "activator"
+        },
+        {
+          "raw_name": "C3H10T1/2-derived beige adipocytes",
+          "entity_type": "phenotype",
+          "role": "readout"
         }
       ],
-      "review_status": "draft",
-      "review_notes": "",
-      "reviewed_at": null
+      "experimental_model": {
+        "model_level": "cell",
+        "model_name": "C3H10T1/2-derived beige adipocytes",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "beige adipocyte",
+        "in_vivo_or_in_vitro": "in_vitro"
+      },
+      "condition_context": {
+        "temperature": "41°C",
+        "duration": "0.5, 1, or 2 h"
+      },
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0308"
+        ],
+        "quote": "(A) Ucp1 mRNA levels in C3H10T1/2-derived beige adipocytes treated with 37°C (Con) or 41°C hyperthermia therapy (HT) for 0.5, 1, or 2 h (n = 3) and rest for 12 h",
+        "page": 28,
+        "section": "S57",
+        "figure_or_table": "Figure S1"
+      },
+      "polarity": "positive",
+      "statistics": {
+        "sample_size": 3
+      },
+      "measurement": {
+        "method": "RT-qPCR",
+        "measured_variable": "Ucp1 mRNA level",
+        "measured_value": "increased"
+      },
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.9
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
+    },
+    {
+      "evidence_id": "E0018",
+      "paper_id": "real_paper_001",
+      "evidence_type": "thermogenesis_modulation",
+      "claim": "Local hyperthermia (LHT) for 10 min on BAT increased body core temperature and local skin temperature in mice.",
+      "structured_fields": {
+        "intervention": "local hyperthermia (LHT) on BAT",
+        "target": "body core temperature and local skin temperature",
+        "modulation_direction": "increases",
+        "effect_size_reported": null,
+        "thermogenic_marker": "temperature"
+      },
+      "raw_entities": [
+        {
+          "raw_name": "BAT",
+          "entity_type": "tissue",
+          "role": "readout"
+        },
+        {
+          "raw_name": "local hyperthermia",
+          "entity_type": "drug",
+          "role": "activator"
+        }
+      ],
+      "experimental_model": {
+        "model_level": "animal",
+        "model_name": "mouse",
+        "species": "Mus musculus",
+        "tissue_or_cell_type": "brown adipose tissue",
+        "in_vivo_or_in_vivo": "in_vivo"
+      },
+      "condition_context": {
+        "duration": "10 min"
+      },
+      "source_trace": {
+        "source_block_ids": [
+          "real_paper_001_SB0308"
+        ],
+        "quote": "(C) The body core temperature change (left) and local skin temperature change (right) of mice unilaterally treated with Sham or L HT for 10 min (n = 6)",
+        "page": 28,
+        "section": "S57",
+        "figure_or_table": "Figure S1"
+      },
+      "polarity": "positive",
+      "statistics": {
+        "sample_size": 6
+      },
+      "measurement": {
+        "method": "temperature measurement",
+        "measured_variable": "body core temperature and local skin temperature",
+        "measured_value": "increased"
+      },
+      "extraction_meta": {
+        "method": "LLM",
+        "confidence": 0.9
+      },
+      "review_coverage": {
+        "status": "unreviewed"
+      },
+      "normalization_status": "not_normalized"
     }
-  ]
+  ],
+  "review_audit": {
+    "reviewer": "unknown",
+    "reviewed_at": "2026-06-26T19:31:38.812500",
+    "entry_count": 0,
+    "approved_count": 0,
+    "rejected_count": 0,
+    "evidence_coverage_summary": {
+      "total_evidence_units": 18,
+      "evidence_in_approved_entries": 0,
+      "coverage_pct": 0.0,
+      "unreferenced_evidence_ids": [
+        "E0001",
+        "E0002",
+        "E0003",
+        "E0004",
+        "E0005",
+        "E0006",
+        "E0007",
+        "E0008",
+        "E0009",
+        "E0010",
+        "E0011",
+        "E0012",
+        "E0013",
+        "E0014",
+        "E0015",
+        "E0016",
+        "E0017",
+        "E0018"
+      ]
+    },
+    "notes": ""
+  }
 }

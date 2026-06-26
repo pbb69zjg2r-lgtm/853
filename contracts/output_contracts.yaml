@@ -16,8 +16,6 @@ trusted_outputs:
       - stage
       - schema_version
       - normalization_status
-      - relation_linking_status
-      - graph_status
       - reviewed_entries
       - reviewed_evidence_units
       - review_audit

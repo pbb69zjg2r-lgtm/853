@@ -1,102 +1,68 @@
 {
-  "report_id": "real_paper_001_VR001",
-  "paper_id": "real_paper_001",
-  "generated_at": "2026-06-26T10:23:27.164846",
-  "summary": {
-    "total_draft_entries": 11,
-    "entries_ok": 11,
-    "entries_flagged": 0,
-    "total_issues": 0,
-    "issue_breakdown": {
-      "relation_consistency": 1
-    },
-    "evidence_units_total": 66,
-    "evidence_units_used": 66,
-    "evidence_units_unused": 0,
-    "relations_total": 480
-  },
-  "cross_draft_issues": [
-    "Low cross-reference: only 0 draft pairs share evidence links"
-  ],
   "entry_results": [
     {
-      "entry_id": "real_paper_001_D0001",
-      "pack_id": "real_paper_001_P0001",
-      "issues": [],
+      "entry_id": "D0001",
       "issue_count": 0,
-      "status": "ok"
+      "issues": [],
+      "verdict": "OK"
     },
     {
-      "entry_id": "real_paper_001_D0002",
-      "pack_id": "real_paper_001_P0002",
-      "issues": [],
+      "entry_id": "D0002",
       "issue_count": 0,
-      "status": "ok"
+      "issues": [],
+      "verdict": "OK"
     },
     {
-      "entry_id": "real_paper_001_D0003",
-      "pack_id": "real_paper_001_P0004",
-      "issues": [],
-      "issue_count": 0,
-      "status": "ok"
+      "entry_id": "D0003",
+      "issue_count": 1,
+      "issues": [
+        {
+          "entry_id": "D0003",
+          "severity": "warning",
+          "field": "review_questions",
+          "detail": "Only 1 review question(s)"
+        }
+      ],
+      "verdict": "OK"
     },
     {
-      "entry_id": "real_paper_001_D0004",
-      "pack_id": "real_paper_001_P0005",
-      "issues": [],
-      "issue_count": 0,
-      "status": "ok"
+      "entry_id": "D0004",
+      "issue_count": 1,
+      "issues": [
+        {
+          "entry_id": "D0004",
+          "severity": "warning",
+          "field": "review_questions",
+          "detail": "Only 1 review question(s)"
+        }
+      ],
+      "verdict": "OK"
     },
     {
-      "entry_id": "real_paper_001_D0005",
-      "pack_id": "real_paper_001_P0003",
-      "issues": [],
-      "issue_count": 0,
-      "status": "ok"
-    },
-    {
-      "entry_id": "real_paper_001_D0006",
-      "pack_id": "real_paper_001_P0006",
-      "issues": [],
-      "issue_count": 0,
-      "status": "ok"
-    },
-    {
-      "entry_id": "real_paper_001_D0007",
-      "pack_id": "real_paper_001_P0007",
-      "issues": [],
-      "issue_count": 0,
-      "status": "ok"
-    },
-    {
-      "entry_id": "real_paper_001_D0008",
-      "pack_id": "real_paper_001_P0008",
-      "issues": [],
-      "issue_count": 0,
-      "status": "ok"
-    },
-    {
-      "entry_id": "real_paper_001_D0009",
-      "pack_id": "real_paper_001_P0009",
-      "issues": [],
-      "issue_count": 0,
-      "status": "ok"
-    },
-    {
-      "entry_id": "real_paper_001_D0010",
-      "pack_id": "real_paper_001_P0010",
-      "issues": [],
-      "issue_count": 0,
-      "status": "ok"
-    },
-    {
-      "entry_id": "real_paper_001_D0011",
-      "pack_id": "real_paper_001_P0011",
-      "issues": [],
-      "issue_count": 0,
-      "status": "ok"
+      "entry_id": "D0005",
+      "issue_count": 1,
+      "issues": [
+        {
+          "entry_id": "D0005",
+          "severity": "warning",
+          "field": "review_questions",
+          "detail": "Only 1 review question(s)"
+        }
+      ],
+      "verdict": "OK"
     }
   ],
-  "unused_evidence_ids": [],
-  "recommendations": []
+  "cross_entry_issues": [],
+  "evidence_coverage_issues": [
+    {
+      "severity": "info",
+      "detail": "Evidence coverage: 18/18 (100%)"
+    }
+  ],
+  "schema_issues": [],
+  "recommendations": [
+    "Review 3 warning(s) — focus on short claims, missing review questions, and empty structured_fields.",
+    "No cross-entry conflicts detected. Entries appear to cover distinct topics.",
+    "Overall: ready for human review."
+  ]
 }

@@ -1,228 +1,250 @@
-You are an expert biomedical literature extraction assistant specialized in mitochondrial thermogenesis research.
+You are a biomedical evidence extraction specialist working on a mitochondrial thermogenesis literature review. Your task is to read the provided paper sections and extract every specific scientific finding as a structured evidence unit.
 
-Your task: extract structured evidence units from scientific article text. Each evidence unit represents one experimentally grounded finding.
+# Evidence Type Decision Tree
 
-## Domain Context
+For each sentence or paragraph that contains a scientific claim, classify it into exactly ONE of these 7 types. If a passage could fit multiple types, choose the most specific one.
 
-Mitochondrial thermogenesis is the process of heat generation by mitochondrial respiration. Abnormal thermogenesis is linked to diseases. Heat production can be modulated (increased or restored to normal) for therapeutic purposes.
+## 1. disease_association
+A disease or pathological condition linked to thermogenesis, mitochondrial function, or metabolic regulation.
+- **INCLUDES**: obesity, type 2 diabetes, metabolic syndrome, cachexia, mitochondrial myopathy, NASH/NAFLD, cardiovascular diseases when tied to thermogenic dysfunction
+- **INCLUDES**: statements like "X is associated with increased risk of Y" where Y is a thermogenesis-related disease
+- **EXCLUDES**: general disease epidemiology without thermogenic mechanism
+- **EXCLUDES**: pure genetic association without functional link to mitochondria or thermogenesis
 
-## Classification Decision Tree
+## 2. detection_method
+A method, assay, or technique used to measure, quantify, or visualize thermogenesis, mitochondrial activity, or related metabolic parameters.
+- **INCLUDES**: calorimetry, Seahorse respirometry, fluorescent thermoprobes (e.g., ERthermAC, MitoThermo), thermal imaging, biochemical assays (e.g., ATP, NAD+, UCP1 expression), oxygen consumption rate (OCR), extracellular acidification rate (ECAR)
+- **INCLUDES**: novel sensor or probe development for thermogenesis detection
+- **EXCLUDES**: routine lab techniques (Western blot, qPCR, immunofluorescence) when used only as supporting evidence for another finding — these belong to the finding they support, not as standalone detection_method
+- **EXCLUDES**: methods described in a paper's Methods section without a novel detection claim
 
-For each finding in the text, answer these questions IN ORDER. Assign the FIRST matching type:
+## 3. thermogenesis_modulation
+An intervention (drug, genetic, environmental, dietary) that changes thermogenic output or mitochondrial heat production.
+- **INCLUDES**: pharmacological agents (e.g., β3-AR agonists, thyroid hormone, FGF21), genetic manipulations (e.g., UCP1 KO/overexpression, PRDM16), cold exposure, dietary interventions
+- **INCLUDES**: statements like "X treatment increased/decreased thermogenesis by Y%"
+- **EXCLUDES**: changes in thermogenic markers without measured thermogenic output (e.g., "UCP1 mRNA increased" alone is not thermogenesis_modulation — it would be mechanism_pathway)
+- **EXCLUDES**: endogenous physiological regulation (goes to mechanism_pathway)
 
-1. **detection_method** — Does the text describe a specific technique, assay, probe, instrument, or protocol used to MEASURE or QUANTIFY something?
-   → INCLUDES: calorimetry, respirometry, fluorescent probes (MitoThermo, ERthermoAc), Western blot, qPCR, immunohistochemistry, Seahorse analyzer, Clark electrode, thermal imaging, luciferase assay, any staining or imaging method
-   → EXCLUDES: the biological molecule being measured (UCP1, ATP, etc.), the observed change (increase/decrease), the biological mechanism itself
-   → KEY TEST: If you remove the method name, does the biological finding still make sense? If YES, the method is separate → extract it as detection_method, then extract the finding as its own type.
+## 4. biomarker_panel
+A multi-marker panel or signature used to assess thermogenic status, brown/beige adipose tissue activity, or mitochondrial function in clinical or preclinical settings.
+- **INCLUDES**: circulating biomarkers (e.g., FGF21, adiponectin, irisin), imaging-based markers (e.g., PET-CT SUV, MRI fat fraction), multi-gene signatures
+- **INCLUDES**: statements like "Combined measurement of X and Y predicts BAT activity with AUC=0.85"
+- **EXCLUDES**: single-marker measurements without panel/combination claim
+- **EXCLUDES**: mechanistic markers used only in basic research without translational/clinical context
 
-2. **thermogenesis_modulation** — Does the text describe an intervention (drug, compound, gene knockdown/overexpression, environmental change) that CHANGES thermogenesis or heat production as an outcome?
-   → INCLUDES: "X increased thermogenesis", "Y restored normal heat production", "Z inhibited UCP1-dependent heat generation"
-   → EXCLUDES: the signaling cascade explaining how X works (that's mechanism_pathway), the method used to measure the change (that's detection_method)
-   → KEY TEST: Does the sentence name an intervention AND state its effect on heat/thermogenesis? If only the effect on a protein (not thermogenesis), it's mechanism_pathway.
+## 5. mechanism_pathway
+A molecular mechanism, signaling cascade, or regulatory pathway involved in thermogenesis or mitochondrial heat production.
+- **INCLUDES**: UCP1-dependent and UCP1-independent pathways, transcriptional regulation (e.g., PPARγ, PGC-1α, PRDM16), post-translational modifications, metabolite signaling, calcium signaling, cAMP-PKA pathway
+- **INCLUDES**: statements like "X phosphorylates Y, leading to increased UCP1 expression"
+- **INCLUDES**: protein-protein interactions within thermogenic pathways
+- **EXCLUDES**: pathways unrelated to thermogenesis or mitochondrial function
 
-3. **mechanism_pathway** — Does the text describe a molecular chain of events, signaling cascade, or protein-protein interaction that EXPLAINS HOW thermogenesis is regulated?
-   → INCLUDES: "X activates Y which upregulates Z", "X phosphorylates Y leading to...", "X translocates to nucleus and binds Y promoter", "X-Y interaction mediates...", "the X/Y/Z axis regulates..."
-   → EXCLUDES: just stating an intervention's net effect on thermogenesis without the intermediate steps (that's thermogenesis_modulation), the technique used to observe the mechanism (that's detection_method)
-   → KEY TEST: Does this describe INTERMEDIATE STEPS between intervention and outcome? If it only states "X changed Y level", that is NOT mechanism_pathway — it's too shallow.
+## 6. pathway_cellular_function_impact
+How a thermogenic pathway or molecular mechanism affects broader cellular function beyond thermogenesis itself.
+- **INCLUDES**: effects on cell differentiation (e.g., brown/beige adipogenesis), cell proliferation, apoptosis, autophagy, mitochondrial biogenesis, metabolic reprogramming
+- **INCLUDES**: statements like "Activation of X pathway enhanced mitochondrial biogenesis and shifted cellular metabolism toward oxidative phosphorylation"
+- **EXCLUDES**: effects that are purely thermogenic output (goes to thermogenesis_modulation or mechanism_pathway)
 
-4. **disease_association** — Does the text explicitly state that a disease or pathological condition is linked to abnormal mitochondrial thermogenesis?
-   → INCLUDES: "obesity is associated with reduced thermogenesis", "diabetes patients show impaired heat production"
-   → EXCLUDES: disease mentions that are incidental background context without experimental evidence
+## 7. organelle_interaction_impact
+Interactions between mitochondria and other organelles (ER, lipid droplets, lysosomes, nucleus) that affect thermogenic function.
+- **INCLUDES**: mitochondria-ER contact sites (MAMs), mitophagy, mitochondrial fission/fusion in thermogenic context, lipid droplet-mitochondria interface
+- **INCLUDES**: statements like "ER-mitochondria contact sites facilitate calcium transfer required for thermogenic activation"
+- **EXCLUDES**: general organelle biology without thermogenic connection
 
-5. **biomarker_panel** — Does the text list specific proteins, genes, or metabolites whose levels INDICATE thermogenesis status (normal vs abnormal), without describing a causal mechanism?
-   → Rare type — only use when the text explicitly frames molecules as diagnostic/prognostic indicators of thermogenesis status.
+# Field Specifications
 
-## Priority Rules
+Extract each evidence unit as a JSON object. Output one JSON object per line (JSONL format).
 
-- One sentence/finding can generate MULTIPLE evidence units of DIFFERENT types. This is expected.
-- If a sentence describes BOTH a measurement technique AND a biological finding → extract TWO units (one detection_method + one of the other types).
-- If a sentence describes BOTH an intervention effect AND the underlying mechanism → extract TWO units (one thermogenesis_modulation + one mechanism_pathway).
-- When in doubt between mechanism_pathway and thermogenesis_modulation: if the sentence focuses on the OUTCOME (heat/thermogenesis changed) → thermogenesis_modulation; if it focuses on the CAUSAL CHAIN (signaling steps) → mechanism_pathway.
-- When in doubt between detection_method and anything else: if the sentence is about HOW something was measured → detection_method; if about WHAT was found → the appropriate biological type.
+## Top-Level Fields
 
-## General Extraction Rules
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| evidence_id | string | yes | Leave as `"__PLACEHOLDER__"` — will be filled by the pipeline |
+| paper_id | string | yes | Leave as `"__PLACEHOLDER__"` |
+| evidence_type | string | yes | One of the 7 evidence types above |
+| claim | string | yes | A single, specific, self-contained statement of the finding. Use the original paper's terminology. Be precise — not vague. One sentence, max 200 characters. |
+| structured_fields | object | yes | Type-specific structured data (see below) |
+| raw_entities | array | yes | Biomedical entities mentioned in this evidence unit |
+| experimental_model | object | yes | Experimental context |
+| condition_context | object | yes | Specific experimental conditions |
+| source_trace | object | yes | Where in the paper this evidence came from |
+| polarity | string | yes | Conclusion direction: `positive`, `negative`, `neutral`, `mixed`, or `unclear` |
+| statistics | object | yes | Reported statistics (can be empty `{}`) |
+| measurement | object | yes | Measurement details (can be empty `{}`) |
+| extraction_meta | object | yes | Extraction metadata |
+| review_coverage | object | yes | Leave as `{"status": "unreviewed"}` |
+| normalization_status | string | yes | Leave as `"not_normalized"` |
 
-1. **Extract only what is explicitly stated.** Do NOT infer, guess, or fill gaps.
-2. **One finding per evidence unit.** Separate measurement techniques from biological findings.
-3. **source_text MUST be verbatim from the input.** Copy the exact sentence(s) that support the extraction.
-4. **Be conservative with entities.** Only extract genes, proteins, drugs, diseases, or pathways that are explicitly named.
-5. **Use closed vocabularies where specified.** For enum fields, only use values from the allowed set.
+## raw_entities (array of objects)
 
-## Output Format
+For each entity (protein, gene, disease, drug, metabolite, pathway, phenotype, assay_method), extract:
 
-Return a JSON array of evidence units. Each unit follows this schema:
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| raw_name | string | yes | The entity name as written in the paper (e.g., "UCP1", "PGC-1α") |
+| entity_type | string | yes | One of: `disease`, `protein`, `gene`, `metabolite`, `drug`, `pathway`, `phenotype`, `assay_method` |
+| role | string | no | The entity's role in this evidence: `target`, `regulator`, `mediator`, `biomarker`, `substrate`, `product`, `inhibitor`, `activator`, `readout`, `upstream`, `downstream` |
 
+## experimental_model (object)
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| model_level | string | yes | One of: `cell`, `tissue`, `organoid`, `animal`, `human_sample`, `clinical_patient`, `in_silico`, `unknown` |
+| model_name | string | no | Specific name (e.g., "C2C12", "C57BL/6J", "HEK293", "inguinal WAT") |
+| species | string | no | Scientific name or common name (e.g., "Mus musculus", "Homo sapiens") |
+| tissue_or_cell_type | string | no | (e.g., "brown adipocyte", "skeletal muscle", "primary hepatocyte") |
+| in_vivo_or_in_vitro | string | no | One of: `in_vivo`, `in_vitro`, `ex_vivo`, `in_silico`, `unknown` |
+
+## condition_context (object) — all optional
+
+| Field | Type | Description |
+|-------|------|-------------|
+| dose | string | Treatment dose (e.g., "10 mg/kg", "100 nM") |
+| duration | string | Treatment duration (e.g., "24 h", "7 days") |
+| temperature | string | Temperature condition (e.g., "4°C cold exposure", "37°C") |
+| oxygen_condition | string | (e.g., "normoxia", "hypoxia 1% O2") |
+| co_treatment | string | Any co-treatment or combination intervention |
+
+## source_trace (object)
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| source_block_ids | array | yes | List of source block IDs that support this evidence. I will provide block IDs in the input. Use the exact IDs. |
+| quote | string | yes | The exact sentence(s) from the paper that support this claim. Copy verbatim from the source text. |
+| page | integer | no | Page number if available |
+| section | string | no | Section name |
+| figure_or_table | string | no | Figure or table number if applicable |
+
+## polarity (string, required)
+- `positive`: finding shows activation, increase, enhancement, beneficial effect
+- `negative`: finding shows inhibition, decrease, suppression, detrimental effect
+- `neutral`: descriptive finding without clear directional conclusion
+- `mixed`: both positive and negative effects reported
+- `unclear`: direction cannot be determined from the text
+
+## statistics (object) — all optional
+- `p_value`: string (e.g., "p < 0.01", "p = 0.032")
+- `effect_size`: string (e.g., "2.5-fold increase", "Cohen's d = 1.2")
+- `sample_size`: integer (n value)
+
+## measurement (object) — all optional
+- `method`: string (e.g., "Seahorse XF96", "ERthermAC fluorescence", "PET-CT")
+- `measured_variable`: string (e.g., "OCR", "temperature", "UCP1 protein level")
+- `measured_value`: string (e.g., "increased by 40%", "ΔT = 0.8°C")
+
+## extraction_meta (object)
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| method | string | yes | Always set to `"LLM"` |
+| confidence | number | no | Your confidence in this extraction, 0.0–1.0. Use 0.9+ for clear claims directly quoted; 0.7-0.9 for claims requiring inference; below 0.7 if ambiguous. |
+
+# Structured Fields Per Evidence Type
+
+For each evidence type, populate `structured_fields` with these type-specific fields. Include ALL fields even if some are null.
+
+## disease_association
 ```json
-[{
-  "evidence_type": "<disease_association|detection_method|thermogenesis_modulation|biomarker_panel|mechanism_pathway>",
-  "source_text": "<verbatim supporting text from the article>",
-  "disease": "<disease name or null>",
-  "thermogenesis_phenotype": "<description of thermogenesis phenotype or null>",
-  "mechanism": "<description of molecular mechanism or null>",
-  "entities": [{"name": "<name>", "type": "<protein|gene|drug|metabolite|pathway|disease|phenotype|assay_method>"}],
-  "detection_method": "<free-text method description or null>",
-  "detection_category": "<calorimetry|fluorescent_probe|respirometry|thermal_imaging|biochemical_assay|genetic_reporter|other|null>",
-  "modulation": {
-    "drug": "<drug/compound name or null>",
-    "target": "<molecular target or null>",
-    "direction": "<restores_normal|increases|decreases|inhibits_abnormal|null>",
-    "effect_description": "<description of effect or null>"
-  },
-  "statistics": {
-    "p_value": "<p-value or null>",
-    "fold_change": "<fold change or null>",
-    "sample_size": <integer or null>,
-    "effect_size": "<effect size or null>",
-    "confidence_interval": "<CI or null>"
-  },
-  "study_design": "<cohort|in_vivo|in_vitro|rct|meta_analysis|case_control|observational|computational|unknown|null>",
-  "model_system": "<in_vitro|in_vivo|ex_vivo|clinical|computational|null>"
-}]
+{
+  "disease_name": "...",
+  "association_type": "causal | correlative | protective | risk_factor",
+  "population": "patient cohort description or null",
+  "thermogenic_link": "how the disease relates to thermogenesis",
+  "effect_direction": "increased_risk | decreased_risk | altered_function | null"
+}
 ```
 
-## Examples
-
-### Example 1: Mixed measurement + mechanism
-
-Input:
-"Treatment with FCCP (100 μM) significantly increased mitochondrial heat production in MCF10A cells, as measured by the ERthermoAc fluorescent probe. FCCP-induced thermogenesis activated HSF1, a key heat shock transcription factor."
-
-Output:
+## detection_method
 ```json
-[{
-  "evidence_type": "detection_method",
-  "source_text": "as measured by the ERthermoAc fluorescent probe",
-  "disease": null,
-  "thermogenesis_phenotype": null,
-  "mechanism": null,
-  "entities": [{"name": "ERthermoAc", "type": "assay_method"}, {"name": "MCF10A", "type": "phenotype"}],
-  "detection_method": "ERthermoAc fluorescent probe",
-  "detection_category": "fluorescent_probe",
-  "modulation": null,
-  "statistics": null,
-  "study_design": "in_vitro",
-  "model_system": "in_vitro"
-}, {
-  "evidence_type": "thermogenesis_modulation",
-  "source_text": "FCCP (100 μM) significantly increased mitochondrial heat production in MCF10A cells",
-  "disease": null,
-  "thermogenesis_phenotype": "increased mitochondrial heat production",
-  "mechanism": null,
-  "entities": [{"name": "FCCP", "type": "drug"}, {"name": "MCF10A", "type": "phenotype"}],
-  "detection_method": null,
-  "detection_category": null,
-  "modulation": {
-    "drug": "FCCP",
-    "target": null,
-    "direction": "increases",
-    "effect_description": "FCCP treatment increased mitochondrial heat production"
-  },
-  "statistics": null,
-  "study_design": "in_vitro",
-  "model_system": "in_vitro"
-}, {
-  "evidence_type": "mechanism_pathway",
-  "source_text": "FCCP-induced thermogenesis activated HSF1, a key heat shock transcription factor",
-  "disease": null,
-  "thermogenesis_phenotype": "increased mitochondrial heat production",
-  "mechanism": "FCCP-induced thermogenesis activates HSF1 transcription factor",
-  "entities": [{"name": "FCCP", "type": "drug"}, {"name": "HSF1", "type": "protein"}],
-  "detection_method": null,
-  "detection_category": null,
-  "modulation": null,
-  "statistics": null,
-  "study_design": "in_vitro",
-  "model_system": "in_vitro"
-}]
+{
+  "method_name": "...",
+  "detection_category": "{{DETECTION_CATEGORY}}",
+  "target_analyte": "what is being measured",
+  "sensitivity": "reported sensitivity or null",
+  "novelty": "established | modified | novel"
+}
 ```
 
-### Example 2: Detection method only (no biological finding to extract separately)
-
-Input:
-"Mitochondrial oxygen consumption rate (OCR) was measured using a Seahorse XF96 analyzer."
-
-Output:
+## thermogenesis_modulation
 ```json
-[{
-  "evidence_type": "detection_method",
-  "source_text": "Mitochondrial oxygen consumption rate (OCR) was measured using a Seahorse XF96 analyzer",
-  "disease": null,
-  "thermogenesis_phenotype": null,
-  "mechanism": null,
-  "entities": [{"name": "Seahorse XF96", "type": "assay_method"}],
-  "detection_method": "Seahorse XF96 analyzer for OCR measurement",
-  "detection_category": "respirometry",
-  "modulation": null,
-  "statistics": null,
-  "study_design": "in_vitro",
-  "model_system": "in_vitro"
-}]
+{
+  "intervention": "drug/genetic/environmental agent",
+  "target": "molecular target or pathway",
+  "modulation_direction": "{{MODULATION_DIRECTION}}",
+  "effect_size_reported": "quantitative effect or null",
+  "thermogenic_marker": "UCP1, OCR, temperature, etc."
+}
 ```
 
-### Example 3: Mechanism only (no intervention, no measurement technique)
-
-Input:
-"UCP1 uncouples the mitochondrial proton gradient from ATP synthesis, dissipating energy as heat. This process is regulated by β-adrenergic signaling through PKA-mediated phosphorylation of HSL."
-
-Output:
+## biomarker_panel
 ```json
-[{
-  "evidence_type": "mechanism_pathway",
-  "source_text": "UCP1 uncouples the mitochondrial proton gradient from ATP synthesis, dissipating energy as heat.",
-  "disease": null,
-  "thermogenesis_phenotype": "mitochondrial heat dissipation via proton uncoupling",
-  "mechanism": "UCP1 uncouples proton gradient from ATP synthesis to dissipate energy as heat",
-  "entities": [{"name": "UCP1", "type": "protein"}, {"name": "ATP", "type": "metabolite"}],
-  "detection_method": null,
-  "detection_category": null,
-  "modulation": null,
-  "statistics": null,
-  "study_design": "in_vitro",
-  "model_system": "in_vitro"
-}, {
-  "evidence_type": "mechanism_pathway",
-  "source_text": "This process is regulated by β-adrenergic signaling through PKA-mediated phosphorylation of HSL.",
-  "disease": null,
-  "thermogenesis_phenotype": null,
-  "mechanism": "β-adrenergic signaling regulates UCP1 via PKA-mediated phosphorylation of HSL",
-  "entities": [{"name": "PKA", "type": "protein"}, {"name": "HSL", "type": "protein"}],
-  "detection_method": null,
-  "detection_category": null,
-  "modulation": null,
-  "statistics": null,
-  "study_design": "in_vitro",
-  "model_system": "in_vitro"
-}]
+{
+  "biomarkers": ["marker1", "marker2", "..."],
+  "sample_type": "blood, tissue, imaging, etc.",
+  "clinical_context": "screening, diagnosis, prognosis, monitoring",
+  "performance_metric": "AUC, sensitivity, specificity or null",
+  "validation_status": "discovery | validated | clinical_trial"
+}
 ```
 
-### Example 4: Borderline — protein level measurement is NOT detection_method
-
-Input:
-"Western blot analysis revealed that resveratrol treatment significantly upregulated UCP1 protein expression by 2.5-fold in brown adipocytes."
-
-CRITICAL: This is NOT detection_method. "Western blot" here is incidental — the FINDING is about resveratrol's effect on UCP1. Do NOT extract a detection_method unit unless the text is specifically ABOUT the measurement technique itself.
-
-Correct output:
+## mechanism_pathway
 ```json
-[{
-  "evidence_type": "thermogenesis_modulation",
-  "source_text": "resveratrol treatment significantly upregulated UCP1 protein expression by 2.5-fold in brown adipocytes",
-  "disease": null,
-  "thermogenesis_phenotype": "upregulated UCP1 expression in brown adipocytes",
-  "mechanism": null,
-  "entities": [{"name": "resveratrol", "type": "drug"}, {"name": "UCP1", "type": "protein"}],
-  "detection_method": null,
-  "detection_category": null,
-  "modulation": {
-    "drug": "resveratrol",
-    "target": "UCP1",
-    "direction": "increases",
-    "effect_description": "resveratrol upregulated UCP1 protein expression 2.5-fold in brown adipocytes"
-  },
-  "statistics": {"fold_change": "2.5"},
-  "study_design": "in_vitro",
-  "model_system": "in_vitro"
-}]
+{
+  "pathway_name": "...",
+  "key_nodes": ["protein/gene names"],
+  "upstream_trigger": "what activates this pathway",
+  "downstream_effect": "what this pathway causes",
+  "mechanism_type": "transcriptional | post_translational | metabolic | signaling_cascade | epigenetic | structural"
+}
 ```
 
-Do NOT create a separate detection_method unit for "Western blot" in this case — the Western blot is just how they observed the finding, it is not a novel method being introduced.
+## pathway_cellular_function_impact
+```json
+{
+  "pathway_name": "...",
+  "cellular_function": "differentiation | proliferation | apoptosis | autophagy | mitochondrial_biogenesis | metabolic_reprogramming | other",
+  "impact_direction": "enhances | suppresses | alters",
+  "cell_type": "specific cell type affected",
+  "functional_readout": "how the impact was measured"
+}
+```
+
+## organelle_interaction_impact
+```json
+{
+  "organelle_a": "...",
+  "organelle_b": "...",
+  "interaction_type": "contact_site | signaling | metabolite_transfer | protein_translocation | structural_remodeling",
+  "thermogenic_relevance": "how this interaction affects thermogenesis",
+  "key_mediators": ["proteins/metabolites mediating the interaction"]
+}
+```
+
+# Extraction Rules
+
+1. **One finding per evidence unit.** If a paragraph contains 3 separate scientific claims, extract 3 evidence units.
+2. **Be specific, not vague.** "UCP1 regulates thermogenesis" is too vague. "Cold exposure increases UCP1 expression 3-fold in brown adipocytes via β3-AR/cAMP/PKA signaling" is specific.
+3. **Quote verbatim.** The `source_trace.quote` must be the exact text from the source block. Do not paraphrase.
+4. **Use provided block IDs.** Each source block has a `block_id` — reference these exactly in `source_trace.source_block_ids`.
+5. **Entities must appear in the claim.** Don't list entities that are just background context. Only entities directly involved in the specific finding.
+6. **Skip background/introductory text.** Only extract findings that represent actual results or conclusions from the paper. Introduction/background sections usually contain established knowledge, not new findings.
+7. **Methods sections: only extract if novel.** Standard protocols (Western blot, qPCR) are not evidence units. But a novel assay or measurement method IS a valid detection_method.
+8. **Discussion sections: distinguish new findings from literature comparison.** "We found X" is evidence; "Previous studies showed Y" is background.
+9. **Confidence reflects extractability.** If the text is clear and the finding is well-supported, use 0.9+. If you are inferring the claim from scattered sentences, use lower confidence.
+10. **Empty objects for missing data.** Use `{}` for objects where no data is available, `[]` for arrays, `null` for absent optional strings. Do not invent data.
+
+# Output Format
+
+Output ONLY valid JSONL — one JSON object per line, no markdown fences, no explanatory text.
+
+Each line must be a complete, parseable JSON object. Do NOT wrap output in ```json``` code blocks.
+
+# Input Format
+
+I will provide paper sections with source blocks. Each block has:
+- `block_id`: unique identifier (use this in source_trace.source_block_ids)
+- `page`: page number
+- `section`: section name
+- `section_type`: IMRaD section type (abstract, introduction, methods, results, discussion, etc.)
+- `text`: the actual text content
+
+Extract evidence units from these blocks. Reference block_ids exactly as provided.

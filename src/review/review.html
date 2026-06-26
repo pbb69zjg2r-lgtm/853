@@ -70,6 +70,9 @@ body{font:14px/1.5 system-ui,sans-serif;display:flex;height:100vh;color:#1a1a2e;
     <div class="stat-item" style="color:#d93025">&#10007; <b id="st-rejected">0</b></div>
     <div class="stat-item" style="color:#e37400">&#9873; <b id="st-flagged">0</b></div>
   </div>
+  <div style="padding:6px 14px;border-bottom:1px solid #e0e0e0;background:#fafafa">
+    <input id="reviewer-input" placeholder="Reviewer name" style="width:100%;font-size:12px;padding:4px 8px;border:1px solid #dadce0;border-radius:4px" onchange="saveReviewer(this.value)">
+  </div>
   <div id="entry-list"><div class="loading">Loading...</div></div>
 </div>
 <div id="main">
@@ -83,6 +86,12 @@ body{font:14px/1.5 system-ui,sans-serif;display:flex;height:100vh;color:#1a1a2e;
   <div id="content">
     <div class="loading">Loading data...</div>
   </div>
+  <div style="padding:12px 24px;border-top:1px solid #e0e0e0;background:#fff">
+    <label style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.8px">Export Notes (paper-level)</label>
+    <textarea id="export-notes-area" placeholder="Notes to include in final export..."
+      style="width:100%;min-height:50px;padding:8px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px;resize:vertical;font-family:inherit;margin-top:4px"
+      onchange="saveExportNotes(this.value)"></textarea>
+  </div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
@@ -92,9 +101,15 @@ let reviewState = {entries:{}};
 let currentPaperId = null;
 let allPapers = [];
 
+function showError(title, msg) {
+  document.getElementById('content').innerHTML =
+    `<div class="empty-state"><h3>${title}</h3><pre style="text-align:left;font-size:12px;color:#d93025;white-space:pre-wrap">${msg}</pre></div>`;
+}
+
 async function init() {
   try {
     const papersResp = await fetch('/api/papers');
+    if (!papersResp.ok) throw new Error(`/api/papers returned ${papersResp.status}`);
     allPapers = await papersResp.json();
 
     const sel = document.getElementById('paper-selector');
@@ -115,8 +130,7 @@ async function init() {
     sel.value = initialPaper;
     await loadPaper(initialPaper);
   } catch(e) {
-    document.getElementById('content').innerHTML =
-      `<div class="empty-state"><h3>Failed to load</h3><p>${escHtml(e.message)}</p></div>`;
+    showError('Failed to load', e.message || String(e));
   }
 }
 
@@ -142,14 +156,19 @@ async function loadPaper(paperId) {
   try {
     const resp = await fetch(`/api/data?paper=${encodeURIComponent(paperId)}`);
     DATA = await resp.json();
-    reviewState = DATA.review_state || {entries:{}};
+    // Normalize review_state — old format may lack 'entries' key
+    const rs = DATA.review_state || {};
+    reviewState = { entries: rs.entries || {} };
+    if (rs.reviewer) { reviewState.reviewer = rs.reviewer; }
+    if (rs.export_notes) { reviewState.export_notes = rs.export_notes; }
+    document.getElementById('reviewer-input').value = reviewState.reviewer || '';
+    document.getElementById('export-notes-area').value = reviewState.export_notes || '';
     renderSidebar();
     document.getElementById('content').innerHTML =
       `<div class="empty-state"><h3>${DATA.drafts.length} draft entries loaded</h3>
       <p>Select an entry from the sidebar to begin review</p></div>`;
   } catch(e) {
-    document.getElementById('content').innerHTML =
-      `<div class="empty-state"><h3>Failed to load data for ${escHtml(paperId)}</h3><p>${escHtml(e.message)}</p></div>`;
+    showError(`Failed to load: ${paperId}`, e.message || String(e));
   }
 }
 
@@ -187,24 +206,33 @@ function selectEntry(eid) {
   const sf = d.structured_fields || {};
   let fieldsHtml = '<div class="field-grid">';
   Object.entries(sf).forEach(([k,v]) => {
-    fieldsHtml += `<div class="key">${escHtml(k)}</div><div class="val">${escHtml(String(v||''))}</div>`;
+    let display = '';
+    if (v === null || v === undefined) display = '(none)';
+    else if (Array.isArray(v)) display = v.length ? v.join(', ') : '(empty)';
+    else if (typeof v === 'object') display = JSON.stringify(v);
+    else display = String(v);
+    fieldsHtml += `<div class="key">${escHtml(k)}</div><div class="val">${escHtml(display)}</div>`;
   });
   fieldsHtml += '</div>';
 
-  const evIds = [...new Set(d.evidence_links||[])];
+  const evLinks = (d.evidence_links||[]).map(l => typeof l === 'string' ? l : (l.evidence_id||'')).filter(Boolean);
   const evMap = {};
   (DATA.evidence||[]).forEach(ev => { evMap[ev.evidence_id] = ev; });
   let evHtml = '';
-  evIds.forEach(eid => {
-    const ev = evMap[eid];
+  evLinks.forEach(evId => {
+    const ev = evMap[evId];
     if(!ev) return;
-    const tags = (ev.entities||[]).map(e => {
-      const cls = e.type==='drug'?'type-drug':e.type==='protein'?'type-protein':e.type==='pathway'?'type-pathway':'';
-      return `<span class="entity-tag ${cls}">${escHtml(e.name)} (${escHtml(e.type||'?')})</span>`;
+    const tags = (ev.raw_entities||[]).map(e => {
+      const et = e.entity_type||'';
+      const cls = et==='drug'?'type-drug':et==='protein'?'type-protein':et==='pathway'?'type-pathway':'';
+      return `<span class="entity-tag ${cls}">${escHtml(e.raw_name||'?')} (${escHtml(et||'?')})</span>`;
     }).join(' ');
+    const evQuote = (ev.source_trace && ev.source_trace.quote) ? ev.source_trace.quote : '';
+    const evModel = ev.experimental_model ? (ev.experimental_model.model_level||'') + ' ' + (ev.experimental_model.model_name||'') : '';
     evHtml += `<div class="evidence-card">
-      <div class="ev-meta">${escHtml(ev.evidence_id)} &middot; ${escHtml(ev.evidence_type||'')} &middot; ${escHtml(ev.section_type||'')}</div>
-      <div class="ev-text">${escHtml(ev.source_text||'')}</div>
+      <div class="ev-meta">${escHtml(ev.evidence_id)} &middot; ${escHtml(ev.evidence_type||'')} &middot; ${escHtml(ev.polarity||'')}</div>
+      <div class="ev-text">${escHtml(evQuote)}</div>
+      <div class="ev-model">${escHtml(ev.claim||'')} ${escHtml(evModel)}</div>
       <div style="margin-top:6px">${tags}</div>
     </div>`;
   });
@@ -212,9 +240,9 @@ function selectEntry(eid) {
   const notes = (reviewState.entries[eid] || {}).notes || '';
   document.getElementById('content').innerHTML = `
     <h3>${escHtml(d.main_claim||'(No claim)')}</h3>
-    <div class="section"><h4>Task</h4><p>${escHtml(d.task_type||'')}</p></div>
+    <div class="section"><h4>Evidence Type</h4><p>${escHtml(d.evidence_type||'')}</p></div>
     <div class="section"><h4>Structured Fields</h4>${fieldsHtml}</div>
-    <div class="section"><h4>Linked Evidence (${evIds.length})</h4>${evHtml||'<p style="color:#999">No linked evidence</p>'}</div>
+    <div class="section"><h4>Linked Evidence (${evLinks.length})</h4>${evHtml||'<p style="color:#999">No linked evidence</p>'}</div>
     <div class="section"><h4>Review Notes</h4>
       <textarea id="notes-area" placeholder="Notes for this entry..."
         onchange="saveNotes('${eid}',this.value)">${escHtml(notes)}</textarea>
@@ -237,6 +265,16 @@ function review(status) {
 function saveNotes(eid, value) {
   if(!reviewState.entries[eid]) reviewState.entries[eid] = {};
   reviewState.entries[eid].notes = value;
+  save();
+}
+
+function saveReviewer(name) {
+  reviewState.reviewer = name;
+  save();
+}
+
+function saveExportNotes(notes) {
+  reviewState.export_notes = notes;
   save();
 }
 

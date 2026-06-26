@@ -1,33 +1,39 @@
 # V2 Literature Review Extraction
 
-本目录是 V2 重写项目的隔离工作区。
+线粒体产热文献证据提取流水线。Contracts-first 架构，9 阶段全自动 + 人工审核。
 
-它位于当前仓库内，但与旧项目流程隔离：
+## 快速开始
 
-- 旧项目代码、脚本、流程不应直接依赖本目录。
-- V2 新骨架、contracts、prompts、runs、review_app 后续都放在本目录下。
-- 当前已生成 V2 最小目录骨架、contracts 样板、mock run 样例、mock source normalizer 和最小 mock 校验脚本，尚未实现真实业务 pipeline。
+```bash
+cd D:\融合版\853
+export OPENAI_API_KEY="sk-..." OPENAI_BASE_URL="https://api.deepseek.com"
 
-当前文件：
+# 完整跑一篇论文
+python src/parsing/run_mineru.py input/paper.pdf runs/<id>/01_raw_parse
+python src/parsing/build_raw_parse.py runs/<id> <id>
+python src/parsing/build_source.py runs/<id> <id>
+python src/evidence/extract_evidence.py runs/<id> <id>
+python src/context/build_context_packs.py runs/<id> <id>
+python src/drafting/generate_drafts.py runs/<id> <id>
+python src/verification/generate_report.py runs/<id> <id>
+python src/review/review_server.py                    # → http://localhost:8080
+python src/export/build_export.py runs/<id> <id>
 
-```text
-AGENTS.md
-_project/
-V2_design_confirmed.md
-contracts/
-prompts/
-src/
-runs/
-review_app/
-tests/
-docs/
+# Mock 模式（跳过 LLM，快速测试）
+python src/evidence/extract_evidence.py runs/<id> <id> --mock
+python src/drafting/generate_drafts.py runs/<id> <id> --mock
 ```
 
-下一步：
+## 目录
 
-```text
-1. 讨论 MinerU adapter 的真实输入输出边界
-2. 评估是否扩展为通用 stage contract validator
-3. 讨论真实文献前的最小 pipeline
-4. 再评估是否接入真实 MinerU 和 LLM
 ```
+contracts/          ← 字典、字段 schema、阶段 I/O（唯一真相来源）
+prompts/            ← LLM 提示词（{{DICT_NAME}} 动态注入）
+src/                ← Python 代码（不硬编码路径/枚举值）
+_project/           ← 项目管理（STATUS / TASKS / CHANGELOG / HANDOFF）
+runs/               ← 论文运行输出
+```
+
+## 入口
+
+新 agent / 新线程请先读 `_project/00_START_HERE.md`。

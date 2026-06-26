@@ -1,5 +1,83 @@
 # Changelog
 
+## 2026-06-26 (Decoupling Audit & Prompt Format)
+
+### Overview
+Complete decoupling audit: 20 issues (4 HIGH, 12 MEDIUM, 4 LOW) all resolved. All pipeline code now references contracts for paths, enums, and field schemas. No hardcoded directory names or enum values remain in Python code. Prompts now use `{{PLACEHOLDER}}` syntax with runtime dictionary injection.
+
+### Added
+- `format_prompt()` in `src/core/contracts.py` — replaces `{{DICT_NAME}}` with pipe-joined dictionary values
+- Reviewer name input + export notes textarea in `review.html`
+
+### Changed
+- Prompts: 5 hardcoded enum value lists → `{{DETECTION_CATEGORY}}`, `{{MODULATION_DIRECTION}}`, `{{DRAFT_ENTRY_STATUS}}` placeholders
+- `build_raw_parse.py`: input dir from `stage_output_paths` instead of hardcoded `"01_raw_parse"`
+- `fields.yaml`: `draft_entry.status` → `dictionary: draft_entry_status`
+- `dictionaries.yaml`: `section_type` + `preamble`, reduced from 16 to 6 active dictionaries
+- `stage_contracts.yaml`: removed `review.html` from outputs, removed `verifier_report.json` from review_export inputs
+
+### Removed
+- Dead `flagged` logic in `build_export.py`
+- Unused `_verifier_summary()` and verifier loading in `review_server.py`
+- Unused `verifier_summary`/`verifier_results` from API response
+- Unused imports: `get_dictionary` (build_export), `get_required_fields` (extract_evidence)
+- Unused variable: `VALID_EVIDENCE_TYPES` (extract_evidence)
+
+### Verified
+- All 5 Python modules compile clean
+- 3 YAML contracts validate
+- S3 real LLM: 20 units from 4 batches
+- S6 mock: 5 drafts, 0 validation errors
+- `format_prompt()` correctly replaces all placeholders end-to-end
+
+---
+
+## 2026-06-26 (LEGACY_MAP Full Migration)
+
+### Overview
+Completed all 8 steps of LEGACY_MAP migration. All business modules rewritten to match current contracts. No legacy code references remain in the pre-review pipeline.
+
+### New Files
+- `src/core/contracts.py` — unified contracts loader (18 API functions)
+- `src/validation/validate_stage.py` — contracts-driven validator (JSON/JSONL)
+- `prompts/evidence_extraction.txt` — 7-type decision tree, 15-field schema, INCLUDES/EXCLUDES
+- `src/evidence/extract_evidence.py` — batch LLM extraction + mock mode
+- `src/evidence/consensus_evidence.py` — Jaccard+Union-Find consensus voting
+- `src/context/build_context_packs.py` — no relations dependency, entity+section clustering
+- `prompts/draft_generation.txt` — Chinese draft synthesis prompt
+- `src/drafting/generate_drafts.py` — batched LLM generation
+- `src/verification/generate_report.py` — pure-logic quality report
+- `src/export/build_export.py` — trusted export (approved/rejected only)
+
+### Changed
+- `src/review/review.html` — fixed `source_text`→`source_trace.quote`, `task_type`→`evidence_type`, added polarity display
+
+### Kept (already aligned)
+- `src/parsing/*` (4 files) — parse pipeline unchanged
+- `src/review/review_server.py` — multi-paper server already using new data formats
+
+### Design Decisions
+- Context packs: evidence_type → entity overlap → discriminative type merge (assay_method/drug/disease/metabolite), NOT section adjacency
+- Draft generation: Chinese prompt, max 4 packs/batch, by evidence_type
+- Export: only approved/rejected entries, validates forbidden fields, builds audit trail
+- All pre-review outputs marked candidate, only review_export is trusted
+
+---
+
+## 2026-06-26 (Contracts Core)
+
+### Added
+
+- **`src/core/contracts.py`** — unified contracts loader. Loads all 4 `contracts/*.yaml` files and provides a clean API:
+  - `get_dictionary(name)` / `get_enum_values(name)` — enum value lists (16 dictionaries)
+  - `get_field_schema(name)` / `get_required_fields(name)` — field definitions (6 schemas)
+  - `get_stage(name)` / `get_stage_inputs(name)` / `get_stage_outputs(name)` — stage I/O (8 stages)
+  - `get_output_info(name)` / `is_output_trusted(name)` — output contracts
+  - `load_contracts()` — all contracts in one dict
+- **`src/core/__init__.py`** — package exports
+
+---
+
 ## 2026-06-26 (Legacy Isolation)
 
 ### Added

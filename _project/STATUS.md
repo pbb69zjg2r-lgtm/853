@@ -1,36 +1,36 @@
 # Status
 
-## 2026-06-26 Legacy Isolation Update
+## 2026-06-26 Decoupling Audit Complete
 
-Current status:
+**去耦合审计全部完成（20 个问题全部修复）**
 
-```text
-contracts have been updated to the new confirmed design.
-src, prompts, tests, and old run outputs still mostly follow the previous runnable pipeline.
-```
+### HIGH (4/4 fixed)
+- H1: verifier_summary 从 entry_results 动态计算（替代硬编码 .summary 读取）
+- H2: 删除 build_export.py 死代码 flagged 逻辑
+- H3: 统一 review_state 时间戳字段为 updated_at
+- H4: review.html 新增 reviewer 输入框 + export_notes 文本框
 
-Important:
+### MEDIUM (12/12 resolved)
+- M1: build_raw_parse.py 路径从 stage_output_paths 派生
+- M4: 提示词枚举值动态注入（format_prompt + {{PLACEHOLDER}}）
+- M5: draft_entry.status 改为 dictionary 引用
+- M6-M8: 清理未使用的 import 和变量
+- M9: section_type 字典新增 preamble
+- M11: 从 stage_contracts 移除 review.html（源文件非产出）
+- M12: 删除 API 中未使用的 verifier_summary/verifier_results
+- M2/M10: 判断为合理保留
 
-```text
-_project/LEGACY_MAP.md is now the boundary map.
-Use contracts/* as the current authority.
-Use legacy code and old runs only as reference, not as current contract truth.
-```
+### 关键新增
+- `format_prompt()` in contracts.py: 将 `{{DICT_NAME}}` 占位符替换为字典值
+- 提示词中 4 处硬编码枚举值全部改为占位符
 
-Current high-risk drift:
+### LLM 验证通过
+- S3 extract_evidence: 20 units 成功提取（4 batches, real LLM）
+- S6 generate_drafts: 5 drafts mock 模式通过
 
-```text
-old code still depends on 04_relations/evidence_relations.json
-old evidence extraction prompt still emits old evidence_unit fields
-old export still emits old review_export shape
-old validator still hard-codes old file list
-```
-
-Next recommended step:
-
-```text
-create src/core/contracts.py, then replace hard-coded validation with a contracts-driven validator.
-```
+### 已知问题
+- S6 mechanism_pathway JSON 截断（LLM max_tokens 不足，提示词已建议改为 claim-first 顺序）
+- LLM 偶用 `mixed`/`both` 作为 model_level/in_vivo_or_in_vitro（字典中不存在）
 
 更新时间：2026-06-26
 

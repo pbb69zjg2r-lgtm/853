@@ -6,9 +6,13 @@ Output: source_blocks.jsonl + document_structure.json
 """
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from src.core.contracts import stage_input_paths, stage_output_paths
 
 TEXT_LIKE = {"text", "title", "list", "list_text", "interline_equation",
              "inline_equation", "code", "algorithm", "footnote", "aside_text"}
@@ -104,7 +108,9 @@ def classify_source_type(block: dict) -> str:
 
 
 def build_source(paper_dir: Path, paper_id: str):
-    raw_path = paper_dir / "01_raw_parse" / "raw_parse.json"
+    inputs = stage_input_paths("source_normalization", str(paper_dir))
+    outputs = stage_output_paths("source_normalization", str(paper_dir))
+    raw_path = Path(inputs["raw_parse.json"])
     if not raw_path.exists():
         raise FileNotFoundError(f"{raw_path} not found. Run build_raw_parse.py first.")
 
@@ -210,15 +216,13 @@ def build_source(paper_dir: Path, paper_id: str):
     }
 
     # Write outputs
-    out_dir = paper_dir / "02_source"
-    out_dir.mkdir(parents=True, exist_ok=True)
-
-    sbs_path = out_dir / "source_blocks.jsonl"
+    sbs_path = Path(outputs["source_blocks.jsonl"])
+    sbs_path.parent.mkdir(parents=True, exist_ok=True)
     with open(sbs_path, "w", encoding="utf-8") as f:
         for sb in source_blocks:
             f.write(json.dumps(sb, ensure_ascii=False) + "\n")
 
-    doc_path = out_dir / "document_structure.json"
+    doc_path = Path(outputs["document_structure.json"])
     doc_path.write_text(json.dumps(doc_structure, ensure_ascii=False, indent=2), encoding="utf-8")
 
     print(f"  Sections: {len(sections)}")

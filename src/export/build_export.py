@@ -1,135 +1,270 @@
-"""build_export.py — Generate final review export from review state.
+"""
+Review export builder (step 9 of V2 pipeline — final trusted output).
 
-Input:  08_review/review_state.json (or defaults), 06_draft/draft_entries.jsonl,
-        03_evidence/evidence_units.jsonl, 07_verification/verifier_report.json
-Output: 09_export/review_export.json
+Reads review_state.json + draft_entries.jsonl + evidence_units.jsonl +
+verifier_report.json, and produces the trusted review_export.json.
+
+Only runs after human review is complete. Only approved/rejected entries
+are included in the final export.
+
+Usage:
+    python build_export.py <run_dir> <paper_id>
 """
 
 import json
+import os
 import sys
 from datetime import datetime
-from pathlib import Path
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+from src.core.contracts import get_output_forbidden_fields, stage_input_paths, stage_output_paths
+from src.validation.validate_stage import validate_record, validate_forbidden
 
 
-def load_jsonl(path: Path) -> list[dict]:
-    with open(path, encoding="utf-8") as f:
-        return [json.loads(line) for line in f]
+# ---------------------------------------------------------------------------
+# Data loading
+# ---------------------------------------------------------------------------
 
-
-def load_json(path: Path):
-    with open(path, encoding="utf-8") as f:
+def load_json(path):
+    with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
-def build_export(paper_dir: Path, paper_id: str) -> dict:
-    drafts = load_jsonl(paper_dir / "06_draft" / "draft_entries.jsonl")
-    evidence = load_jsonl(paper_dir / "03_evidence" / "evidence_units.jsonl")
-    verifier = load_json(paper_dir / "07_verification" / "verifier_report.json")
+def load_jsonl(path):
+    records = []
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                records.append(json.loads(line))
+    return records
 
-    # Load review state or default to all-draft
-    review_path = paper_dir / "08_review" / "review_state.json"
-    if review_path.exists():
-        review_state = load_json(review_path)
-        entries_state = review_state.get("entries", {})
-    else:
-        entries_state = {d["entry_id"]: {"status": "draft", "notes": "", "reviewed_at": None}
-                        for d in drafts}
 
-    ev_map = {e["evidence_id"]: e for e in evidence}
+# ---------------------------------------------------------------------------
+# Export assembly
+# ---------------------------------------------------------------------------
 
-    # Build reviewed entries with embedded evidence
-    reviewed = []
-    for d in drafts:
-        eid = d["entry_id"]
-        state = entries_state.get(eid, {"status": "draft", "notes": ""})
+def build_export(run_dir, paper_id):
+    """Build the review_export.json from reviewed data.
 
-        # Collect linked evidence
-        linked_evidence = []
-        for ev_id in d.get("evidence_links", []):
-            eu = ev_map.get(ev_id)
-            if eu:
-                linked_evidence.append({
-                    "evidence_id": ev_id,
-                    "evidence_type": eu.get("evidence_type", ""),
-                    "source_text": eu.get("source_text", ""),
-                    "entities": eu.get("entities", []),
-                    "modulation": eu.get("modulation"),
-                    "statistics": eu.get("statistics"),
-                })
+    Returns the export dict or raises if review is incomplete.
+    """
+    # Load inputs
+    inputs = stage_input_paths("review_export", run_dir)
+    review_state = load_json(inputs["review_state.json"])
+    drafts = load_jsonl(inputs["draft_entries.jsonl"])
+    evidence = load_jsonl(inputs["evidence_units.jsonl"])
 
-        reviewed.append({
-            "entry_id": eid,
-            "task_type": d.get("task_type", ""),
-            "main_claim": d.get("main_claim", ""),
-            "structured_fields": d.get("structured_fields", {}),
-            "linked_evidence": linked_evidence,
-            "review_status": state.get("status", "draft"),
-            "review_notes": state.get("notes", ""),
-            "reviewed_at": state.get("reviewed_at"),
-        })
+    # Index by ID
+    draft_map = {d["entry_id"]: d for d in drafts}
+    evidence_map = {e["evidence_id"]: e for e in evidence}
 
-    # Summary
-    from collections import Counter
-    status_counts = Counter(r["review_status"] for r in reviewed)
+    # Review state: {entries: {entry_id: {decision, notes, flagged, ...}}}
+    reviewed = review_state.get("entries", {})
 
-    export = {
-        "export_id": f"{paper_id}_EXPORT",
-        "paper_id": paper_id,
-        "generated_at": datetime.now().isoformat(),
-        "summary": {
-            "total_entries": len(reviewed),
-            "approved": status_counts.get("approved", 0),
-            "rejected": status_counts.get("rejected", 0),
-            "flagged": status_counts.get("needs_review", 0),
-            "draft": status_counts.get("draft", 0),
-            "total_evidence_units": len(evidence),
-            "verifier_ok": verifier["summary"].get("entries_ok", 0),
-            "verifier_flagged": verifier["summary"].get("entries_flagged", 0),
-        },
-        "reviewed_entries": reviewed,
+    # Separate approved, rejected, and unreviewed
+    approved_entries = []
+    rejected_entries = []
+    unreviewed = []
+
+    for entry_id, state in reviewed.items():
+        decision = state.get("status", "")
+        if decision == "approved":
+            approved_entries.append(entry_id)
+        elif decision == "rejected":
+            rejected_entries.append(entry_id)
+        else:
+            unreviewed.append(entry_id)
+
+    # Check: all drafts must be reviewed
+    all_draft_ids = set(d["entry_id"] for d in drafts)
+    unreviewed_drafts = all_draft_ids - set(reviewed.keys())
+    if unreviewed_drafts:
+        print(f"WARNING: {len(unreviewed_drafts)} draft entries have not been reviewed: {sorted(unreviewed_drafts)}")
+        print("Only reviewed entries will be included in the export.")
+
+    pending = [eid for eid in reviewed if reviewed[eid].get("status") not in ("approved", "rejected")]
+    if pending:
+        print(f"WARNING: {len(pending)} entries still pending review decision: {pending}")
+        print("These will be excluded from the export.")
+
+    # Build reviewed_entries
+    reviewed_entries = []
+    for entry_id in approved_entries + rejected_entries:
+        if entry_id not in draft_map:
+            print(f"WARNING: reviewed entry {entry_id} not found in drafts, skipping")
+            continue
+
+        draft = draft_map[entry_id]
+        state = reviewed.get(entry_id, {})
+
+        entry = {
+            "entry_id": entry_id,
+            "paper_id": paper_id,
+            "evidence_type": draft.get("evidence_type", "unknown"),
+            "reviewed_claim": draft.get("main_claim", ""),
+            "structured_fields": draft.get("structured_fields", {}),
+            "evidence_links": draft.get("evidence_links", []),
+            "experimental_model_summary": draft.get("experimental_model_summary", {}),
+            "review": {
+                "decision": state.get("status", "rejected"),
+            },
+        }
+
+        # Add reviewer notes if present
+        if state.get("notes"):
+            entry["review"]["notes"] = state["notes"]
+
+        reviewed_entries.append(entry)
+
+    # Build reviewed_evidence_units
+    reviewed_evidence = []
+    for unit in evidence:
+        eid = unit.get("evidence_id", "")
+        # Update review_coverage from review_state
+        evidence_review = review_state.get("evidence", {}).get(eid, {})
+        coverage = dict(unit.get("review_coverage", {}))
+        if evidence_review:
+            coverage["reviewed"] = True
+        reviewed_unit = dict(unit)
+        reviewed_unit["review_coverage"] = coverage
+        reviewed_evidence.append(reviewed_unit)
+
+    # Build review_audit
+    audit = {
+        "reviewer": review_state.get("reviewer", "unknown"),
+        "reviewed_at": review_state.get("updated_at", datetime.now().isoformat()),
+        "entry_count": len(reviewed_entries),
+        "approved_count": len(approved_entries),
+        "rejected_count": len(rejected_entries),
+        "evidence_coverage_summary": _build_coverage_summary(drafts, evidence, reviewed),
+        "notes": review_state.get("export_notes", ""),
     }
+
+    # Assemble export
+    export = {
+        "package_id": f"{paper_id}_export_{datetime.now().strftime('%Y%m%d')}",
+        "paper_id": paper_id,
+        "stage": "review_export",
+        "schema_version": "0.1.0",
+        "normalization_status": "not_normalized",
+        "reviewed_entries": reviewed_entries,
+        "reviewed_evidence_units": reviewed_evidence,
+        "review_audit": audit,
+    }
+
+    # Validate forbidden fields
+    forbidden_errs = validate_forbidden(export, "review_export")
+    if forbidden_errs:
+        for e in forbidden_errs:
+            print(f"  FORBIDDEN: {e}")
 
     return export
 
 
+def _build_coverage_summary(drafts, evidence, reviewed):
+    """Build evidence coverage summary for the audit."""
+    all_evidence_ids = set(e["evidence_id"] for e in evidence)
+    linked_ids = set()
+    for d in drafts:
+        eid = d.get("entry_id", "")
+        if reviewed.get(eid, {}).get("status") == "approved":
+            for link in d.get("evidence_links", []):
+                linked_ids.add(link.get("evidence_id", ""))
+
+    return {
+        "total_evidence_units": len(evidence),
+        "evidence_in_approved_entries": len(linked_ids),
+        "coverage_pct": round(len(linked_ids) / len(all_evidence_ids) * 100, 1) if all_evidence_ids else 0,
+        "unreferenced_evidence_ids": sorted(all_evidence_ids - linked_ids),
+    }
+
+
+# ---------------------------------------------------------------------------
+# Validation
+# ---------------------------------------------------------------------------
+
+def validate_export(export):
+    """Validate the export against contracts."""
+    errors = []
+
+    # Top-level schema check
+    errs, warns = validate_record(export, "review_export")
+    errors.extend(errs)
+
+    # Validate each reviewed_entry
+    for entry in export.get("reviewed_entries", []):
+        errs, warns = validate_record(entry, "review_export")
+        # Only check entry-level relevant fields
+        for e in errs:
+            if "entry_id" in e or "paper_id" in e or "evidence_type" in e or "reviewed_claim" in e or "decision" in e:
+                errors.append(f"Entry {entry.get('entry_id', '?')}: {e}")
+
+    # Validate each evidence unit
+    for unit in export.get("reviewed_evidence_units", []):
+        errs, warns = validate_record(unit, "evidence_unit")
+        for e in errs:
+            errors.append(f"Evidence {unit.get('evidence_id', '?')}: {e}")
+
+    # Check review.decision values
+    for entry in export.get("reviewed_entries", []):
+        decision = entry.get("review", {}).get("decision", "")
+        if decision not in ("approved", "rejected"):
+            errors.append(f"Entry {entry.get('entry_id')}: invalid review decision '{decision}'")
+
+    return errors
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python src/export/build_export.py <paper_run_dir> [paper_id]")
+    if len(sys.argv) < 3:
+        print(__doc__)
         sys.exit(1)
 
-    paper_dir = Path(sys.argv[1]).resolve()
-    paper_id = sys.argv[2] if len(sys.argv) > 2 else paper_dir.parent.name
+    run_dir = sys.argv[1]
+    paper_id = sys.argv[2]
 
-    # Ensure review state exists (default all to draft)
-    review_path = paper_dir / "08_review" / "review_state.json"
-    if not review_path.exists():
-        drafts = load_jsonl(paper_dir / "06_draft" / "draft_entries.jsonl")
-        default_state = {
-            "paper_id": paper_id,
-            "entries": {d["entry_id"]: {"status": "draft", "notes": "", "reviewed_at": None}
-                       for d in drafts},
-            "updated_at": datetime.now().isoformat(),
-        }
-        review_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(review_path, "w", encoding="utf-8") as f:
-            json.dump(default_state, f, ensure_ascii=False, indent=2)
-        print(f"  Created default review state: {len(default_state['entries'])} entries as draft")
+    print(f"=== Review Export Builder ===")
+    print(f"Run dir: {run_dir}")
+    print(f"Paper ID: {paper_id}")
+    print()
 
-    export = build_export(paper_dir, paper_id)
+    # Check required inputs exist
+    inputs = stage_input_paths("review_export", run_dir)
+    for key, path in inputs.items():
+        if not os.path.exists(path):
+            print(f"ERROR: Required input not found: {path}")
+            sys.exit(1)
 
-    out_dir = paper_dir / "09_export"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / "review_export.json"
+    export = build_export(run_dir, paper_id)
+
+    print(f"\n=== Export Summary ===")
+    audit = export["review_audit"]
+    print(f"Entries: {audit['entry_count']} total ({audit['approved_count']} approved, {audit['rejected_count']} rejected)")
+    print(f"Evidence: {audit['evidence_coverage_summary']['total_evidence_units']} total, {audit['evidence_coverage_summary']['evidence_in_approved_entries']} in approved entries")
+
+    print(f"\n=== Validation ===")
+    errors = validate_export(export)
+    if errors:
+        print(f"{len(errors)} validation error(s):")
+        for e in errors[:10]:
+            print(f"  - {e}")
+    else:
+        print("0 validation errors")
+
+    outputs = stage_output_paths("review_export", run_dir)
+    out_path = outputs["review_export.json"]
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(export, f, ensure_ascii=False, indent=2)
 
-    s = export["summary"]
-    print(f"  Entries: {s['total_entries']}")
-    print(f"  Approved: {s['approved']}, Rejected: {s['rejected']}, "
-          f"Flagged: {s['flagged']}, Draft: {s['draft']}")
-    print(f"  Evidence units: {s['total_evidence_units']}")
-    print(f"  Verifier: {s['verifier_ok']} ok / {s['verifier_flagged']} flagged")
-    print(f"  Output: {out_path}")
+    print(f"\nOutput: {out_path}")
+    print(f"Done.")
 
 
 if __name__ == "__main__":

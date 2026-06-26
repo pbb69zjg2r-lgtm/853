@@ -46,6 +46,24 @@ source_block:
   figure_number:
     type: string
     required: false
+  img_path:
+    type: string
+    required: false
+  image_caption:
+    type: array
+    required: false
+  image_footnote:
+    type: array
+    required: false
+  chart_caption:
+    type: array
+    required: false
+  chart_footnote:
+    type: array
+    required: false
+  mineru_type:
+    type: string
+    required: false
 
 evidence_unit:
   evidence_id:
@@ -56,14 +74,7 @@ evidence_unit:
     required: true
   evidence_type:
     type: enum
-    values:
-      - disease_association
-      - detection_method
-      - thermogenesis_modulation
-      - biomarker_panel
-      - mechanism_pathway
-      - pathway_cellular_function_impact
-      - organelle_interaction_impact
+    dictionary: evidence_type
     required: true
   claim:
     type: string
@@ -292,7 +303,7 @@ draft_entry:
     required: true
   status:
     type: enum
-    values: [draft, needs_review]
+    dictionary: draft_entry_status
     required: true
 
 verifier_report:
@@ -328,14 +339,6 @@ review_export:
   normalization_status:
     type: enum
     values: [not_normalized]
-    required: true
-  relation_linking_status:
-    type: enum
-    values: [not_linked]
-    required: true
-  graph_status:
-    type: enum
-    values: [not_built]
     required: true
   reviewed_entries:
     type: array

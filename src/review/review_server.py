@@ -18,6 +18,9 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
+sys.path.insert(0, str(PROJECT_ROOT))
+from src.core.contracts import stage_output_paths
+
 
 def discover_papers(runs_dir: Path) -> list[dict]:
     """Scan runs_dir for paper subdirectories that have 06_draft/draft_entries.jsonl."""
@@ -27,7 +30,8 @@ def discover_papers(runs_dir: Path) -> list[dict]:
     for child in sorted(runs_dir.iterdir()):
         if not child.is_dir():
             continue
-        draft_path = child / "06_draft" / "draft_entries.jsonl"
+        out_paths = stage_output_paths("draft_entries", str(child))
+        draft_path = Path(out_paths["draft_entries.jsonl"])
         if not draft_path.exists():
             continue
         paper_id = child.name
@@ -53,20 +57,15 @@ def load_json(path: Path):
 def build_api_data(paper_dir: Path) -> dict:
     """Assemble all V2 pipeline data into one API response."""
     paper_id = paper_dir.name
+    run_dir = str(paper_dir)
 
-    ev_path = paper_dir / "03_evidence" / "evidence_units.jsonl"
+    ev_path = Path(stage_output_paths("evidence_units", run_dir)["evidence_units.jsonl"])
     evidence = load_jsonl(ev_path) if ev_path.exists() else []
 
-    draft_path = paper_dir / "06_draft" / "draft_entries.jsonl"
+    draft_path = Path(stage_output_paths("draft_entries", run_dir)["draft_entries.jsonl"])
     drafts = load_jsonl(draft_path) if draft_path.exists() else []
 
-    ver_path = paper_dir / "07_verification" / "verifier_report.json"
-    if ver_path.exists():
-        verifier = load_json(ver_path)
-    else:
-        verifier = {}
-
-    review_path = paper_dir / "08_review" / "review_state.json"
+    review_path = Path(stage_output_paths("review_workspace", run_dir)["review_state.json"])
     if review_path.exists():
         review_state = load_json(review_path)
     else:
@@ -76,8 +75,6 @@ def build_api_data(paper_dir: Path) -> dict:
         "paper_id": paper_id,
         "evidence": evidence,
         "drafts": drafts,
-        "verifier_summary": verifier.get("summary", {}),
-        "verifier_results": verifier.get("entry_results", []),
         "review_state": review_state,
     }
 
@@ -165,7 +162,7 @@ class ReviewHandler(http.server.SimpleHTTPRequestHandler):
     def _save_review(self, paper_dir: Path):
         content_len = int(self.headers.get("Content-Length", 0))
         body = json.loads(self.rfile.read(content_len))
-        review_path = paper_dir / "08_review" / "review_state.json"
+        review_path = Path(stage_output_paths("review_workspace", str(paper_dir))["review_state.json"])
         review_path.parent.mkdir(parents=True, exist_ok=True)
         body["updated_at"] = datetime.now().isoformat()
         with open(review_path, "w", encoding="utf-8") as f:
