@@ -8,8 +8,10 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font:14px/1.5 system-ui,sans-serif;display:flex;height:100vh;color:#1a1a2e;background:#f5f5f7}
 #sidebar{width:340px;background:#fff;border-right:1px solid #e0e0e0;display:flex;flex-direction:column}
-#sidebar h2{padding:14px 16px;font-size:15px;border-bottom:1px solid #e0e0e0;background:#fafafa;display:flex;justify-content:space-between}
-#stats{padding:8px 16px;font-size:12px;border-bottom:1px solid #e0e0e0;background:#fafafa;display:flex;gap:14px}
+#sidebar h2{padding:10px 14px;font-size:15px;border-bottom:1px solid #e0e0e0;background:#fafafa}
+#paper-selector{font-size:13px;padding:4px 8px;border:1px solid #dadce0;border-radius:4px;background:#fff;max-width:100%;cursor:pointer}
+#paper-selector:focus{outline:2px solid #1a73e8;outline-offset:-1px}
+#stats{padding:8px 14px;font-size:12px;border-bottom:1px solid #e0e0e0;background:#fafafa;display:flex;gap:14px}
 .stat-item{display:flex;align-items:center;gap:4px}
 .stat-item b{font-size:14px}
 #entry-list{flex:1;overflow-y:auto}
@@ -57,7 +59,11 @@ body{font:14px/1.5 system-ui,sans-serif;display:flex;height:100vh;color:#1a1a2e;
 </head>
 <body>
 <div id="sidebar">
-  <h2>Draft entries <span id="paper-id" style="font-weight:400;font-size:12px;color:#999"></span></h2>
+  <h2>
+    <select id="paper-selector" onchange="switchPaper(this.value)">
+      <option value="">Loading...</option>
+    </select>
+  </h2>
   <div id="stats">
     <div class="stat-item">Total <b id="st-total">0</b></div>
     <div class="stat-item" style="color:#1e8e3e">&#10003; <b id="st-approved">0</b></div>
@@ -83,20 +89,67 @@ body{font:14px/1.5 system-ui,sans-serif;display:flex;height:100vh;color:#1a1a2e;
 let DATA = null;
 let activeId = null;
 let reviewState = {entries:{}};
+let currentPaperId = null;
+let allPapers = [];
 
 async function init() {
   try {
-    const resp = await fetch('/api/data');
+    const papersResp = await fetch('/api/papers');
+    allPapers = await papersResp.json();
+
+    const sel = document.getElementById('paper-selector');
+    if (allPapers.length === 0) {
+      sel.innerHTML = '<option>No papers found</option>';
+      document.getElementById('content').innerHTML =
+        '<div class="empty-state"><h3>No papers found</h3><p>Run pipeline first to generate draft entries.</p></div>';
+      return;
+    }
+    sel.innerHTML = allPapers.map(p =>
+      `<option value="${p.paper_id}">${escHtml(p.paper_id)} (${p.draft_count} drafts)</option>`
+    ).join('');
+
+    const lastPaper = localStorage.getItem('review_last_paper');
+    const initialPaper = (lastPaper && allPapers.find(p => p.paper_id === lastPaper))
+                         ? lastPaper
+                         : allPapers[0].paper_id;
+    sel.value = initialPaper;
+    await loadPaper(initialPaper);
+  } catch(e) {
+    document.getElementById('content').innerHTML =
+      `<div class="empty-state"><h3>Failed to load</h3><p>${escHtml(e.message)}</p></div>`;
+  }
+}
+
+async function switchPaper(paperId) {
+  if (!paperId || paperId === currentPaperId) return;
+  if (currentPaperId && reviewState && Object.keys(reviewState.entries||{}).length > 0) {
+    try {
+      await fetch(`/api/save?paper=${encodeURIComponent(currentPaperId)}`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(reviewState)
+      });
+    } catch(e) { /* silent */ }
+  }
+  await loadPaper(paperId);
+}
+
+async function loadPaper(paperId) {
+  currentPaperId = paperId;
+  activeId = null;
+  localStorage.setItem('review_last_paper', paperId);
+  document.getElementById('entry-list').innerHTML = '<div class="loading">Loading...</div>';
+  try {
+    const resp = await fetch(`/api/data?paper=${encodeURIComponent(paperId)}`);
     DATA = await resp.json();
     reviewState = DATA.review_state || {entries:{}};
-    document.getElementById('paper-id').textContent = DATA.paper_id;
     renderSidebar();
     document.getElementById('content').innerHTML =
       `<div class="empty-state"><h3>${DATA.drafts.length} draft entries loaded</h3>
       <p>Select an entry from the sidebar to begin review</p></div>`;
   } catch(e) {
     document.getElementById('content').innerHTML =
-      `<div class="empty-state"><h3>Failed to load data</h3><p>${e.message}</p></div>`;
+      `<div class="empty-state"><h3>Failed to load data for ${escHtml(paperId)}</h3><p>${escHtml(e.message)}</p></div>`;
   }
 }
 
@@ -112,8 +165,8 @@ function renderSidebar() {
     else if(st==='needs_review') counts.flagged++;
     const badgeCls = st==='approved'?'approved':st==='rejected'?'rejected':st==='needs_review'?'flagged':'draft';
     html += `<div class="entry-item${activeId===d.entry_id?' active':''}" onclick="selectEntry('${d.entry_id}')">
-      <div class="eid"><span class="badge badge-${badgeCls}">${st}</span> ${d.entry_id}</div>
-      <div class="claim">${esc(d.main_claim||'(no claim)').substring(0,110)}</div>
+      <div class="eid"><span class="badge badge-${badgeCls}">${st}</span> ${escHtml(d.entry_id)}</div>
+      <div class="claim">${escHtml(d.main_claim||'(no claim)').substring(0,110)}</div>
     </div>`;
   });
   list.innerHTML = html || '<div class="empty-state">No entries</div>';
@@ -134,7 +187,7 @@ function selectEntry(eid) {
   const sf = d.structured_fields || {};
   let fieldsHtml = '<div class="field-grid">';
   Object.entries(sf).forEach(([k,v]) => {
-    fieldsHtml += `<div class="key">${esc(k)}</div><div class="val">${esc(String(v||''))}</div>`;
+    fieldsHtml += `<div class="key">${escHtml(k)}</div><div class="val">${escHtml(String(v||''))}</div>`;
   });
   fieldsHtml += '</div>';
 
@@ -147,24 +200,24 @@ function selectEntry(eid) {
     if(!ev) return;
     const tags = (ev.entities||[]).map(e => {
       const cls = e.type==='drug'?'type-drug':e.type==='protein'?'type-protein':e.type==='pathway'?'type-pathway':'';
-      return `<span class="entity-tag ${cls}">${esc(e.name)} (${e.type||'?'})</span>`;
+      return `<span class="entity-tag ${cls}">${escHtml(e.name)} (${escHtml(e.type||'?')})</span>`;
     }).join(' ');
     evHtml += `<div class="evidence-card">
-      <div class="ev-meta">${esc(ev.evidence_id)} &middot; ${esc(ev.evidence_type||'')} &middot; ${esc(ev.section_type||'')}</div>
-      <div class="ev-text">${esc(ev.source_text||'')}</div>
+      <div class="ev-meta">${escHtml(ev.evidence_id)} &middot; ${escHtml(ev.evidence_type||'')} &middot; ${escHtml(ev.section_type||'')}</div>
+      <div class="ev-text">${escHtml(ev.source_text||'')}</div>
       <div style="margin-top:6px">${tags}</div>
     </div>`;
   });
 
   const notes = (reviewState.entries[eid] || {}).notes || '';
   document.getElementById('content').innerHTML = `
-    <h3>${esc(d.main_claim||'(No claim)')}</h3>
-    <div class="section"><h4>Task</h4><p>${esc(d.task_type||'')}</p></div>
+    <h3>${escHtml(d.main_claim||'(No claim)')}</h3>
+    <div class="section"><h4>Task</h4><p>${escHtml(d.task_type||'')}</p></div>
     <div class="section"><h4>Structured Fields</h4>${fieldsHtml}</div>
     <div class="section"><h4>Linked Evidence (${evIds.length})</h4>${evHtml||'<p style="color:#999">No linked evidence</p>'}</div>
     <div class="section"><h4>Review Notes</h4>
       <textarea id="notes-area" placeholder="Notes for this entry..."
-        onchange="saveNotes('${eid}',this.value)">${esc(notes)}</textarea>
+        onchange="saveNotes('${eid}',this.value)">${escHtml(notes)}</textarea>
     </div>`;
 }
 
@@ -190,7 +243,7 @@ function saveNotes(eid, value) {
 async function save() {
   reviewState.updated_at = new Date().toISOString();
   try {
-    await fetch('/api/save', {
+    await fetch(`/api/save?paper=${encodeURIComponent(currentPaperId)}`, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify(reviewState)
@@ -201,7 +254,8 @@ async function save() {
 }
 
 function exportData() {
-  window.open('/api/export', '_blank');
+  if(!currentPaperId) return toast('No paper selected');
+  window.open(`/api/export?paper=${encodeURIComponent(currentPaperId)}`, '_blank');
   toast('Export started');
 }
 
@@ -212,7 +266,7 @@ function toast(msg) {
   setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-function esc(s) {
+function escHtml(s) {
   const d = document.createElement('div');
   d.textContent = s;
   return d.innerHTML;

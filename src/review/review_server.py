@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """V2 Review server — serves review.html and REST APIs for human review.
 
-Usage: python src/review/review_server.py <paper_run_dir> [--port 8080]
+Usage:
+    python src/review/review_server.py [paper_dir] [--port 8080]
+      paper_dir omitted → multi-paper mode, auto-discovers all papers under runs/
+      paper_dir given    → single-paper mode (backward compatible)
 Open:  http://localhost:8080
 """
 
@@ -10,9 +13,31 @@ import json
 import os
 import sys
 import urllib.parse
+from datetime import datetime
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
+
+def discover_papers(runs_dir: Path) -> list[dict]:
+    """Scan runs_dir for paper subdirectories that have 06_draft/draft_entries.jsonl."""
+    papers = []
+    if not runs_dir.exists():
+        return papers
+    for child in sorted(runs_dir.iterdir()):
+        if not child.is_dir():
+            continue
+        draft_path = child / "06_draft" / "draft_entries.jsonl"
+        if not draft_path.exists():
+            continue
+        paper_id = child.name
+        draft_count = sum(1 for _ in open(draft_path, encoding="utf-8"))
+        papers.append({
+            "paper_id": paper_id,
+            "paper_dir": str(child.resolve()),
+            "draft_count": draft_count,
+        })
+    return papers
 
 
 def load_jsonl(path: Path) -> list:
@@ -27,12 +52,20 @@ def load_json(path: Path):
 
 def build_api_data(paper_dir: Path) -> dict:
     """Assemble all V2 pipeline data into one API response."""
-    evidence = load_jsonl(paper_dir / "03_evidence" / "evidence_units.jsonl")
-    drafts = load_jsonl(paper_dir / "06_draft" / "draft_entries.jsonl")
-    verifier = load_json(paper_dir / "07_verification" / "verifier_report.json")
-    paper_id = paper_dir.parent.name if paper_dir.parent.name != "runs" else paper_dir.name
+    paper_id = paper_dir.name
 
-    # Load review state
+    ev_path = paper_dir / "03_evidence" / "evidence_units.jsonl"
+    evidence = load_jsonl(ev_path) if ev_path.exists() else []
+
+    draft_path = paper_dir / "06_draft" / "draft_entries.jsonl"
+    drafts = load_jsonl(draft_path) if draft_path.exists() else []
+
+    ver_path = paper_dir / "07_verification" / "verifier_report.json"
+    if ver_path.exists():
+        verifier = load_json(ver_path)
+    else:
+        verifier = {}
+
     review_path = paper_dir / "08_review" / "review_state.json"
     if review_path.exists():
         review_state = load_json(review_path)
@@ -50,26 +83,63 @@ def build_api_data(paper_dir: Path) -> dict:
 
 
 class ReviewHandler(http.server.SimpleHTTPRequestHandler):
-    paper_dir: Path = None
+    papers: dict = {}
+    paper_dirs: dict = {}
+    single_mode: bool = False
 
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
+        qs = urllib.parse.parse_qs(parsed.query)
 
-        if path == "/api/data":
-            self._json_response(build_api_data(self.paper_dir))
+        if path == "/api/papers":
+            self._json_response(list(self.papers.values()))
+        elif path == "/api/data":
+            paper_id = qs.get("paper", [None])[0]
+            if not paper_id:
+                self.send_error(400, "Missing ?paper= parameter")
+                return
+            paper_dir = self._resolve_paper(paper_id)
+            if not paper_dir:
+                return
+            self._json_response(build_api_data(paper_dir))
         elif path == "/":
             self._serve_html()
         elif path == "/api/export":
-            self._export_json()
+            paper_id = qs.get("paper", [None])[0]
+            if not paper_id:
+                self.send_error(400, "Missing ?paper= parameter")
+                return
+            paper_dir = self._resolve_paper(paper_id)
+            if not paper_dir:
+                return
+            self._export_json(paper_dir)
         else:
             super().do_GET()
 
     def do_POST(self):
-        if self.path == "/api/save":
-            self._save_review()
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+        qs = urllib.parse.parse_qs(parsed.query)
+
+        if path == "/api/save":
+            paper_id = qs.get("paper", [None])[0]
+            if not paper_id:
+                self.send_error(400, "Missing ?paper= parameter")
+                return
+            paper_dir = self._resolve_paper(paper_id)
+            if not paper_dir:
+                return
+            self._save_review(paper_dir)
         else:
             self.send_error(404)
+
+    def _resolve_paper(self, paper_id: str) -> Path | None:
+        paper_dir = self.paper_dirs.get(paper_id)
+        if not paper_dir:
+            self.send_error(404, f"Paper '{paper_id}' not found")
+            return None
+        return paper_dir
 
     def _json_response(self, data):
         body = json.dumps(data, ensure_ascii=False).encode("utf-8")
@@ -92,18 +162,18 @@ class ReviewHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
-    def _save_review(self):
+    def _save_review(self, paper_dir: Path):
         content_len = int(self.headers.get("Content-Length", 0))
         body = json.loads(self.rfile.read(content_len))
-        review_path = self.paper_dir / "08_review" / "review_state.json"
+        review_path = paper_dir / "08_review" / "review_state.json"
         review_path.parent.mkdir(parents=True, exist_ok=True)
-        body["updated_at"] = __import__("datetime").datetime.now().isoformat()
+        body["updated_at"] = datetime.now().isoformat()
         with open(review_path, "w", encoding="utf-8") as f:
             json.dump(body, f, ensure_ascii=False, indent=2)
         self._json_response({"status": "ok"})
 
-    def _export_json(self):
-        data = build_api_data(self.paper_dir)
+    def _export_json(self, paper_dir: Path):
+        data = build_api_data(paper_dir)
         review_state = data["review_state"]
         entries_state = review_state.get("entries", {})
         drafts = data["drafts"]
@@ -133,23 +203,55 @@ class ReviewHandler(http.server.SimpleHTTPRequestHandler):
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="V2 Human Review Server")
-    parser.add_argument("paper_dir", help="Path to paper run directory")
+    parser.add_argument(
+        "paper_dir", nargs="?", default=None,
+        help="Path to a single paper run directory (single-paper mode)"
+    )
+    parser.add_argument(
+        "--runs-dir", default=None,
+        help="Path to runs directory for multi-paper auto-discovery (default: PROJECT_ROOT/runs)"
+    )
     parser.add_argument("--port", type=int, default=8080, help="HTTP port (default: 8080)")
     args = parser.parse_args()
 
-    paper_dir = Path(args.paper_dir).resolve()
-    if not paper_dir.exists():
-        print(f"ERROR: {paper_dir} not found")
-        sys.exit(1)
+    if args.paper_dir:
+        # Single-paper mode (backward compatible)
+        paper_dir = Path(args.paper_dir).resolve()
+        if not paper_dir.exists():
+            print(f"ERROR: {paper_dir} not found")
+            sys.exit(1)
+        paper_id = paper_dir.name
+        ReviewHandler.papers = {
+            paper_id: {
+                "paper_id": paper_id,
+                "paper_dir": str(paper_dir),
+                "draft_count": "?",
+            }
+        }
+        ReviewHandler.paper_dirs = {paper_id: paper_dir}
+        ReviewHandler.single_mode = True
+        print(f"\n  Review server: http://127.0.0.1:{args.port}")
+        print(f"  Mode: single-paper")
+        print(f"  Paper: {paper_id}  ({paper_dir})")
+    else:
+        # Multi-paper mode
+        runs_dir = Path(args.runs_dir).resolve() if args.runs_dir else (PROJECT_ROOT / "runs")
+        papers = discover_papers(runs_dir)
+        if not papers:
+            print(f"ERROR: No papers with 06_draft/draft_entries.jsonl found under {runs_dir}")
+            sys.exit(1)
+        ReviewHandler.papers = {p["paper_id"]: p for p in papers}
+        ReviewHandler.paper_dirs = {p["paper_id"]: Path(p["paper_dir"]) for p in papers}
+        ReviewHandler.single_mode = False
+        print(f"\n  Review server: http://127.0.0.1:{args.port}")
+        print(f"  Mode: multi-paper  ({len(papers)} papers)")
+        for p in papers:
+            print(f"    - {p['paper_id']}  ({p['draft_count']} drafts)")
 
-    ReviewHandler.paper_dir = paper_dir
+    print(f"  Press Ctrl+C to stop\n")
 
     host = "127.0.0.1"
     server = http.server.HTTPServer((host, args.port), ReviewHandler)
-    url = f"http://{host}:{args.port}"
-    print(f"\n  Review server: {url}")
-    print(f"  Paper: {paper_dir}")
-    print(f"  Press Ctrl+C to stop\n")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
