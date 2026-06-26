@@ -162,3 +162,16 @@
 - 如果某个可选子字段没有信息，填 `null` 或 `[]`
 - 不要编造任何未在证据中出现的实体名称或数据
 - 如果证据不足（如只有 1 条证据），在 uncertainty_map.gaps 中说明
+# Authoritative Scientific Questions
+
+Use these 7 evidence_type values as the current scientific-question taxonomy:
+
+1. `disease_association`: disease/pathological state relationship with mitochondrial thermogenesis or thermogenic dysfunction.
+2. `detection_method`: method or readout for measuring thermogenesis or thermogenesis-relevant variables.
+3. `thermogenesis_modulation`: intervention that changes thermogenesis and its direction.
+4. `biomarker_panel`: marker combination, signature, score, or panel for judging thermogenic state.
+5. `mechanism_pathway`: molecular pathway by which heat is produced, regulated, transmitted, or linked to signaling.
+6. `pathway_cellular_function_impact`: downstream impact of thermogenic pathways on cell functions such as differentiation, apoptosis, autophagy, mitochondrial biogenesis, metabolism, inflammation, stress response, secretion, senescence, or cell fate.
+7. `organelle_interaction_impact`: organelle-organelle interaction under mitochondrial thermogenesis abnormality or thermogenesis-related states, linked to thermogenic state, metabolic state, or cellular function.
+
+Overlap rule: keep draft entries within their provided `evidence_type`. Do not merge `pathway_cellular_function_impact` or `organelle_interaction_impact` into generic `mechanism_pathway` unless the input evidence_type is already `mechanism_pathway`.

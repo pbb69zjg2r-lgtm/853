@@ -82,7 +82,7 @@ evidence_unit:
   structured_fields:
     type: object
     required: true
-    description: "Evidence-type-specific fields for one of the seven scientific questions."
+    description: "Evidence-type-specific fields for one of the seven scientific questions. Human-readable question definitions are in _project/SCIENTIFIC_QUESTIONS.md."
   raw_entities:
     type: array
     required: true

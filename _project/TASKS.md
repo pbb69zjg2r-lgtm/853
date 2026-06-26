@@ -8,6 +8,8 @@
 
 ## Pending
 
+- Check future extraction results against `_project/SCIENTIFIC_QUESTIONS.md`, especially boundary cases between `mechanism_pathway`, `pathway_cellular_function_impact`, and `organelle_interaction_impact`.
+
 - ~~Build `src/core/contracts.py` to load `contracts/*.yaml` from one place.~~
 - ~~Replace the old hard-coded validator with a contracts-driven validator.~~
 - ~~Rewrite `prompts/evidence_extraction.txt` and `src/evidence/extract_evidence.py` to emit the confirmed `evidence_unit` structure.~~
@@ -24,6 +26,8 @@
 - 考虑只在 review 页面展示 real_paper_* 论文（过滤 mock_）
 
 ## Done
+
+- Added `_project/SCIENTIFIC_QUESTIONS.md` and synchronized the 7-question taxonomy into evidence extraction and draft generation prompts.
 
 - **去耦合审计（20 问题全部修复）** — 4 HIGH + 12 MEDIUM + 4 LOW，contracts 路径统一、枚举值字典引用、提示词动态注入、死代码清理、review.html 审核字段完善
 - **format_prompt() 动态注入** — 提示词中 `{{DETECTION_CATEGORY}}` 等占位符运行时替换为字典值，改字典自动同步提示词

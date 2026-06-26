@@ -1,5 +1,25 @@
 # Handoff
 
+## 2026-06-26 Scientific Questions Update
+
+Before changing evidence extraction or draft synthesis behavior, read:
+
+```text
+_project/SCIENTIFIC_QUESTIONS.md
+```
+
+This file defines the 7 scientific questions behind `evidence_type` and the overlap rules between:
+
+```text
+thermogenesis_modulation vs mechanism_pathway
+mechanism_pathway vs pathway_cellular_function_impact
+pathway_cellular_function_impact vs organelle_interaction_impact
+detection_method vs routine supporting method
+biomarker_panel vs single marker
+```
+
+The enum names are stable and were not renamed.
+
 ## 2026-06-26 Decoupling Complete
 
 去耦合审计全部完成。所有 Python 代码通过 contracts API 获取路径、枚举值和字段 schema。

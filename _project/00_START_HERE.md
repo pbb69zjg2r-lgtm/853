@@ -16,6 +16,7 @@
 5. _project/AGENT_RULES.md
 6. _project/QUALITY_GATES.md
 7. _project/ARCHITECTURE.md
+8. _project/SCIENTIFIC_QUESTIONS.md
 ```
 
 如果需要了解完整设计，再读：

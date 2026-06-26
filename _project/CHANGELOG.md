@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-06-26 (Scientific Questions Revision)
+
+### Added
+
+- Added `_project/SCIENTIFIC_QUESTIONS.md` as the human-readable authority for the 7 scientific questions mapped to `evidence_type`.
+
+### Changed
+
+- Added an authoritative taxonomy and overlap rules to `prompts/evidence_extraction.txt`.
+- Added the same 7-question taxonomy to `prompts/draft_generation.txt` so draft synthesis preserves `pathway_cellular_function_impact` and `organelle_interaction_impact` instead of collapsing them into generic `mechanism_pathway`.
+- Added a pointer from `contracts/fields.yaml` to `_project/SCIENTIFIC_QUESTIONS.md`.
+- Added `_project/SCIENTIFIC_QUESTIONS.md` to the required read order in `_project/00_START_HERE.md`.
+
+### Notes
+
+- The stable enum names in `contracts/dictionaries.yaml` were not changed.
+- This is a definition and prompt-boundary revision, not a pipeline logic change.
+
+---
+
 ## 2026-06-26 (Decoupling Audit & Prompt Format)
 
 ### Overview

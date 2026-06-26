@@ -1,5 +1,12 @@
 # Status
 
+## 2026-06-26 Scientific Questions Revised
+
+- Added `_project/SCIENTIFIC_QUESTIONS.md` as the human-readable authority for the 7 scientific questions.
+- Updated `prompts/evidence_extraction.txt` with an authoritative taxonomy and overlap rules.
+- Updated `prompts/draft_generation.txt` with the same taxonomy so draft synthesis does not collapse type 6/7 into generic mechanisms.
+- Stable enum names remain unchanged in `contracts/dictionaries.yaml`.
+
 ## 2026-06-26 Decoupling Audit Complete
 
 **去耦合审计全部完成（20 个问题全部修复）**
