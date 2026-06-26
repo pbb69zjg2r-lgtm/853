@@ -42,7 +42,7 @@ D:\融合版\853
 
 ```bash
 # 前置：设置 API key
-export OPENAI_API_KEY=<deepseek-key>
+export OPENAI_API_KEY=sk-634a08836afc48a68863df07b6af8c69
 export OPENAI_BASE_URL=https://api.deepseek.com
 export EVIDENCE_LLM_MODEL=deepseek-chat
 
@@ -72,8 +72,9 @@ python src/drafting/generate_drafts.py runs/<paper_id> <paper_id>
 # Step 8: 质量核查
 python src/verification/generate_report.py runs/<paper_id> <paper_id>
 
-# Step 9: 启动审核服务器
-python src/review/review_server.py runs/<paper_id> --port 8080
+# Step 9: 启动审核服务器（多论文模式 — 自动发现 runs/ 下所有论文）
+python src/review/review_server.py --port 8080
+# 或单论文模式：python src/review/review_server.py runs/<paper_id> --port 8080
 # 浏览器打开 http://localhost:8080 进行人工审核
 # 审核完成后导出 JSON
 
@@ -102,12 +103,29 @@ python src/evidence/extract_evidence.py runs/<paper_id> <paper_id> --mock
 - thermogenesis_modulation: 10
 - disease_association: 1
 
+## real_paper_002 运行结果
+
+### 完整链路数据
+- 201 MinerU blocks → 110 kept → 73P + 37F + 0T，21 sections
+- 11 extraction groups → 4 LLM batches × 3 runs → consensus 35 evidence units (25 全票 + 10 两票)
+- 35 units → 263 relations (supports:106, detects:89, causal_chain:38, associated_with:17, extends:13)
+- 35 evidence units → 5 context packs (BFS clustering max_size=20) → 5 draft entries (中文)
+- Verifier: 5/5 OK, 35/35 evidence linked
+
+### 证据分布
+- mechanism_pathway: 20
+- detection_method: 12
+- disease_association: 3
+
+### 论文主题
+HSF1 双重调控 SPI1/PU.1 和 HSP70 在单核细胞向巨噬细胞分化中的作用（非线粒体产热，但与 HSF1 热休克通路相关）
+
 ### 关键技术决策
 - Evidence units: 3-run majority voting (temperature=0, Jaccard threshold=0.4, min_runs=2)
 - Evidence relations: 纯规则引擎（实体重叠 + 类型组合），每节点最多 10 条出边
 - Context packs: 基于关系图的 BFS 连通分量聚类（max_size=20），66 证据单元 → 11 主题 packs
 - Draft entries: 中文 LLM 生成，按 task_type 分批（每批≤4），解析失败自动逐 pack 重试
-- Review UI: client-server 架构（Python HTTP server + 独立 HTML 前端）
+- Review UI: client-server 架构，多论文自动发现 + 下拉切换 + 按论文独立保存审核状态
 
 ## 已知问题
 

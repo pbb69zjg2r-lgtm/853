@@ -8,10 +8,11 @@
 
 ## Pending
 
-- 人工审核 real_paper_001 的 11 条 draft entries
+- 人工审核 real_paper_001 的 11 条 + real_paper_002 的 5 条 draft entries
 - 审核完成后跑 `build_export.py` 生成最终 review_export.json
 - 跑更多论文测试泛化性
 - 评估是否把 mock 校验扩展为通用 stage contract validator
+- 考虑只在 review 页面展示 real_paper_* 论文（过滤 mock_）
 
 ## Done
 
@@ -45,6 +46,11 @@
 - 迭代聚类粒度（max_size=8→17, 12→13, 20→11），消除前 4 条 draft entries 主题重叠问题
 - 将 review_workspace 从静态 HTML 改为 server-based 架构
 - 推送完整 pipeline 到 GitHub (pbb69zjg2r-lgtm/853)
+- 用 real_paper_002 (HSF1/SPI1 巨噬细胞分化) 跑通全流程（35 consensus, 5 drafts, 5/5 OK）
+- 升级 review_workspace 为多论文模式（自动发现 + 下拉切换 + 按论文独立保存）
+- 切换到 DeepSeek 官方直连 API（弃用代理 rawchat.cn/codex）
+- 修复审核页面空白 bug（mock_paper_001 旧格式 review_state 兼容）
+- 修复 selectEntry 变量遮蔽 bug（evIds.forEach 遮蔽 eid 参数）
 
 ## Blocked
 

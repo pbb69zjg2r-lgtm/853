@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-06-26 (Session 4)
+
+### Added
+
+- **real_paper_002** 全流程跑通：HSF1/SPI1/PU.1 巨噬细胞分化论文（35 consensus → 5 drafts, 5/5 OK）
+- **多论文审核服务器**：自动发现 `runs/` 下所有论文，论文选择下拉框，按论文独立保存审核状态
+- **`/api/papers`** 端点：返回所有可用论文列表及 draft 数量
+
+### Changed
+
+- **切换到 DeepSeek 官方直连**：`OPENAI_BASE_URL=https://api.deepseek.com`，弃用代理 `rawchat.cn/codex`
+- **审核 UI**：侧边栏顶部新增论文切换器，切换时自动保存当前审核状态，localStorage 记住上次选择的论文
+
+### Fixed
+
+- 审核页面空白 bug：`mock_paper_001` 旧格式 `review_state.json` 缺少 `entries` 字段导致 JS 崩溃
+- `selectEntry()` 变量遮蔽 bug：`evIds.forEach(eid => ...)` 遮蔽了函数参数 `eid`，导致 notes 保存到错误 entry
+
+---
+
 ## 2026-06-26 (Session 3)
 
 ### Changed

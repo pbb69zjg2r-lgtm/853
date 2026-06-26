@@ -7,8 +7,10 @@
 ```text
 阶段：Pipeline 全 9 阶段完成（raw_parse → review_export）
 代码状态：10 个 Python 脚本全部通过真实论文 real_paper_001 验证
-运行状态：real_paper_001 完整链路跑通：PDF → 66 consensus evidence units → 480 relations → 11 context packs (relation-graph clustering) → 11 draft entries → review workspace
-可信输出：review_export.json (11 entries，待人工审核)；review.html (server-based review workspace)
+运行状态：
+  real_paper_001 — PDF → 66 consensus → 480 relations → 11 context packs → 11 draft entries → review workspace ✓
+  real_paper_002 — PDF → 35 consensus → 263 relations → 5 context packs → 5 draft entries → review workspace ✓
+可信输出：review_export.json (两篇论文，待人工审核)；review.html (多论文 server-based review workspace)
 ```
 
 ## 项目目录
@@ -45,12 +47,15 @@ D:\融合版\853
 - 证据关系：纯规则引擎，基于实体重叠 + 类型组合，无 LLM
 - 上下文打包：基于关系图的 BFS 连通分量聚类（max_size=20），66 证据单元 → 11 主题 packs
 - 草稿生成：中文 prompt，按 task_type 分批（每批最多 4 packs），解析失败时逐 pack 重试
-- 审核界面：Client-server 架构（Python HTTP server + 独立 HTML 前端），参考旧项目模式
+- 审核界面：Client-server 架构，多论文自动发现 + 下拉切换 + 按论文独立保存审核状态
+- real_paper_002 验证：HSF1/SPI1 巨噬细胞分化论文全流程跑通（40/37/50 → 35 consensus, 5 draft entries, 5/5 OK）
+- 切换到 DeepSeek 官方直连（api.deepseek.com），弃用代理
 - Bug 修复：跨 batch 的 evidence_id 重复（parse_llm_output 需 id_offset）
 - Review HTML 嵌入方案从静态内联 JSON 改为 server-based API 动态加载
 
 ## 当前建议
 
-- 人工审核：启动 `python src/review/review_server.py runs/real_paper_001`，浏览器打开 http://localhost:8080
-- 审核完成后运行 `python src/export/build_export.py runs/real_paper_001` 生成最终 review_export.json
+- 人工审核：启动 `python src/review/review_server.py`（多论文模式），浏览器打开 http://localhost:8080
+- 审核完成后运行 `python src/export/build_export.py runs/<paper_id>` 生成最终 review_export.json
 - 后续可跑更多论文测试泛化性
+- 当前服务器运行中（localhost:8080），含 mock_paper_001 / real_paper_001 / real_paper_002 三篇
