@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-06-26 (Session 3)
+
+### Changed
+
+- **context_packs**：从 1:1 映射（每证据一包）改为基于关系图的 BFS 连通分量聚类（max_size=20），66 证据单元 → 11 主题 packs
+- **draft_generation prompt**：从英文重写为中文，要求 main_claim 用中文、实体保留英文、忠实原文
+- **draft entries**：从 66 条减至 11 条，消除主题重叠（用户反馈"前四条都在说同一件事"）
+- **聚类粒度迭代**：max_size=8→17 条, 12→13 条, 20→11 条（当前版本）
+- **review_workspace**：从静态内联 HTML 改为 client-server 架构（Python HTTP server + 独立 HTML 前端），参考旧项目 `review_server.py`
+- **draft 生成稳定性**：按 task_type 分批（每批最多 4 packs），解析失败时自动逐 pack 重试
+- **Pipeline 推送到 GitHub**：`git@github-pbb:pbb69zjg2r-lgtm/853.git`
+
+### Fixed
+
+- SSH 推送权限：`github.com`→`github-pbb` host alias（id_ed25519_pbb 密钥）
+
+---
+
 ## 2026-06-26 (Session 2)
 
 ### Added

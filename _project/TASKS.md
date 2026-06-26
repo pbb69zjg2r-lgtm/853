@@ -8,7 +8,7 @@
 
 ## Pending
 
-- 人工审核 real_paper_001 的 66 条 draft entries
+- 人工审核 real_paper_001 的 11 条 draft entries
 - 审核完成后跑 `build_export.py` 生成最终 review_export.json
 - 跑更多论文测试泛化性
 - 评估是否把 mock 校验扩展为通用 stage contract validator
@@ -40,6 +40,11 @@
 - 实现 review_export 最终导出（build_export.py）
 - 修复跨 batch evidence_id 重复 bug
 - 修复 review HTML JSON 嵌入转义问题，改为 server-based 架构
+- 将 context_packs 从 1:1 映射改为 relation-graph BFS 聚类（max_size=20，66→11 packs）
+- 将 draft_generation prompt 重写为中文
+- 迭代聚类粒度（max_size=8→17, 12→13, 20→11），消除前 4 条 draft entries 主题重叠问题
+- 将 review_workspace 从静态 HTML 改为 server-based 架构
+- 推送完整 pipeline 到 GitHub (pbb69zjg2r-lgtm/853)
 
 ## Blocked
 

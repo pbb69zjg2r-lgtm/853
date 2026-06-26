@@ -93,8 +93,8 @@ python src/evidence/extract_evidence.py runs/<paper_id> <paper_id> --mock
 - 248 MinerU blocks → 123 kept → 91P + 32F + 0T，14 sections
 - 27 extraction groups → 5 LLM batches × 3 runs → consensus 66 evidence units
 - 66 units → 480 directed relations (8 types: supports:131, targets:100, mediates:91, detects:90, extends:29, modulates:20, causal_chain:18, associated_with:1)
-- 66 context packs → 18 LLM batches → 66 draft entries
-- Verifier: 65/66 OK, 1 flagged, 66/66 evidence linked
+- 66 evidence units → 480 relations → 11 context packs (relation-graph BFS clustering, max_size=20) → 11 draft entries (中文)
+- Verifier: 11/11 OK, 66/66 evidence linked
 
 ### 证据分布
 - mechanism_pathway: 36
@@ -105,6 +105,8 @@ python src/evidence/extract_evidence.py runs/<paper_id> <paper_id> --mock
 ### 关键技术决策
 - Evidence units: 3-run majority voting (temperature=0, Jaccard threshold=0.4, min_runs=2)
 - Evidence relations: 纯规则引擎（实体重叠 + 类型组合），每节点最多 10 条出边
+- Context packs: 基于关系图的 BFS 连通分量聚类（max_size=20），66 证据单元 → 11 主题 packs
+- Draft entries: 中文 LLM 生成，按 task_type 分批（每批≤4），解析失败自动逐 pack 重试
 - Review UI: client-server 架构（Python HTTP server + 独立 HTML 前端）
 
 ## 已知问题
@@ -121,10 +123,10 @@ python src/evidence/extract_evidence.py runs/<paper_id> <paper_id> --mock
 
 ## 下一步建议
 
-- 人工审核 real_paper_001 的 66 条 draft entries
+- 人工审核 real_paper_001 的 11 条 draft entries（启动 `python src/review/review_server.py runs/real_paper_001`）
+- 审核完成后导出最终 `review_export.json`
 - 跑更多论文测试泛化性
 - 考虑跨论文 relation（当前仅论文内）
-- 后续阶段优化：context_packs 和 draft_entries 目前每单元独立打包，可探索按主题聚类
 
 ## 注意事项
 
