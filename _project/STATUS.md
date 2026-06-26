@@ -5,58 +5,50 @@
 ## 阶段
 
 ```text
-阶段：V2 设计确认完成，项目管理层已建立
-代码状态：已生成最小目录骨架，并实现 mock source normalizer 与最小 mock run 校验脚本
-运行状态：已生成 mock run 样例，尚未运行真实 demo
-可信输出：尚无真实 review_export.json；已有 mock review_export.json 样例
+阶段：Pipeline 全 9 阶段完成（raw_parse → review_export）
+代码状态：9 个 Python 脚本全部通过真实论文 real_paper_001 验证
+运行状态：real_paper_001 完整链路跑通：PDF → 66 consensus evidence units → 480 relations → 66 draft entries → review workspace
+可信输出：review_export.json (66 entries，待人工审核)；review.html (server-based review workspace)
 ```
 
 ## 项目目录
 
 ```text
-D:\codex新\v2_lit_review
+D:\融合版\853
 ```
 
 ## 已完成
 
-- 已确认 V2 以证据为中心、以人工审核为最终确认环节。
-- 已确认 V2 不兼容旧格式。
-- 已确认最终主输出是人工审核后的 `review_export.json`。
-- 已确认人工不直接审核 JSON，而是通过 `review_workspace` 审核。
-- 已确认第一版 demo 只跑一篇论文。
-- 已确认使用 contracts-first 目录结构。
-- 已确认成本判断优先级：稳定性 > 效率 > 成本。
-- 已保存完整设计确认稿：`V2_design_confirmed.md`。
-- 已建立项目管理目录：`_project/`。
-- 已将根目录旧管理文件改为兼容入口，正文统一维护在 `_project/`。
-- 已新增 `AGENTS.md`，作为后续 agent 的工作入口规则。
-- 已生成最小项目目录骨架。
-- 已编写 contracts 样板：`dictionaries.yaml`、`fields.yaml`、`output_contracts.yaml`、`stage_contracts.yaml`。
-- 已生成 `runs/mock_paper_001/` mock 样例运行目录。
-- 已写入一条最小可追溯 mock 链路：`DE001 -> E001/E002 -> SB001/SB002`。
-- 已临时验证 mock JSON/JSONL 可解析，引用链路连通。
-- 已实现 `src/validation/validate_mock_run.js`。
-- 已新增 `tests/validate_mock_run.test.js`。
-- 已验证 mock run 校验脚本可通过测试和 CLI 运行。
-- 已实现 `src/parsing/normalize_mock_raw_parse.js`，用于明确 `raw_parse -> source_blocks/document_structure` 的统一边界。
-- 已新增 `tests/normalize_mock_raw_parse.test.js`。
-- 已创建给另一台电脑 agent 的字典设计任务：`_project/agent_tasks/TASK_DICTIONARIES_V1.md`。
-- 已创建 `_project/AI_HANDOFF_PROMPT.md`，用于交接给另一个 AI。
+### Pipeline 全阶段
 
-## 尚未开始
+| # | 阶段 | 脚本 | 输出 | 状态 |
+|---|------|------|------|------|
+| 1 | raw_parse | `src/parsing/run_mineru.py` + `build_raw_parse.py` | raw_parse.json | ✓ |
+| 2 | source_normalization | `src/parsing/build_source.py` | source_blocks.jsonl + document_structure.json | ✓ |
+| 3 | evidence_units | `src/evidence/extract_evidence.py` | evidence_units.jsonl (66 consensus) | ✓ |
+| 4 | evidence_relations | `src/relations/build_relations.py` | evidence_relations.json (480 relations) | ✓ |
+| 5 | context_packs | `src/context/build_context_packs.py` | context_packs.jsonl (66 packs) | ✓ |
+| 6 | draft_entries | `src/drafting/generate_drafts.py` | draft_entries.jsonl (66 entries) | ✓ |
+| 7 | verifier_report | `src/verification/generate_report.py` | verifier_report.json (65/66 OK) | ✓ |
+| 8 | review_workspace | `src/review/review_server.py` + `review.html` | Server-based review UI | ✓ |
+| 9 | review_export | `src/export/build_export.py` | review_export.json | ✓ |
 
-- 尚未实现真实文件链路。
-- 尚未接入 MinerU。
-- 尚未接入真实 LLM。
-- 尚未生成真实 `review_workspace`。
-- 尚未生成真实 `review_export.json`。
+### 辅助脚本
 
-## 当前未定
+- `src/evidence/consensus_evidence.py` — 多轮 LLM 提取多数投票共识
+- `prompts/evidence_extraction.txt` — 证据提取 prompt（含决策树、INCLUDES/EXCLUDES）
+- `prompts/draft_generation.txt` — 草稿生成 prompt
 
-- 第一版 demo 使用哪一篇 PDF。
-- 第一版 contracts 字段范围是否需要继续细化。
-- 等待另一台电脑 agent 完成 V1 字典设计。
+### 关键设计决策
+
+- 证据提取：3 轮 DeepSeek-chat (T=0) + majority voting → 66 consensus units
+- 证据关系：纯规则引擎，基于实体重叠 + 类型组合，无 LLM
+- 审核界面：Client-server 架构（Python HTTP server + 独立 HTML 前端），参考旧项目模式
+- Bug 修复：跨 batch 的 evidence_id 重复（parse_llm_output 需 id_offset）
+- Review HTML 嵌入方案从静态内联 JSON 改为 server-based API 动态加载
 
 ## 当前建议
 
-下一步建议讨论 MinerU adapter 的真实输入输出边界，或把 mock normalizer 接入一个最小 pipeline 命令。不要一开始接入真实 LLM。
+- 人工审核：启动 `python src/review/review_server.py runs/real_paper_001`，浏览器打开 http://localhost:8080
+- 审核完成后运行 `python src/export/build_export.py runs/real_paper_001` 生成最终 review_export.json
+- 后续可跑更多论文测试泛化性

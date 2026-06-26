@@ -1,0 +1,1403 @@
+{
+  "paper_id": "real_paper_001",
+  "schema_version": "0.1.0",
+  "contract_version": "2026-06-26",
+  "sections": [
+    {
+      "section_id": "S00",
+      "title": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "section_type": "title"
+    },
+    {
+      "section_id": "S02",
+      "title": "INTRODUCTION",
+      "section_type": "introduction"
+    },
+    {
+      "section_id": "S03",
+      "title": "RESULTS",
+      "section_type": "results"
+    },
+    {
+      "section_id": "S04",
+      "title": "DISCUSSION",
+      "section_type": "discussion"
+    },
+    {
+      "section_id": "S05",
+      "title": "ASSOCIATED CONTENT",
+      "section_type": "body"
+    },
+    {
+      "section_id": "S06",
+      "title": "\\*sı Supporting Information",
+      "section_type": "supplementary"
+    },
+    {
+      "section_id": "S07",
+      "title": "AUTHOR INFORMATION",
+      "section_type": "back_matter"
+    },
+    {
+      "section_id": "S08",
+      "title": "Corresponding Authors",
+      "section_type": "back_matter"
+    },
+    {
+      "section_id": "S09",
+      "title": "Authors",
+      "section_type": "back_matter"
+    },
+    {
+      "section_id": "S10",
+      "title": "Author Contributions",
+      "section_type": "back_matter"
+    },
+    {
+      "section_id": "S11",
+      "title": "Funding",
+      "section_type": "back_matter"
+    },
+    {
+      "section_id": "S12",
+      "title": "Notes",
+      "section_type": "back_matter"
+    },
+    {
+      "section_id": "S13",
+      "title": "ACKNOWLEDGMENTS",
+      "section_type": "back_matter"
+    },
+    {
+      "section_id": "S14",
+      "title": "REFERENCES",
+      "section_type": "references"
+    }
+  ],
+  "paragraphs": [
+    {
+      "paragraph_id": "real_paper_001_P0001",
+      "source_block_id": "real_paper_001_B0001",
+      "page": 1,
+      "section": "S00",
+      "section_title": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "section_type": "title",
+      "text": "http://pubs.acs.org/journal/acscii",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0002",
+      "source_block_id": "real_paper_001_B0002",
+      "page": 1,
+      "section": "S00",
+      "section_title": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "section_type": "title",
+      "text": "Article",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0003",
+      "source_block_id": "real_paper_001_B0003",
+      "page": 1,
+      "section": "S00",
+      "section_title": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "section_type": "title",
+      "text": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "text_level": 1,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0004",
+      "source_block_id": "real_paper_001_B0004",
+      "page": 1,
+      "section": "S00",
+      "section_title": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "section_type": "title",
+      "text": "Myeong-Gyun Kang,<sup>#</sup> Hwa-Ryeon Kim,<sup>#</sup> Hee Yong Lee,<sup>#</sup> Chulhwan Kwak, Hyewon Koh, Byoung Heon Kang, Jae-Seok Roe,\\* and Hyun-Woo Rhee\\*",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0005",
+      "source_block_id": "real_paper_001_B0006",
+      "page": 1,
+      "section": "S00",
+      "section_title": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "section_type": "title",
+      "text": "Cite This: ACS Cent. Sci. 2024, 10, 1231−1241",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0006",
+      "source_block_id": "real_paper_001_B0008",
+      "page": 1,
+      "section": "S00",
+      "section_title": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "section_type": "title",
+      "text": "Read Online",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0007",
+      "source_block_id": "real_paper_001_B0009",
+      "page": 1,
+      "section": "S00",
+      "section_title": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "section_type": "title",
+      "text": "ACCESS",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0008",
+      "source_block_id": "real_paper_001_B0010",
+      "page": 1,
+      "section": "S00",
+      "section_title": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "section_type": "title",
+      "text": "Metrics & More",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0009",
+      "source_block_id": "real_paper_001_B0011",
+      "page": 1,
+      "section": "S00",
+      "section_title": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "section_type": "title",
+      "text": "Article Recommendations",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0010",
+      "source_block_id": "real_paper_001_B0012",
+      "page": 1,
+      "section": "S00",
+      "section_title": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "section_type": "title",
+      "text": "\\*sı Supporting Information",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0011",
+      "source_block_id": "real_paper_001_B0013",
+      "page": 1,
+      "section": "S00",
+      "section_title": "Mitochondrial Thermogenesis Can Trigger Heat Shock Response in the Nucleus",
+      "section_type": "abstract",
+      "text": "ABSTRACT: Mitochondrial thermogenesis is a process in which heat is generated by mitochondrial respiration. In living organisms, the thermogenic mechanisms that maintain body temperature have been studied extensively in fat cells with little knowledge on how mitochondrial heat may act beyond energy expenditure. Here, we highlight that the exothermic oxygen reduction reaction (ΔH ° = −286 kJ/mol) is the main source of the protonophoreinduced mitochondrial thermogenesis, and this heat is conducted to other cellular organelles, including the nucleus. As a result, mitochondrial heat that reached the nucleus initiated the classical heat shock response, including the formation of nuclear stress granules and the localization of heat shock factor 1 (HSF1) to chromatin. Consequently, activated HSF1 increases the level of gene expression associated with the response to thermal stress in mammalian cells. Our results illustrate heat generated within the cells as a potential source of mitochondria-nucleus communication and expand our understanding of the biological functions of mitochondria in cell physiology.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0012",
+      "source_block_id": "real_paper_001_B0015",
+      "page": 1,
+      "section": "S02",
+      "section_title": "INTRODUCTION",
+      "section_type": "introduction",
+      "text": "■ INTRODUCTION",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0013",
+      "source_block_id": "real_paper_001_B0016",
+      "page": 1,
+      "section": "S02",
+      "section_title": "INTRODUCTION",
+      "section_type": "introduction",
+      "text": "Heat induces diverse biological events, including biochemical reactions (e.g., reaction equilibrium and reaction rates)<sup>1,2</sup> and structural changes in proteins<sup>3</sup> and lipid membranes.<sup>4</sup> For this reason, living systems can precisely sense and respond to temperature changes.<sup>5</sup> Under the external heat stress conditions, heat shock factor 1 (HSF1) senses the increase in temperature and undergoes a structural change that enables it to regulate the expression of heat shock proteins (HSPs) thereby promoting cell survival. Although HSF1 activation under external heat shock conditions was discovered more than 30 years ago,<sup>6−9</sup> whether mammalian cells can produce their own heat to initiate an HSE1-mediated heat shock response remains unknown.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0014",
+      "source_block_id": "real_paper_001_B0017",
+      "page": 1,
+      "section": "S02",
+      "section_title": "INTRODUCTION",
+      "section_type": "introduction",
+      "text": "Mitochondrial thermogenesis is an intracellular event that actively generates heat to maintain the body temperature. In fat cell mitochondria, protons are directly imported into the mitochondrial matrix by the proton transporter protein (UCP1), not by ATP synthase,<sup>10</sup> which is known to accelerate mitochondrial oxygen consumption.<sup>11,12</sup> A similar event can be induced by treatment with mitochondrial uncoupling agents such as carbonyl cyanide p-(trifluoromethoxy)phenyl-hydrazone (FCCP), which can directly import protons to the mitochondrial matrix.<sup>13</sup> Intriguingly, the FCCP-driven proton import to the mitochondrial matrix can also initiate mitochondrial thermogenesis, which was validated experimen tally using several fluorescent thermometers that can precisely detect mitochondrial temperature increases in live cells.<sup>14−22</sup> However, the biological importance and impact of the heat generated in mitochondria by changes in proton import remain uncertain. In this study, we highlighted that exothermic proton-coupled oxygen consumption reaction or oxygen reduction reaction $\\mathrm { \\tilde { ( O R R , ~ } { 1 / 2 } \\hat { O _ { 2 } } ~ + ~ } 2 \\mathrm { H ^ { + } ~ + ~ } 2 \\mathrm { e ^ { - } ~  ~ } \\dot { \\mathrm { H _ { 2 } O } } ,$ $\\Delta H _ { \\mathrm { f } } ^ { \\mathrm { ~ o ~ } } = - 2 8 6 \\mathrm { ~ \\ k J / m o l ) ^ { \\hat { 2 } 3 , 2 4 } }$ (Figure 1A) is the main thermogenic source under the protonophore (i.e., FCCP) treatment by regulation of oxygen concentration and electron flows in the electron transport chain. Furthermore, we determined that this ORR-induced thermogenesis in mitochondria leads to thermal conduction to other organelles such as the nucleus. Under the same conditions, we observed that mitochondrial thermogenesis activated canonical nuclear heat shock response programs mediated by HSF1. Overall, our study reveals a cell-intrinsic mechanism that allows heat to actively convey biological signals from the mitochondria to the nucleus.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0015",
+      "source_block_id": "real_paper_001_B0018",
+      "page": 1,
+      "section": "S02",
+      "section_title": "INTRODUCTION",
+      "section_type": "introduction",
+      "text": "",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0016",
+      "source_block_id": "real_paper_001_B0019",
+      "page": 1,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "■ RESULTS",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0017",
+      "source_block_id": "real_paper_001_B0020",
+      "page": 1,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Heat Shock Factor 1 Activation by Mitochondrial Thermogenesis. Biochemically, FCCP is a weak acid that facilitates reversible proton import from the mitochondrial intermembrane space (IMS) to the matrix, which in turn uncouples the electron transport chain and inhibits ATP synthesis.<sup>25</sup> From a chemical perspective, this event can induce a highly exothermic oxygen reduction reaction (ORR) at mitochondrial complex IV $\\overline { { ( 1 / 2 0 _ { 2 } + 2 \\mathrm { H } ^ { + } + 2 \\mathrm { e } ^ { - }  \\mathrm { H } _ { 2 } \\mathrm { O } , \\Delta H _ { f } ^ { \\circ } } }$ $= - 2 8 6 \\mathrm { \\ k J / m o l } ) ^ { 2 \\frac { 1 } { 3 } }$ by providing essential protons for the reaction $( { \\mathrm { F i g u r e ~ } } 1 \\mathbf { A } )$ . We confirmed that FCCP induced the mitochondrial uncoupling process by measuring the reduced mitochondrial membrane potential using the TMRE assay (Figure S1A,B). To verify whether other subcellular organelles are afected by heat produced by ORR, we measured that endoplasmic reticulum (ER) temperature was increased by the FCCP treatment with an ER-localized temperature-measuring fluorescent probe, ERthermAC $( \\mathrm { E T A C } ) ^ { 2 \\AA }$ (Figure S1C,D). Using a fluorescent polymeric thermometer (FDV) which is evenly distributed in the entire cellular area,<sup>27−29</sup> we also observed that the fluorescence emission intensity ratio $( \\mathrm { F I } _ { 5 8 0 } /$ $\\mathrm { F I } _ { 5 1 5 } )$ of FDV corresponded to the ratio at the range from 38.9 to 40.0 °C under the FCCP treatment (Figure S1E,F). These results indicate that the mitochondrial-generated heat induced by FCCP can be transferred to the surrounding space and proximal organelles.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0018",
+      "source_block_id": "real_paper_001_B0023",
+      "page": 1,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Downloaded via 107.173.127.164 on December 2, 2025 at 08:20:57 (UTC). See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.",
+      "text_level": null,
+      "mineru_type": "aside_text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0019",
+      "source_block_id": "real_paper_001_B0038",
+      "page": 2,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0020",
+      "source_block_id": "real_paper_001_B0039",
+      "page": 2,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "HSF1 is the fundamental heat-sensitive nuclear factor that can be activated with nuclear “foci” formation under heat stress.<sup>30,31</sup> To determine whether the activity of HSF1 is regulated by mitochondrial heat (Figure 1B), we checked endogenous HSF1 localization by immunofluorescence imaging following treatment with FCCP. Under the FCCP treatment condition (100 μM, 1 h), endogenous HSF1 foci formation was clearly observed in the nucleus, and this pattern was comparable to that of HSF1 foci formation under external heat shock conditions (Figure 1C). As shown in the box plot (Figure 1D), a significant number of HSF1 foci were induced by FCCP (foci per cell: ∼6) and heat shock condition at $4 3 ~ ^ { \\circ } \\mathrm { C }$ (foci per cell: ∼12), compared to DMSO-treated cells (foci per cell: 0). Additionally, the cell population with HSF1-GFP foci significantly increased in the FCCP-treated sample (∼70%) and in the heat shock $( 4 3 ~ ^ { \\circ } \\mathrm { C } )$ induced sample (∼88%) compared to the control (Figure S2A,B).",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0021",
+      "source_block_id": "real_paper_001_B0040",
+      "page": 2,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0022",
+      "source_block_id": "real_paper_001_B0041",
+      "page": 2,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Including heat, there are several factors that contribute to the process of HSF1 activation, such as intracellular pH changes, 37 Hence, we decided to investigate whether mitochondrial heat is the primary factor triggering HSF1 foci formation with FCCP treatment. First of all, we excluded pH changes as factors in HSF1 activation because nuclear pH remained within the physiological range under FCCP treatment, as measured by pHluorin2<sup>38</sup> (Figure S1G). To assess ROS generation under the FCCP treatment, we employed our recently developed system based on the ROS-dependent engineered ascorbate peroxidase (APEX) reaction<sup>39</sup> (Figure 2A−C). As a result, the ROS production induced by FCCP was very low in all submitochondrial spaces compared to the well-established ROS-generating agent menadione<sup>40</sup> (Figure 2D,E).",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0023",
+      "source_block_id": "real_paper_001_B0042",
+      "page": 2,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Notably, HSF1 has multiple activation modes either by heat stress or by ROS generation.<sup>41,42</sup> We confirmed that HSF1 foci",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0024",
+      "source_block_id": "real_paper_001_B0048",
+      "page": 3,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Whole Cell",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0025",
+      "source_block_id": "real_paper_001_B0049",
+      "page": 3,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Outer mitochondrial membrane (OMM)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0026",
+      "source_block_id": "real_paper_001_B0057",
+      "page": 3,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "formation was induced by menadione without heat induction; however, the level of this ROS-induced HSF1 foci formation was much lower than that of FCCP (Figure 1D). In addition, menadione was significantly quenched by cotreatment with ROS quenching agent N-acetylcysteine (NAC, 5 mM) (Figure 1C,D and Figure S2A,B). In contrast, FCCP-driven HSF1 foci formation was minimally afected by cotreatment with the same concentration of NAC (5 mM), suggesting that ROS is unlikely attributed to HSF1 foci formation by FCCP (Figure 1C,D).",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0027",
+      "source_block_id": "real_paper_001_B0058",
+      "page": 3,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Next, we examined whether FCCP treatment activates HSF1 translocation to the nucleus via accumulation of mitochondrial precursor protein in the cytosol.<sup>37</sup> For this assay, we monitored whether the mitochondrial import process of mitochondrial targeting sequence (MTS) conjugated dsRed (MTS-mycdsRed) can be perturbed by our FCCP treatment condition (100 μM, 1 h). As a result, we could observe that both MTS dsRed and endogenous HSPD1 (mitochondrial matrix resident protein) were well-targeted to the mitochondria under our FCCP treatment condition (Figure S3A,B). In the Western blot result, we could not detect the accumulation of precursor proteins of endogenous HSPD1 under the same FCCP treatment conditions (Figure S3C,D). These findings suggest that our short FCCP incubation time may not induce significant accumulation of mitochondrial precursor proteins in the cytosol. Additionally, we confirmed that HSF1 foci formation can be induced by FCCP treatment even under the condition of new protein synthesis being blocked by cycloheximide (CHX) or puromycin, while CHX or puromycin treatment itself could not induce foci formation (Figure S3E,F).",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0028",
+      "source_block_id": "real_paper_001_B0059",
+      "page": 3,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0029",
+      "source_block_id": "real_paper_001_B0060",
+      "page": 3,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "We also examined whether HSF1 foci formation can be induced by gamitrinib-triphenylphosphonium (GTPP), a well known mitochondrial HSP90 inhibitor,<sup>43</sup> because a recent study showed that the HSF1’s nuclear translocation was induced by treatment with GTPP by a fractionation method.<sup>37</sup> However, we could not observe significant foci formation of HSF1 compared to FCCP-treated cells (Figure S3G,H), which may indicate that the FCCP-induced HSF1 activation might be diferent from the GTPP-induced proteotoxic stress pathway. All of these results collectively demonstrate that FCCP induced HSF1 foci formation is independent of ROS, pH changes, and proteotoxic stress. Instead, this can be attributed to mitochondrial thermogenesis.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0030",
+      "source_block_id": "real_paper_001_B0061",
+      "page": 3,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Motivated by the above results, we investigated the potential use of HSF1 foci formation as a real-time recording system that responds to heat conducted from mitochondria. To facilitate the observation of HSF1 foci formation in live cells, we prepared a stable cell line expressing HSF1-EGFP by lentiviral infection (Figure 3A). The HSF1-EGFP foci in the stable cell line was significantly induced by FCCP, and a similar level of foci formation was observed compared to those induced by heat shock at 39 °C (Figure S4A,B) as corresponded to intracellular temperature measured by FDV results. However, HSF1 foci were not formed by FCCP in precooled cells at 32 °C for 2 h, which supports that FCCP-induced foci formation event is a temperature-related process (Figure S4C,D).",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0031",
+      "source_block_id": "real_paper_001_B0071",
+      "page": 4,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0032",
+      "source_block_id": "real_paper_001_B0072",
+      "page": 4,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Utilizing the GFP fluorescence, we recorded the HSF1- EGFP foci formation at $3 7 ~ ^ { \\circ } \\mathrm { C }$ immediately following FCCP treatment by real-time confocal microscopy (Figure 3B; supplemental movie 1 and movie 2). In this experiment, we could not observe any HSF1-EGFP foci in cells without FCCP treatment for the first 10 min. However, upon exposure to FCCP, HSF1-EGFP foci emerged immediately and disap peared rapidly when replaced with FCCP-free growth medium (Figure 3B,C). The time-course measurement of the HSF1- EGFP foci number exhibited a strong positive correlation with the presence or absence of FCCP in the cell growth medium (Figure 3C). This result also presented that the HSF1 foci can be induced in a reversible manner by transient heat generation. Consistently, HSF1-EGFP foci formation was also successfully promoted by other mitochondrial protonophores such as BAM15 and CCCP (carbonyl cyanide 3-chlorophenylhydra $\\mathbf { z o n e } ) ^ { 2 . 5 }$ (Figure S5A−D). Nuclear HSF1 foci formation following FCCP treatment was again detected to a comparable degree in various other cell lines, including U2OS, HEK293T, MCF10A, and A549 (Figure S5E−H; supplemental movies $^ { 3 , }$ 4, 5, 6, 7, 8, 9, 10). These observations suggest that HSF1 activation via mitochondrial thermogenesis is conserved in mammalian cells.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0033",
+      "source_block_id": "real_paper_001_B0073",
+      "page": 4,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0034",
+      "source_block_id": "real_paper_001_B0081",
+      "page": 5,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0035",
+      "source_block_id": "real_paper_001_B0082",
+      "page": 5,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Exothermic Oxygen Reduction Reaction Drives the HSF1 Foci Formation. Mitochondrial thermogenesis, induced by exothermic ORR $\\mathrm { ( 1 / 2 O _ { 2 } + 2 H ^ { + } + 2 e ^ { - }  H _ { 2 } O ) , ^ { 2 3 } }$ relies on the abundant availability of reactants $\\left( \\mathrm { H } ^ { + } , \\ \\mathrm { O } _ { 2 } , \\right.$ and electrons) within the mitochondria. Consequently, protonophore-induced mitochondrial thermogenesis is contingent upon a well-maintained oxygen supply and eficient electron transport in the mitochondria. Thus, we hypothesized that either low oxygen levels or impaired electron transport during",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0036",
+      "source_block_id": "real_paper_001_B0083",
+      "page": 5,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "FCCP treatment may weaken heat generation thereby attenuating formation of HSF1 foci (Figure 4A).",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0037",
+      "source_block_id": "real_paper_001_B0084",
+      "page": 5,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "To test this hypothesis, we reduced the oxygen supply to decrease the availability of oxygen molecules in the media and the intracellular environment (Figure 4B; supplemental movie 11). The HSF1-EGFP expressing cells were subjected to hypoxic conditions for 2 h (1% $\\bar { \\bf O } _ { 2 } )$ prior to incubation with 100 μM FCCP. Using a real-time confocal microscope, we could not detect HSF1 foci formation under prolonged hypoxia of over 2 h (Figure 4C; gray dots), indicating that 2−3 h of hypoxic stress does not activate the HSF1. We",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0038",
+      "source_block_id": "real_paper_001_B0098",
+      "page": 6,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "observed only 1−2 HSF1 foci per cell within 10 min of FCCP treatment; however, these foci subsequently disappeared in the span of 30 min (Figure 4C; light blue dots). In contrast, under normoxic baseline conditions $( 2 0 \\% \\mathrm { ~ O ~ } _ { 2 } )$ Figure 3C), approximately 10 foci per cell formed within 10 min following FCCP treatment $( { \\mathrm { F i g u r e ~ 4 C } } ;$ dark blue dots). This finding highlights that oxygen supplementation is a prerequisite for HSF1 activation by mitochondrial thermogenesis.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0039",
+      "source_block_id": "real_paper_001_B0099",
+      "page": 6,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0040",
+      "source_block_id": "real_paper_001_B0105",
+      "page": 7,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Next, to determine whether HSF1 foci formation is afected by preventing electron supply to the exothermic ORR reaction, cells stably expressing HSF1-EGFP were treated with antimycin A or sodium azide, which inhibit electron flow in the Oxidative Phosphorylation (OXPHOS) complexes III and IV, respectively (Figure 4A). As a result, we observed that HSF1 foci formation was highly reduced upon coincubation of cells with OXPHOS inhibitors and FCCP (Figure 4D). Conversely, HSF1-EGFP foci were distinctly formed in the control group after external heat shock at 43 °C, regardless of treatment with either of the OXPHOS inhibitors (Figure 4E). This result confirmed that OXPHOS inhibitors specifically blocked the mitochondrial thermal activation process, not disturbing the HSF1 system. Overall, here we confirmed that every component (i.e., proton, oxygen, and electrons) in the exothermic mitochondrial ORR is required for generating suficient mitochondrial heat that can activate HSF1.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0041",
+      "source_block_id": "real_paper_001_B0106",
+      "page": 7,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Mitochondrial Thermogenesis Activates HSF1-Dependent Transcriptional Programs. Since heat-induced phosphorylations are prerequisites for the transcriptional active mode of HSF1 in the nucleus,<sup>44−46</sup> we evaluated whether mitochondrial thermogenesis induced by FCCP treatment induces phosphorylation on HSF1. As shown in the HSF1 Western blot results (Figure S6A), HSF1 molecules moved more slowly in the gel when treated with FCCP, similar to when the heat shock is induced externally.<sup>44</sup> In contrast, relative to the control group, HSF1 showed no diferent in-gel migration under intracellular ROS-generating conditions induced by either menadione or rotenone treatment (Figure S6A−D). To clarify whether this slowly migrated HSF1 by FCCP is the phosphorylated product, we treated lambda protein phosphatase (λPPase) in the cell lysates that can actively cleave the phosphorylated groups of HSF1.<sup>47</sup> Then, we found that the slow migration of HSF1 in both the FCCP or heat shock treated samples were recovered to the normal level by λPPase (Figure S6B). Moreover, we used an antibody specific to phosphorylated HSF1 at serine-326 for direct detection, as this residue is one of the phosphorylation sites triggered by heat shock.<sup>47</sup> Subsequently, we observed a phosphorylated HSF1 band under both FCCP and heat shock conditions. In contrast, there was no signal in the control, menadione-, and λPPase-treated samples (Figure S6C). These results support the idea that phosphorylation occurs on HSF1 during FCCP-dependent mitochondrial thermogenesis. Taken together, our results suggest that mitochondrial thermogenesis by FCCP may facilitate the transcriptional activity of HSF1 in the nucleus through a similar mechanism by the heat applied externally.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0042",
+      "source_block_id": "real_paper_001_B0107",
+      "page": 7,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "To further validate this hypothesis, we investigated whether nucleus-localized HSF1 accumulation drives the expression of heat shock response-related programs. Then, we mapped the genome-wide binding of HSF1 using chromatin immunoprecipitation sequencing (ChIP-seq) to determine whether HSF1 binds to heat shock response genes. Meta-analysis of the ChIPseq data sets revealed 621 sites that commonly gained HSF1 signals in the promoter regions, termed Common-GAIN regions (Figure 5A). Moreover, we found sites that recruited HSF1 under either heat shock or FCCP-treatment conditions, termed the HS-GAIN and FCCP-GAIN regions, respectively (Figure S7). Notably, the average intensity of FCCP-mediated HSF1 binding to Common-GAIN sites was reduced to ∼50% of that compared to heat shock-dependent HSF1 activation, corroborating that FCCP treatment increased nuclear temper ature to levels lower than $4 3 ~ ^ { \\circ } \\mathrm { C }$ (Figure 5B,C). This result is in good agreement with our previously measured mean temperature of the entire cellular area $( 3 \\dot { 9 } . 6 ~ ^ { \\circ } \\mathrm { C } )$ using FDV under FCCP treatment (Figure S1F). The motif analysis of the Common-GAIN regions returned classical HSF1 binding motifs, although the possibility of engagement of other transcription factors could not be excluded (Figure 5D). We confirmed with the luciferase assay system that the HSPD1/ HSPE1 promoter, identified as one of the Common-GAIN regions (Figure 5C), can be activated under both external heat shock and FCCP treatment conditions (Figure S8A,B).",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0043",
+      "source_block_id": "real_paper_001_B0108",
+      "page": 7,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0044",
+      "source_block_id": "real_paper_001_B0109",
+      "page": 7,
+      "section": "S03",
+      "section_title": "RESULTS",
+      "section_type": "results",
+      "text": "Among the 797 genes in which single or multiple HSF1- binding peaks were found in the promoter regions, RNA-seq analysis further revealed that 61 genes in the Common-GAIN regions have a positive correlative transcription activation pattern between FCCP-treated and external heat shock conditions (Figure 5E,F and Figure S8C). Furthermore, gene ontology (GO) analysis revealed that these 61 genes were significantly associated with the nuclear response to heat shock stress, exemplified by “cellular response to heat” and “response to unfolded protein”, indicating that the overall transcriptional output of the FCCP treatment phenocopies that of the external heat shock stimulus (Figure 5G,H and Figure S8D,E). Taken together, our findings suggest that FCCP-mediated heat generation activates HSF1 to bind to heat shock response genes, leading to increase in the transcriptional level of HSPs similar to external heat shock conditions.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0045",
+      "source_block_id": "real_paper_001_B0110",
+      "page": 7,
+      "section": "S04",
+      "section_title": "DISCUSSION",
+      "section_type": "discussion",
+      "text": "■ DISCUSSION",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0046",
+      "source_block_id": "real_paper_001_B0111",
+      "page": 7,
+      "section": "S04",
+      "section_title": "DISCUSSION",
+      "section_type": "discussion",
+      "text": "In this work, we used HSF1 as a molecular sensor to monitor how mitochondrial heat afects intracellular biological events. Consequently, we found that HSF1 foci formed in the nucleus when we treated protonophores to initiate the mitochondrial reaction for the heat-releasing oxygen reduction reaction. At the same time, we also observed that HSF1 foci formation is reversible by controlling the oxygen consumption in the mitochondria. Our integrative HSF1 ChIP-seq and RNA-seq experiments verified that FCCP activates the functional HSF1 pathway in a similar manner under external heat stress conditions.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0047",
+      "source_block_id": "real_paper_001_B0112",
+      "page": 7,
+      "section": "S04",
+      "section_title": "DISCUSSION",
+      "section_type": "discussion",
+      "text": "Our results revealed that mitochondrial thermogenesis can modulate the activity of intracellular thermosensing proteins, such as HSF1, in live cells. This suggests that mitochondria generated heat could act as an intracellular signal that may lead to protein conformational alterations without intermediate molecular interactions. Compared to the targeted signaling by molecular transfer events (i.e., molecular conversion and translocation,<sup>37,48,49</sup> molecular interactions, or modifications), mitochondrial heat can be a global retrograde signal that spatiotemporally afects numerous proteins. In mammalian cells, many proteins have a low melting temperature around 40 ${ } ^ { \\circ } \\mathrm { C } , { } ^ { 5 0 }$ and proteins with intrinsically disordered proteins (IDRs) can occur liquid−liquid phase separation (LLPS) in the range of 40 °C.<sup>51−55</sup> Notably, HSF1 possesses a long IDR domain (221−383 aa) that can induce LLPS.<sup>56</sup> Therefore, it is expected that many of such low-melting-temperature or IDRcontaining proteins can be the primary efectors of mitochondrial heat signaling.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0048",
+      "source_block_id": "real_paper_001_B0113",
+      "page": 7,
+      "section": "S04",
+      "section_title": "DISCUSSION",
+      "section_type": "discussion",
+      "text": "It is noteworthy that HSF1 has been studied for its role in mitochondria and nucleus communication. A group of studies has shown that HSF1 can sense mitochondrial misfolding stress and mediated mitochondrial protein unfolded response (UPR<sup>mt</sup>) in the nucleus.<sup>9,37</sup> Other studies have shown that",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0049",
+      "source_block_id": "real_paper_001_B0119",
+      "page": 8,
+      "section": "S04",
+      "section_title": "DISCUSSION",
+      "section_type": "discussion",
+      "text": "HSF1 can be activated by mitochondrial ROS and protect cells under the mitochondrial stress conditions.<sup>37,57,58</sup> Our study showed that mitochondrial generated heat can also activate HSF1. Our data also reinforce the hypothesis that HSF1 is a key protein acting as a master message-transducer between the mitochondria and the nucleus.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0050",
+      "source_block_id": "real_paper_001_B0120",
+      "page": 8,
+      "section": "S04",
+      "section_title": "DISCUSSION",
+      "section_type": "discussion",
+      "text": "We also provided a new chemical interpretation of mitochondrial thermogenesis, based on the exothermic property of the oxygen reduction reaction $\\left( 1 / 2 \\mathrm { O } _ { 2 } + 2 \\mathrm { H } ^ { + } + \\right.$ $2 { \\bf e } ^ { - } \\  \\ { \\bf H } _ { 2 } { \\bf O } )$ which is well-recognized in other research fields.<sup>23,24,59</sup> To the best of our knowledge, our study first connects the exothermic enthalpy change of this oxygen consumption reaction $\\left( \\Delta H _ { \\mathrm { f } } ^ { \\mathrm { o } } \\ \\stackrel { - } { = } \\ - 2 8 6 ^ { \\mathrm { - } } \\ \\mathrm { k J / m o l } \\right)$ to the mitochondrial thermogenesis and suggests that this is likely the primary thermogenic reaction in mitochondria. We validated that every component (i.e., protons, oxygen, and electrons) in this reaction is crucial for suficient mitochondrial thermogenesis and the subsequent upregulation of HSF1. As the oxygen consumption rate is regarded as a reliable indirect measurement standard for thermogenic events in the metabolism research field,<sup>60</sup> we believe that our theorem may be accepted in the field.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0051",
+      "source_block_id": "real_paper_001_B0121",
+      "page": 8,
+      "section": "S04",
+      "section_title": "DISCUSSION",
+      "section_type": "discussion",
+      "text": "We also anticipate that our ORR-driven thermogenesis model can establish a new connection between mitochondrial respiration and mitochondrial thermogenesis, potentially in all actively respiring cells. There is accumulated evidence suggesting that not only brown adipose tissue but also various tissue-originated mammalian cells, including cancer cells, exhibit active mitochondrial respiration activities.<sup>19,61−63</sup> Therefore, we expect that these actively respiring cells may experience an increased intracellular temperature and could activate the HSF1 signaling pathway, possibly due to active ORR-driven mitochondrial thermogenesis. Since HSF1 foci formations have been observed in several aggressive human tumors,<sup>8,30</sup> it would be intriguing to further investigate this mito-ORR and HSF1 axis or mitochondrial heat signaling in cancer research.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0052",
+      "source_block_id": "real_paper_001_B0122",
+      "page": 8,
+      "section": "S04",
+      "section_title": "DISCUSSION",
+      "section_type": "discussion",
+      "text": "In summary, our current study demonstrated that mitochondrial-generated heat is suficient to activate HSF1 independent of pH, ROS, and proteotoxic stress. It provides supporting evidence to consider intracellularly generated heat as a distinct signal that promotes subsequent changes in cel homeostasis. Our work may serve as a basis for future investigations to delineate the complex relationships between various mitochondrial thermogenic events and the activation of heat-sensitive proteins under diverse physiological and pathological contexts.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0053",
+      "source_block_id": "real_paper_001_B0123",
+      "page": 8,
+      "section": "S05",
+      "section_title": "ASSOCIATED CONTENT",
+      "section_type": "body",
+      "text": "■ ASSOCIATED CONTENT",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0054",
+      "source_block_id": "real_paper_001_B0124",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "\\*sı Supporting Information",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0055",
+      "source_block_id": "real_paper_001_B0125",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "The Supporting Information is available free of charge at https://pubs.acs.org/doi/10.1021/acscentsci.3c01589.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0056",
+      "source_block_id": "real_paper_001_B0126",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "Materials and methods, plasmid information, additional figures, movie legends, references (PDF)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0057",
+      "source_block_id": "real_paper_001_B0127",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "Supplementary Dataset 1. 61 genes associated with Figure 5F. Raw data (XLSX)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0058",
+      "source_block_id": "real_paper_001_B0128",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "Transparent Peer Review report available (PDF)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0059",
+      "source_block_id": "real_paper_001_B0129",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "Movie 1. Live imaging of U2OS cells stably expressing HSF1-EGFP shown in the Figure 3B, 0−10 min: normal growth media, 10−40 min: FCCP-treated media, 40−120 min: normal growth media (AVI)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0060",
+      "source_block_id": "real_paper_001_B0130",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "Movie 2. Wide view of live cell imaging in Figure 3B (AVI)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0061",
+      "source_block_id": "real_paper_001_B0131",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "Movie 3. Live imaging of MCF10A cells stably expressing HSF1-EGFP shown in the Figure S5E, 0−30 min: normal growth media, 30−82 min: FCCP treated media (AVI)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0062",
+      "source_block_id": "real_paper_001_B0132",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "Movie 4. Wide view of live cell imaging in Figure S5E (AVI)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0063",
+      "source_block_id": "real_paper_001_B0133",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "Movie 5. Live imaging of HEK293T cells stably expressing HSF1-EGFP in normal growth media for 30 min shown in Figure S5F (AVI)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0064",
+      "source_block_id": "real_paper_001_B0134",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "Movie 6. (Continued from Movie 5) Live imaging of HEK293T cells stably expressing HSF1-EGFP in FCCP treated media for 30 min shown in Figure S5F (AVI)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0065",
+      "source_block_id": "real_paper_001_B0135",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "Movie 7. (Continued from Movie 6) Live imaging of HEK293T cells stably expressing HSF1-EGFP in normal growth media for 30 min shown in Figure S5F (AVI)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0066",
+      "source_block_id": "real_paper_001_B0136",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "Movie 8. Live imaging of U2OS cells stably expressing HSF1-EGFP shown in Figure S5G, 0−30 min: normal growth media, 30−67 min: FCCP-treated media (AVI)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0067",
+      "source_block_id": "real_paper_001_B0139",
+      "page": 8,
+      "section": "S06",
+      "section_title": "\\*sı Supporting Information",
+      "section_type": "supplementary",
+      "text": "Movie 11. Live imaging of HEK293T cells stably expressing HSF1-EGFP after FCCP treatment under hypoxia condition (1% O ) shown in Figure 4B (AVI)",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0068",
+      "source_block_id": "real_paper_001_B0140",
+      "page": 8,
+      "section": "S07",
+      "section_title": "AUTHOR INFORMATION",
+      "section_type": "back_matter",
+      "text": "■ AUTHOR INFORMATION",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0069",
+      "source_block_id": "real_paper_001_B0141",
+      "page": 8,
+      "section": "S08",
+      "section_title": "Corresponding Authors",
+      "section_type": "back_matter",
+      "text": "Corresponding Authors",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0070",
+      "source_block_id": "real_paper_001_B0142",
+      "page": 8,
+      "section": "S08",
+      "section_title": "Corresponding Authors",
+      "section_type": "back_matter",
+      "text": "Jae-Seok Roe − Department of Biochemistry, Yonsei University, Seoul 03722, Korea; Email: jroe@yonsei.ac.kr",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0071",
+      "source_block_id": "real_paper_001_B0143",
+      "page": 8,
+      "section": "S08",
+      "section_title": "Corresponding Authors",
+      "section_type": "back_matter",
+      "text": "Hyun-Woo Rhee − Department of Chemistry and School of Biological Sciences, Seoul National University, Seoul 08826, Korea: orcid.org/0000-0002-3817-3455; Email: rheehw@snu.ac.kr",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0072",
+      "source_block_id": "real_paper_001_B0144",
+      "page": 8,
+      "section": "S09",
+      "section_title": "Authors",
+      "section_type": "back_matter",
+      "text": "Authors",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0073",
+      "source_block_id": "real_paper_001_B0145",
+      "page": 8,
+      "section": "S09",
+      "section_title": "Authors",
+      "section_type": "back_matter",
+      "text": "Myeong-Gyun Kang − Department of Chemistry, Seoul National University, Seoul 08826, Korea",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0074",
+      "source_block_id": "real_paper_001_B0146",
+      "page": 8,
+      "section": "S09",
+      "section_title": "Authors",
+      "section_type": "back_matter",
+      "text": "Hwa-Ryeon Kim − Department of Biochemistry, Yonsei University, Seoul 03722, Korea",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0075",
+      "source_block_id": "real_paper_001_B0147",
+      "page": 8,
+      "section": "S09",
+      "section_title": "Authors",
+      "section_type": "back_matter",
+      "text": "Hee Yong Lee − Department of Chemistry, Seoul National University, Seoul 08826, Korea",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0076",
+      "source_block_id": "real_paper_001_B0148",
+      "page": 8,
+      "section": "S09",
+      "section_title": "Authors",
+      "section_type": "back_matter",
+      "text": "Chulhwan Kwak − Department of Chemistry, Seoul National University, Seoul 08826, Korea; Present Address: Department of Neurosurgery, Stanford University, Stanford, CA, 94305, USA",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0077",
+      "source_block_id": "real_paper_001_B0149",
+      "page": 8,
+      "section": "S09",
+      "section_title": "Authors",
+      "section_type": "back_matter",
+      "text": "Hyewon Koh − Department of Chemistry, Seoul National University, Seoul 08826, Korea; orcid.org/0009-0001- 7440-5778",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0078",
+      "source_block_id": "real_paper_001_B0150",
+      "page": 8,
+      "section": "S09",
+      "section_title": "Authors",
+      "section_type": "back_matter",
+      "text": "Byoung Heon Kang − Department of Biological Sciences, Ulsan National Institute of Science and Technology (UNIST), Ulsan 44919, Korea; orcid.org/0000-0001- 5902-0549",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0079",
+      "source_block_id": "real_paper_001_B0151",
+      "page": 8,
+      "section": "S09",
+      "section_title": "Authors",
+      "section_type": "back_matter",
+      "text": "Complete contact information is available at: https://pubs.acs.org/10.1021/acscentsci.3c01589",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0080",
+      "source_block_id": "real_paper_001_B0157",
+      "page": 9,
+      "section": "S10",
+      "section_title": "Author Contributions",
+      "section_type": "back_matter",
+      "text": "Author Contributions",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0081",
+      "source_block_id": "real_paper_001_B0158",
+      "page": 9,
+      "section": "S10",
+      "section_title": "Author Contributions",
+      "section_type": "back_matter",
+      "text": "<sup>#</sup>M.-G.K., H.-R.K., and H.Y.L. contributed equally to this work. H.W.R. conceived the concept of the project. M.-G.K. and H.Y.L. designed and performed experiments. H.-R.K. and J.S.R. conducted ChIP-seq and RNA-seq experiments and analysis. C.K. conducted flow cytometry analysis. M.-G.K. and H.K. performed statistical analysis. B.H.K. assisted in the experiment with GTPP molecule and the discussion of the results. J.S.R. and H.W.R. supervised the project. M.-G.K., H.-R.K., H.Y.L, J.S.R, and H.W.R. wrote and edited the manuscript.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0082",
+      "source_block_id": "real_paper_001_B0159",
+      "page": 9,
+      "section": "S11",
+      "section_title": "Funding",
+      "section_type": "back_matter",
+      "text": "Funding",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0083",
+      "source_block_id": "real_paper_001_B0160",
+      "page": 9,
+      "section": "S11",
+      "section_title": "Funding",
+      "section_type": "back_matter",
+      "text": "This work was supported by funding from the National R e s e a r c h F o u n d a t i o n o f K o r e a ( N R F 2022R1A2B5B03001658, NRF-2023K2A9A2A08000203, NRF-2022M3E5E8081185, RS-2023-00260454, and RS-2023−00265581 awarded to H.W.R., 2021R1A2C4001420 to J.S.R, NRF-2022R1C1C2006983 to C.K., RS-2023−00246552 to H.-R.K., and NRF-2020R1C1C1013927 to M.-G.K.). H.- R.K. and J.S.R. were also supported by the Brain Korea 21 FOUR Program awarded to Yonsei University. M.-G.K. was supported by the Brain Korea 21 FOUR Program awarded to Seoul National University. Research conducted at the O r g a n e l l e N e t w o r k R e s e a r c h C e n t e r ( N R F - 2017R1A5A1015366) and the Korea Health Industry Develop ment Institute (KHIDI) was funded by the Ministry of Health & Welfare and the Ministry of Science and Information & Communication Technology (ICT), Republic of Korea (grant number HU23C0204). H.W.R. and J.S.R. are supported by Samsung Science & Technology Foundation (SSTF-BA2201− 08 to H.W.R., SSTF-BA2002−12 to J.S.R.).",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0084",
+      "source_block_id": "real_paper_001_B0161",
+      "page": 9,
+      "section": "S12",
+      "section_title": "Notes",
+      "section_type": "back_matter",
+      "text": "Notes",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0085",
+      "source_block_id": "real_paper_001_B0162",
+      "page": 9,
+      "section": "S12",
+      "section_title": "Notes",
+      "section_type": "back_matter",
+      "text": "The authors declare no competing financial interest.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0086",
+      "source_block_id": "real_paper_001_B0163",
+      "page": 9,
+      "section": "S13",
+      "section_title": "ACKNOWLEDGMENTS",
+      "section_type": "back_matter",
+      "text": "■ ACKNOWLEDGMENTS",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0087",
+      "source_block_id": "real_paper_001_B0164",
+      "page": 9,
+      "section": "S13",
+      "section_title": "ACKNOWLEDGMENTS",
+      "section_type": "back_matter",
+      "text": "The ERthermoAc (ETAC) was a gift from Prof. Young-Tae Chang (POSTECH, Korea). Chang Ryul Choi supported LC-MS analysis for checking quality of the compounds used in this work. We thank the anonymous reviewers for their helpful and constructive suggestions. Supporting Information and Supporting Dataset S1 files are available online.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0088",
+      "source_block_id": "real_paper_001_B0165",
+      "page": 9,
+      "section": "S14",
+      "section_title": "REFERENCES",
+      "section_type": "references",
+      "text": "REFERENCES",
+      "text_level": 2,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0089",
+      "source_block_id": "real_paper_001_B0240",
+      "page": 11,
+      "section": "S14",
+      "section_title": "REFERENCES",
+      "section_type": "references",
+      "text": "CAS BIOFINDER DISCOVERY PLATFORM™M ELIMINATE DATA SILOS. FIND WHAT YOU NEED, WHEN YOU NEED IT.",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0090",
+      "source_block_id": "real_paper_001_B0241",
+      "page": 11,
+      "section": "S14",
+      "section_title": "REFERENCES",
+      "section_type": "references",
+      "text": "A single platform for relevant, high-quality biological and toxicology research",
+      "text_level": null,
+      "mineru_type": "text"
+    },
+    {
+      "paragraph_id": "real_paper_001_P0091",
+      "source_block_id": "real_paper_001_B0242",
+      "page": 11,
+      "section": "S14",
+      "section_title": "REFERENCES",
+      "section_type": "references",
+      "text": "Streamline your R&D",
+      "text_level": null,
+      "mineru_type": "text"
+    }
+  ],
+  "figures": [
+    {
+      "figure_id": "real_paper_001_F0001",
+      "source_block_id": "real_paper_001_B0005",
+      "page": 1,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/15aab0f87aefa6242c4750154c3e9bbd5b6edcb7bea78b735067307c10d32f5f.jpg",
+      "section": "S00",
+      "section_type": "title"
+    },
+    {
+      "figure_id": "real_paper_001_F0002",
+      "source_block_id": "real_paper_001_B0007",
+      "page": 1,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/bfadba123945598ee6dff226e7e53871513b2fc09da9de82de521c9105f900bc.jpg",
+      "section": "S00",
+      "section_type": "title"
+    },
+    {
+      "figure_id": "real_paper_001_F0003",
+      "source_block_id": "real_paper_001_B0014",
+      "page": 1,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/a8479014e271b0aaead495973ed7c5f8513ceb8691d1d8b5bf819632dbdcc657.jpg",
+      "section": "S00",
+      "section_type": "title"
+    },
+    {
+      "figure_id": "real_paper_001_F0004",
+      "source_block_id": "real_paper_001_B0021",
+      "page": 1,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/841f446220e4bc9940853ab5044be915e5821158c3205b1007009d0b5ea03bbb.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0005",
+      "source_block_id": "real_paper_001_B0033",
+      "page": 2,
+      "figure_number": "",
+      "caption_text": "A",
+      "img_path": "images/4e041acf6b8f9d09ac5d4c684d3f9adeda603bb8e475a603b40d916639292e9c.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0006",
+      "source_block_id": "real_paper_001_B0034",
+      "page": 2,
+      "figure_number": "",
+      "caption_text": "C",
+      "img_path": "images/ce09f9fa6b2eb1cbaa738be8d7d4c47738ac56386fc396cc1912c65c61e42e21.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0007",
+      "source_block_id": "real_paper_001_B0035",
+      "page": 2,
+      "figure_number": "",
+      "caption_text": "B",
+      "img_path": "images/08c3c6a489559ccbab9efa8b499782206ec093c19372bd0d64f6a89f49046303.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0008",
+      "source_block_id": "real_paper_001_B0036",
+      "page": 2,
+      "figure_number": "",
+      "caption_text": "D",
+      "img_path": "images/733ef125993c33f27500f2a86b2f3a4a79c9774d051b6dbfe00acc2aef89c9dd.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0009",
+      "source_block_id": "real_paper_001_B0037",
+      "page": 2,
+      "figure_number": "Figure 1",
+      "caption_text": "Figure 1. Nuclear HSF1 activation by mitochondrial thermogenesis under FCCP treatment. (A) Schematic representation of FCCP-induced exothermic mitochondrial oxygen reduction reaction (ORR). (B) Schematic representation of HSF1 activation via mitochondrial thermogenesis following FCCP treatment (HSEs: heat shock elements). (C) Confocal images of endogenous HSF1 (anti-HSF1) and Histone H3 (anti-Histone H3) activation in MCF10A cells incubated with either FCCP (100 μM, 1 h) or menadione (30 μM, 30 min) or subjected to heat shock $( 4 3 ^ { \\circ } \\mathrm { C } ,$ 1 h) and with or without cotreatment with NAC (5 mM, 1 h). Scale bar = 10 μm. (D) The quantification of the number of foci per cell in both the control and various stress-induced cells corresponded to (C). In each condition, 50−100 cells were evaluated. Boxes indicate the quartiles, whiskers range from minimal to maximal values. Dots indicate individual data points plotted on the box. Statistical analysis was conducted using an unpaired two-tailed t test, and the significance level was denoted as $( ^ { * } p < 0 . { \\bar { 0 } } 5 , ^ { * * * * } p < 0 . 0 0 0 1$ , ns, not significant).",
+      "img_path": "images/e2b09de764676b90e4eb5e840ec1a5b90dbc1ac5cb520f9af769627603803816.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0010",
+      "source_block_id": "real_paper_001_B0050",
+      "page": 3,
+      "figure_number": "",
+      "caption_text": "A",
+      "img_path": "images/e7f47863cc0cbe03c1d1050623e8a704e68a3707288bfb596f577ea10d4e6808.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0011",
+      "source_block_id": "real_paper_001_B0051",
+      "page": 3,
+      "figure_number": "",
+      "caption_text": "B C",
+      "img_path": "images/99d9c7875abdbded45ced4960e82eb0384dbb786257cd2afe5c58d9a367a6878.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0012",
+      "source_block_id": "real_paper_001_B0052",
+      "page": 3,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/bbc6303402ca60cff00cabbd7076179547cf78a6c7b994b5747dbfcb091ee8a1.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0013",
+      "source_block_id": "real_paper_001_B0053",
+      "page": 3,
+      "figure_number": "",
+      "caption_text": "D",
+      "img_path": "images/d3f209070bd2e2772dd33266633c98ed6aa52e446d66419078f90be98729e0a7.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0014",
+      "source_block_id": "real_paper_001_B0054",
+      "page": 3,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/1126f87e674b924dd68e9500a70abcbf87c1fd053a6a4b9a15fb662efbb36004.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0015",
+      "source_block_id": "real_paper_001_B0055",
+      "page": 3,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/57973a7058ef9dac5c0283e505d9518bc64b89058f339aea05ca6d2a20e4c664.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0016",
+      "source_block_id": "real_paper_001_B0056",
+      "page": 3,
+      "figure_number": "Figure 2",
+      "caption_text": "Figure 2. FCCP treatment does not induce ROS generation. (A) Schematic depiction of APEX-mediated recording of cellular ROS generation. (B) Graphical representation of the subcellular localization of APEX2 constructs used for the enzymatic recording of hydrogen peroxide generation: Matrix-V5-APEX2 (mitochondrial matrix), SCO1-V5-APEX2 (IMS), TDRKH-V5-APEX2 (OMM), and GBP-V5-APEX2 (whole cell). (C) Construct map of the APEX plasmids used in this study. (D) Streptavidin (SA) Western blot results of APEX-mediated biotinylating activity measurements after menadione (30 μM, 30 min) or FCCP (100 μM, 1 h) treatment. Anti-V5 Western blotting images of the same lysate are shown below. (E) Quantification plots of the relative band intensity after short exposure to streptavidin and anti-V5 antibodies.",
+      "img_path": "images/d0d6b0ef4137c30b6f713205656f76c8b65e444710a1c5d2aef29739b86a1e5f.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0017",
+      "source_block_id": "real_paper_001_B0067",
+      "page": 4,
+      "figure_number": "",
+      "caption_text": "B A",
+      "img_path": "images/b13b2c35aae79d23689de9d47a7337a9dae717c35fbb9e3a3b6b08b01a887752.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0018",
+      "source_block_id": "real_paper_001_B0068",
+      "page": 4,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/89b4075b993153d9efaf0a15448093a35135e7f2d1262571939f524d7f855be1.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0019",
+      "source_block_id": "real_paper_001_B0069",
+      "page": 4,
+      "figure_number": "",
+      "caption_text": "C",
+      "img_path": "images/4208a8f3830a37eebefe2b63d46efb99dd1a8c3aa5a5680e1a5a80fe3cfb3cd2.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0020",
+      "source_block_id": "real_paper_001_B0070",
+      "page": 4,
+      "figure_number": "Figure 3",
+      "caption_text": "Figure 3. Real-time imaging of HSF1 foci formation by FCCP treatment. (A) Confocal fluorescent images of HSF1-EGFP foci formation in the stable HSF1-EGFP-expressing cells, under FCCP (100 μM, 1 h) treatment or heat shock $( 4 3 ^ { \\circ } \\mathrm { C } , \\bar { 1 } \\bar { \\mathrm { ~ h ~ } } )$ . Scale bar $= 2 \\ \\mu \\mathrm { m } .$ . (B) Real-time fluorescence recording of HSF1-EGFP in U2OS HSF1-EGFP-expressing stable cells. The FCCP (100 μM, 30 min) was administered after 10 min of incubation in normal conditions, and recovery was recorded during the incubation in fresh media over the 1 h. (C) Time-series graph for the number of counted HSF1-EGFP foci per cell nucleus throughout the FCCP (100 μM, 30 min) treatment and recovery phases for 50 min. Error bars represent the standard error of the mean.",
+      "img_path": "images/b95c091240b3decdfaea6b2b310c89168aa7df3a7d8a30aa41083f14b54cb590.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0021",
+      "source_block_id": "real_paper_001_B0079",
+      "page": 5,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/00cfc4a4bf4c546e5c5239411eb9fd876514f7a6f5091dab6cc253a0b3a625e5.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0022",
+      "source_block_id": "real_paper_001_B0080",
+      "page": 5,
+      "figure_number": "Figure 4",
+      "caption_text": "A C B Figure 4. Mitochondrial oxygen concentration and OXPHOS complex activity are crucial for mitochondrial thermogenesis and HSF1 activation. (A) Schematic view of exothermic mitochondrial oxygen consumption reaction under the FCCP treatment. (B) Real-time confocal imaging of HSF1-EGFP stably expressed in HEK293T cells under normoxic (20% O concentration, 30 min) and hypoxic (1% O concentration, 2 h 30 min) conditions, with FCCP (100 μM) cotreatment at last 30 min. Scale bar 10 μm. (C) The number of counted HSF1-EGFP foci per cel under incubation conditions of 100 μM FCCP and either 1% $\\mathrm { O } _ { 2 }$ concentration (light blue dots) or 20% $\\mathrm { O } _ { 2 }$ concentration (dark blue dots). The gray dots represent foci per cell under hypoxia or normoxia without any chemical treatment. Error bars represent the standard error of the mean. (D) Confocal images of HSF1-EGFP activation in HEK293T HSF1-EGFP stably expressed cells treated with FCCP (100 μM, 1 h), antimycin A (20 μM, 1 h), and sodium azide (32 μM, 1 h). Scale bar 10 μm. (E) Confocal images of HSF1-EGFP activation in HEK293T HSF1-EGFP stably expressed cells treated with antimycin A (20 μM, 1 h) and sodium azide $( 3 2 \\mu \\mathrm { M } , 1 \\mathrm { \\tilde { h } } )$ , under heat shock $\\left( 4 3 ^ { \\circ } \\mathrm { C } , 1 \\mathrm { h } \\right)$ conditions. Scale bar 10 μm.",
+      "img_path": "images/5e0b02b9f2d2593325695fc4cb55186032d39e838e01c3b6121a2918d308b3af.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0023",
+      "source_block_id": "real_paper_001_B0090",
+      "page": 6,
+      "figure_number": "",
+      "caption_text": "A B",
+      "img_path": "images/6d4bbad00beea9dedff5ca1826db1d664cfffc70395a5b6d1acf48dda76088a4.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0024",
+      "source_block_id": "real_paper_001_B0091",
+      "page": 6,
+      "figure_number": "",
+      "caption_text": "D",
+      "img_path": "images/fa16101154de7f07a95698727ec19655a8525c0e1a8a6959a1320fd683754d09.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0025",
+      "source_block_id": "real_paper_001_B0092",
+      "page": 6,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/87ff38e2b6bef0befb98c863379e461467c8fc93e80e3dceb727602f22da4119.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0026",
+      "source_block_id": "real_paper_001_B0093",
+      "page": 6,
+      "figure_number": "",
+      "caption_text": "C E",
+      "img_path": "images/640796d6cac66c6a1cab9cbf75da6e72424a3b28cd2e83793ecb1576077aeade.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0027",
+      "source_block_id": "real_paper_001_B0094",
+      "page": 6,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/97d22610d115e82fb1a2d221ce11db45b0ef78d697314012aea6cb48f772b1b9.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0028",
+      "source_block_id": "real_paper_001_B0095",
+      "page": 6,
+      "figure_number": "",
+      "caption_text": "F H",
+      "img_path": "images/97c75490bc634fee878dc457901171e5c16a0d8baa76881b7ee715cc2191ba9c.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0029",
+      "source_block_id": "real_paper_001_B0096",
+      "page": 6,
+      "figure_number": "",
+      "caption_text": "G",
+      "img_path": "images/1b877163d716d6cba9a56eb29c5dbc5ba06ac5a6a7586cb375aa259c33012b91.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0030",
+      "source_block_id": "real_paper_001_B0097",
+      "page": 6,
+      "figure_number": "Figure 5",
+      "caption_text": "Figure 5. Chip-seq and RNA-seq analysis for common-GAIN regions of HSF1 expression under heat shock and FCCP treatment. (A) Density plots of HSF1 ChIP-seq signal enrichment at a 5-kb region around the center of heat shock/FCCP cobound regions. Each row represents a single region $\\left( n = 6 2 1 \\right)$ . The conditions for heat shock were $4 3 ^ { \\circ } \\mathrm { C }$ for 1 h, and for the FCCP treatment 100 μM, for 1 h. (B) Analysis of ChIP-seq signals on overactive promoters and enhancers under control, heat shock, and FCCP-treatment conditions. The scale of all graphs is calculated based on the distance of the peak (kb). (C) Representative HSF1 ChIP-seq profiles at the HSPB1, HSPD1, HSP90AA1, and HSP90AB1 loci. (D) Motif analysis (HOMER) based on HSF1 ChIP-seq results showing enriched motifs in Common-GAIN peaks. Only the top 10 motifs ranked by statistical significance are shown in the logo plot. (E) Venn diagram depicting the number of identified HSF1-bound genes $\\left( n = 7 9 7 \\right)$ and mRNA upregulated genes $\\left( n = 8 6 8 \\right)$ , following heat shock or treatment with FCCP. Between the two clusters, there was a total of 61 $\\left( n = 6 1 \\right)$ overlapping genes, identified as both being associated with HSF1 and upregulated. (F) Heatmap representation of changes in gene expression of heat shock and FCCP Common-GAIN genes ${ \\bf \\left( \\right)} n = 6 1  . \\mathrm { \\bf ( G , H ) }$ Gene Ontology (GO) analysis for the identified 61 heat shock/FCCP cobound region genes of (G) the associated biological processes and (H) the subcellular compartment (Cellular Component).",
+      "img_path": "images/9731d9f54335abd8aa152582846d745a09247a741ec107865c0875294f017c85.jpg",
+      "section": "S03",
+      "section_type": "results"
+    },
+    {
+      "figure_id": "real_paper_001_F0031",
+      "source_block_id": "real_paper_001_B0237",
+      "page": 11,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/0d92accdf2b2128fc6a819dbc35b45a0a2c7616604ef35da2102f7ee60a47651.jpg",
+      "section": "S14",
+      "section_type": "references"
+    },
+    {
+      "figure_id": "real_paper_001_F0032",
+      "source_block_id": "real_paper_001_B0243",
+      "page": 11,
+      "figure_number": "",
+      "caption_text": "",
+      "img_path": "images/9675aadafd890991a5452ccc3fd67a8f77ea86e44e3d01f69b50f6bac9993959.jpg",
+      "section": "S14",
+      "section_type": "references"
+    }
+  ],
+  "tables": []
+}

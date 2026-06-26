@@ -20,20 +20,31 @@ source_block:
   paper_id:
     type: string
     required: true
+  source_block_id:
+    type: string
+    required: true
   page:
     type: integer
     required: false
   section:
     type: string
     required: false
+  section_title:
+    type: string
+    required: false
+  section_type:
+    type: enum
+    dictionary: section_type
+    required: true
   text:
     type: string
     required: true
-  char_start:
-    type: integer
-    required: false
-  char_end:
-    type: integer
+  source_type:
+    type: enum
+    values: [paragraph, figure, table]
+    required: true
+  figure_number:
+    type: string
     required: false
 
 evidence_unit:
@@ -43,36 +54,128 @@ evidence_unit:
   paper_id:
     type: string
     required: true
-  source:
-    type: object
-    required: true
-  evidence_text:
-    type: string
+  source_block_ids:
+    type: array
     required: true
   evidence_type:
     type: enum
     dictionary: evidence_type
     required: true
+  source_text:
+    type: string
+    required: true
+  section_type:
+    type: enum
+    dictionary: section_type
+    required: false
+
+  # --- Domain core ---
+  disease:
+    type: string
+    required: false
+  thermogenesis_phenotype:
+    type: string
+    required: false
+  mechanism:
+    type: string
+    required: false
+
+  # --- Entities ---
   entities:
     type: array
     required: false
-  condition:
+    item_schema:
+      name:
+        type: string
+        required: true
+      type:
+        type: enum
+        dictionary: entity_type
+        required: true
+      normalized_id:
+        type: string
+        required: false
+      canonical_name:
+        type: string
+        required: false
+
+  # --- Detection ---
+  detection_method:
+    type: string
+    required: false
+  detection_category:
+    type: enum
+    dictionary: detection_category
+    required: false
+
+  # --- Modulation ---
+  modulation:
     type: object
     required: false
-  measurement:
-    type: object
-    required: false
-  result:
-    type: object
-    required: false
+    fields:
+      drug:
+        type: string
+        required: false
+      target:
+        type: string
+        required: false
+      direction:
+        type: enum
+        dictionary: modulation_direction
+        required: false
+      effect_description:
+        type: string
+        required: false
+
+  # --- Quantitative ---
   statistics:
     type: object
     required: false
-  quality:
+    fields:
+      p_value:
+        type: string
+        required: false
+      fold_change:
+        type: string
+        required: false
+      sample_size:
+        type: integer
+        required: false
+      effect_size:
+        type: string
+        required: false
+      confidence_interval:
+        type: string
+        required: false
+
+  # --- Study context ---
+  study_design:
+    type: enum
+    dictionary: study_design
+    required: false
+  model_system:
+    type: enum
+    dictionary: model_system
+    required: false
+
+  # --- Quality ---
+  score:
     type: object
-    required: true
-  review_hint:
-    type: string
+    required: false
+    fields:
+      composite:
+        type: number
+        required: false
+      grade:
+        type: enum
+        dictionary: evidence_grade
+        required: false
+      llm_confidence:
+        type: number
+        required: false
+  review_status:
+    type: enum
+    dictionary: review_decision
     required: false
 
 context_pack:

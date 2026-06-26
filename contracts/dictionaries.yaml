@@ -1,29 +1,73 @@
-schema_version: "0.1.0"
+schema_version: "0.2.0"
 contract_version: "2026-06-26"
-description: "Central dictionaries for V2 literature evidence extraction."
+description: "Central dictionaries for mitochondrial thermogenesis literature evidence extraction. Design informed by EvidenceNet (2603.28325v1) and Mistral-OCR pipeline (s12874-026-02847-8) patterns."
 
+# ============================================================
+# Section type — standardized IMRaD section classification.
+# ============================================================
+section_type:
+  - title
+  - abstract
+  - introduction
+  - methods
+  - results
+  - discussion
+  - conclusion
+  - supplementary
+  - back_matter
+  - references
+  - body
+
+# ============================================================
+# Evidence type — what kind of finding is this evidence unit?
+# Closed enum: these 5 types cover the core questions of the domain.
+# ============================================================
 evidence_type:
-  - experimental_result
-  - method_detail
-  - figure_caption
-  - table_caption
-  - background
-  - limitation
-  - statistical_result
+  - disease_association        # 线粒体产热异常 ↔ 疾病关联
+  - detection_method           # 检测/测量产热的方法
+  - thermogenesis_modulation   # 调控产热（药物/基因/环境干预）
+  - biomarker_panel            # 判断产热状态的蛋白/基因/代谢物标志物
+  - mechanism_pathway          # 药物/干预恢复或促进产热的通路机制
 
+# ============================================================
+# Entity type — semantic class of extracted biomedical entities.
+# Closed enum: stable semantic categories.
+# ============================================================
+entity_type:
+  - disease
+  - protein
+  - gene
+  - metabolite
+  - drug
+  - pathway
+  - phenotype
+  - assay_method
+
+# ============================================================
+# Relation type — directed semantic relations between evidence units.
+# General relations inherited from EvidenceNet + domain-specific relations.
+# ============================================================
 relation_type:
-  core:
-    - supports
-    - contradicts
-    - duplicates
-    - limits
-    - context_for
-  advanced:
-    - extends
-    - replicates
-    - refines
-    - causal_chain
+  # --- General (EvidenceNet) ---
+  general:
+    - supports          # A 支持 B 的结论
+    - contradicts       # A 与 B 矛盾
+    - extends           # A 在 B 基础上扩展
+    - refines           # A 细化 B 的发现
+    - replicates        # A 复现了 B
+    - causal_chain      # A → B 因果链
+  # --- Domain-specific (mitochondrial thermogenesis) ---
+  domain:
+    - associated_with   # 产热异常 ↔ 疾病
+    - detects           # 方法 → 检测产热状态
+    - modulates         # 药物/干预 → 调控产热
+    - indicates         # 标志物 → 反映产热状态
+    - mediates          # 通路 → 介导产热效应
+    - targets           # 药物 → 靶向蛋白/基因
 
+# ============================================================
+# Relation status — lifecycle of a relation assertion.
+# ============================================================
 relation_status:
   - candidate
   - verified
@@ -31,6 +75,77 @@ relation_status:
   - needs_review
   - human_confirmed
 
+# ============================================================
+# Study design — type of research study.
+# Adapted from EvidenceNet, stable closed set.
+# ============================================================
+study_design:
+  - cohort
+  - in_vivo
+  - in_vitro
+  - rct                     # randomized controlled trial
+  - meta_analysis
+  - case_control
+  - observational
+  - computational
+  - unknown
+
+# ============================================================
+# Model system — experimental context of the finding.
+# ============================================================
+model_system:
+  - in_vitro
+  - in_vivo
+  - ex_vivo
+  - clinical
+  - computational
+
+# ============================================================
+# Modulation direction — how an intervention affects thermogenesis.
+# Closed enum: the directions are finite.
+# ============================================================
+modulation_direction:
+  - restores_normal         # 恢复正常产热
+  - increases               # 增加产热
+  - decreases               # 减少产热
+  - inhibits_abnormal       # 抑制异常产热
+
+# ============================================================
+# Detection category — high-level classification of detection methods.
+# Closed enum for aggregation. Detailed method name is free text
+# in evidence_unit.detection_method.
+# ============================================================
+detection_category:
+  - calorimetry             # 量热法
+  - fluorescent_probe       # 荧光探针（如 ERthermoAc）
+  - respirometry            # 呼吸测量（如 Seahorse）
+  - thermal_imaging         # 热成像
+  - biochemical_assay       # 生化检测
+  - genetic_reporter        # 基因报告系统
+  - other
+
+# ============================================================
+# Evidence grade — quality level of an evidence unit.
+# Inherited from EvidenceNet A-D system.
+# ============================================================
+evidence_grade:
+  - A    # 多篇独立验证 + 大样本 + 显著统计
+  - B    # 较好方法论 + 统计支持
+  - C    # 中等置信度（大多数证据的默认级别）
+  - D    # 低置信度（单篇个案 / 体外初步发现）
+
+# ============================================================
+# Review decision — human reviewer decision on an evidence unit.
+# ============================================================
+review_decision:
+  - accepted
+  - modified
+  - rejected
+  - needs_recheck
+
+# ============================================================
+# Draft entry status — lifecycle of a draft entry.
+# ============================================================
 draft_entry_status:
   - draft
   - needs_verification
@@ -38,18 +153,9 @@ draft_entry_status:
   - rejected
   - human_confirmed
 
-review_decision:
-  - accepted
-  - modified
-  - rejected
-  - needs_recheck
-
-reviewed_evidence_decision:
-  - accepted
-  - rejected
-  - needs_recheck
-  - partial
-
+# ============================================================
+# Recommended action — verifier recommendation.
+# ============================================================
 recommended_action:
   - accept_for_review
   - needs_human_review
@@ -57,12 +163,18 @@ recommended_action:
   - needs_evidence_fix
   - reject_before_review
 
+# ============================================================
+# Alignment status — contract alignment check result.
+# ============================================================
 alignment_status:
   - aligned
   - partial
   - failed
   - not_attempted
 
+# ============================================================
+# LLM profile — which model to use for extraction.
+# ============================================================
 llm_profile:
   - cheap
   - strong

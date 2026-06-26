@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>V2 Review — Human Review</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:14px/1.5 system-ui,sans-serif;display:flex;height:100vh;color:#1a1a2e;background:#f5f5f7}
+#sidebar{width:340px;background:#fff;border-right:1px solid #e0e0e0;display:flex;flex-direction:column}
+#sidebar h2{padding:14px 16px;font-size:15px;border-bottom:1px solid #e0e0e0;background:#fafafa;display:flex;justify-content:space-between}
+#stats{padding:8px 16px;font-size:12px;border-bottom:1px solid #e0e0e0;background:#fafafa;display:flex;gap:14px}
+.stat-item{display:flex;align-items:center;gap:4px}
+.stat-item b{font-size:14px}
+#entry-list{flex:1;overflow-y:auto}
+.entry-item{padding:10px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;transition:background .12s;border-left:3px solid transparent}
+.entry-item:hover{background:#f0f4ff}
+.entry-item.active{background:#e8f0fe;border-left-color:#1a73e8}
+.entry-item .eid{font-weight:600;font-size:12px;color:#888;margin-bottom:2px}
+.entry-item .claim{font-size:12px;color:#333;line-height:1.35}
+.badge{display:inline-block;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:600}
+.badge-draft{background:#e8eaf6;color:#3f51b5}
+.badge-approved{background:#e6f4ea;color:#1e8e3e}
+.badge-rejected{background:#fce8e6;color:#d93025}
+.badge-flagged{background:#fef7e0;color:#f9ab00}
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#toolbar{padding:10px 20px;background:#fff;border-bottom:1px solid #e0e0e0;display:flex;gap:8px;align-items:center}
+#toolbar button{padding:7px 16px;border:1px solid #dadce0;border-radius:6px;background:#fff;cursor:pointer;font-size:13px;font-weight:500;transition:all .15s}
+#toolbar button:hover{background:#f1f3f4}
+#toolbar button.btn-approve{color:#1e8e3e;border-color:#1e8e3e;background:#e6f4ea}
+#toolbar button.btn-approve:hover{background:#ceead6}
+#toolbar button.btn-reject{color:#d93025;border-color:#d93025;background:#fce8e6}
+#toolbar button.btn-reject:hover{background:#f9d7d4}
+#toolbar button.btn-flag{color:#e37400;border-color:#f9ab00;background:#fef7e0}
+#toolbar button.btn-export{background:#1a73e8;color:#fff;border-color:#1a73e8;margin-left:auto}
+#toolbar .status{font-size:12px;color:#666}
+#content{flex:1;overflow-y:auto;padding:24px}
+#content h3{font-size:18px;margin-bottom:16px;line-height:1.4}
+.section{margin-bottom:24px}
+.section h4{font-size:12px;color:#888;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;border-bottom:1px solid #eee;padding-bottom:4px}
+.field-grid{display:grid;grid-template-columns:180px 1fr;gap:6px 12px;font-size:13px}
+.field-grid .key{font-weight:600;color:#555}
+.field-grid .val{color:#333}
+.evidence-card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:12px 16px;margin-bottom:8px}
+.evidence-card .ev-meta{font-size:11px;color:#999;margin-bottom:4px}
+.evidence-card .ev-text{font-size:13px;line-height:1.5}
+.entity-tag{display:inline-block;background:#e8f5e9;color:#2e7d32;padding:1px 8px;border-radius:10px;font-size:11px;margin:2px}
+.entity-tag.type-drug{background:#fce4ec;color:#c62828}
+.entity-tag.type-protein{background:#e3f2fd;color:#1565c0}
+.entity-tag.type-pathway{background:#f3e5f5;color:#7b1fa2}
+#notes-area{width:100%;min-height:80px;padding:10px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px;resize:vertical;font-family:inherit}
+.empty-state{text-align:center;padding:80px 20px;color:#999}
+.toast{position:fixed;bottom:20px;right:20px;background:#333;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;z-index:999;opacity:0;transition:opacity .3s}
+.toast.show{opacity:1}
+.loading{text-align:center;padding:40px;color:#999}
+</style>
+</head>
+<body>
+<div id="sidebar">
+  <h2>Draft entries <span id="paper-id" style="font-weight:400;font-size:12px;color:#999"></span></h2>
+  <div id="stats">
+    <div class="stat-item">Total <b id="st-total">0</b></div>
+    <div class="stat-item" style="color:#1e8e3e">&#10003; <b id="st-approved">0</b></div>
+    <div class="stat-item" style="color:#d93025">&#10007; <b id="st-rejected">0</b></div>
+    <div class="stat-item" style="color:#e37400">&#9873; <b id="st-flagged">0</b></div>
+  </div>
+  <div id="entry-list"><div class="loading">Loading...</div></div>
+</div>
+<div id="main">
+  <div id="toolbar">
+    <button class="btn-approve" onclick="review('approved')">&#10003; Approve</button>
+    <button class="btn-reject" onclick="review('rejected')">&#10007; Reject</button>
+    <button class="btn-flag" onclick="review('needs_review')">&#9873; Flag</button>
+    <span class="status" id="current-status"></span>
+    <button class="btn-export" onclick="exportData()">Export JSON</button>
+  </div>
+  <div id="content">
+    <div class="loading">Loading data...</div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+let DATA = null;
+let activeId = null;
+let reviewState = {entries:{}};
+
+async function init() {
+  try {
+    const resp = await fetch('/api/data');
+    DATA = await resp.json();
+    reviewState = DATA.review_state || {entries:{}};
+    document.getElementById('paper-id').textContent = DATA.paper_id;
+    renderSidebar();
+    document.getElementById('content').innerHTML =
+      `<div class="empty-state"><h3>${DATA.drafts.length} draft entries loaded</h3>
+      <p>Select an entry from the sidebar to begin review</p></div>`;
+  } catch(e) {
+    document.getElementById('content').innerHTML =
+      `<div class="empty-state"><h3>Failed to load data</h3><p>${e.message}</p></div>`;
+  }
+}
+
+function renderSidebar() {
+  const list = document.getElementById('entry-list');
+  const counts = {total:0,approved:0,rejected:0,flagged:0};
+  let html = '';
+  DATA.drafts.forEach(d => {
+    const st = (reviewState.entries[d.entry_id] || {}).status || 'draft';
+    counts.total++;
+    if(st==='approved') counts.approved++;
+    else if(st==='rejected') counts.rejected++;
+    else if(st==='needs_review') counts.flagged++;
+    const badgeCls = st==='approved'?'approved':st==='rejected'?'rejected':st==='needs_review'?'flagged':'draft';
+    html += `<div class="entry-item${activeId===d.entry_id?' active':''}" onclick="selectEntry('${d.entry_id}')">
+      <div class="eid"><span class="badge badge-${badgeCls}">${st}</span> ${d.entry_id}</div>
+      <div class="claim">${esc(d.main_claim||'(no claim)').substring(0,110)}</div>
+    </div>`;
+  });
+  list.innerHTML = html || '<div class="empty-state">No entries</div>';
+  Object.entries(counts).forEach(([k,v]) => {
+    const el = document.getElementById('st-'+k);
+    if(el) el.textContent = v;
+  });
+}
+
+function selectEntry(eid) {
+  activeId = eid;
+  renderSidebar();
+  const d = DATA.drafts.find(x => x.entry_id === eid);
+  if(!d) return;
+  const st = (reviewState.entries[eid] || {}).status || 'draft';
+  document.getElementById('current-status').textContent = `Status: ${st}`;
+
+  const sf = d.structured_fields || {};
+  let fieldsHtml = '<div class="field-grid">';
+  Object.entries(sf).forEach(([k,v]) => {
+    fieldsHtml += `<div class="key">${esc(k)}</div><div class="val">${esc(String(v||''))}</div>`;
+  });
+  fieldsHtml += '</div>';
+
+  const evIds = [...new Set(d.evidence_links||[])];
+  const evMap = {};
+  (DATA.evidence||[]).forEach(ev => { evMap[ev.evidence_id] = ev; });
+  let evHtml = '';
+  evIds.forEach(eid => {
+    const ev = evMap[eid];
+    if(!ev) return;
+    const tags = (ev.entities||[]).map(e => {
+      const cls = e.type==='drug'?'type-drug':e.type==='protein'?'type-protein':e.type==='pathway'?'type-pathway':'';
+      return `<span class="entity-tag ${cls}">${esc(e.name)} (${e.type||'?'})</span>`;
+    }).join(' ');
+    evHtml += `<div class="evidence-card">
+      <div class="ev-meta">${esc(ev.evidence_id)} &middot; ${esc(ev.evidence_type||'')} &middot; ${esc(ev.section_type||'')}</div>
+      <div class="ev-text">${esc(ev.source_text||'')}</div>
+      <div style="margin-top:6px">${tags}</div>
+    </div>`;
+  });
+
+  const notes = (reviewState.entries[eid] || {}).notes || '';
+  document.getElementById('content').innerHTML = `
+    <h3>${esc(d.main_claim||'(No claim)')}</h3>
+    <div class="section"><h4>Task</h4><p>${esc(d.task_type||'')}</p></div>
+    <div class="section"><h4>Structured Fields</h4>${fieldsHtml}</div>
+    <div class="section"><h4>Linked Evidence (${evIds.length})</h4>${evHtml||'<p style="color:#999">No linked evidence</p>'}</div>
+    <div class="section"><h4>Review Notes</h4>
+      <textarea id="notes-area" placeholder="Notes for this entry..."
+        onchange="saveNotes('${eid}',this.value)">${esc(notes)}</textarea>
+    </div>`;
+}
+
+function review(status) {
+  if(!activeId) return toast('Select an entry first');
+  reviewState.entries[activeId] = {
+    status: status,
+    notes: document.getElementById('notes-area')?.value || '',
+    reviewed_at: new Date().toISOString()
+  };
+  save();
+  renderSidebar();
+  document.getElementById('current-status').textContent = `Status: ${status}`;
+  toast(`Entry ${activeId}: ${status}`);
+}
+
+function saveNotes(eid, value) {
+  if(!reviewState.entries[eid]) reviewState.entries[eid] = {};
+  reviewState.entries[eid].notes = value;
+  save();
+}
+
+async function save() {
+  reviewState.updated_at = new Date().toISOString();
+  try {
+    await fetch('/api/save', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(reviewState)
+    });
+  } catch(e) {
+    toast('Save failed: '+e.message);
+  }
+}
+
+function exportData() {
+  window.open('/api/export', '_blank');
+  toast('Export started');
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+init();
+</script>
+</body>
+</html>

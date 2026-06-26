@@ -1,6 +1,33 @@
 # Changelog
 
-## 2026-06-26
+## 2026-06-26 (Session 2)
+
+### Added
+
+- 实现 `src/evidence/consensus_evidence.py` — 多轮 LLM 提取多数投票共识（Jaccard 匹配 + ≥2 票）
+- 迭代 `prompts/evidence_extraction.txt` — 新增决策树、INCLUDES/EXCLUDES、边界示例（例 4: Western blot 非 detection_method）
+- 实现 `src/relations/build_relations.py` — 纯规则引擎，实体重叠 + 类型组合 → 8 种关系，max 10 出边/节点
+- 实现 `src/context/build_context_packs.py` — 证据+关系+源文打包为 LLM 上下文
+- 实现 `src/drafting/generate_drafts.py` — LLM 批量生成结构化 draft entries
+- 新增 `prompts/draft_generation.txt` — 草稿生成 prompt
+- 实现 `src/verification/generate_report.py` — 证据链接、字段完整性、实体覆盖检查
+- 实现 `src/review/review_server.py` — Python HTTP review server (client-server 架构)
+- 新增 `src/review/review.html` — 审核界面（左侧列表+右侧详情+审批/导出）
+- 实现 `src/export/build_export.py` — 最终 review_export.json 生成
+- real_paper_001 完整 pipeline 跑通：66 consensus units → 480 relations → 66 drafts → review workspace
+
+### Fixed
+
+- 修复 `extract_evidence.py` 跨 batch evidence_id 重复 bug（parse_llm_output 需 id_offset）
+- 修复 review HTML JSON 嵌入转义问题，从静态内联改为 server-based API 动态加载
+
+### Changed
+
+- evidence_units 从单次 LLM 提取改为 3 轮多数投票（temperature=0），提高稳定性
+
+---
+
+## 2026-06-26 (Session 1)
 
 ### Added
 
@@ -34,6 +61,25 @@
 - 新增 normalizer 测试：`tests/normalize_mock_raw_parse.test.js`。
 - 验证 normalizer 测试、mock run 测试和 CLI 校验均通过。
 - 新增 `_project/AI_HANDOFF_PROMPT.md`，用于把项目交给另一个 AI 时恢复上下文和约束边界。
+
+- 克隆 3 个参考项目到 `D:\融合版\`：langextract、mistral-ocr-pipeline、EvidenceNet-code。
+- 分析参考项目字典设计模式，产出 6 条设计规则，写入 AI 对话记忆。
+- 实现 `src/parsing/run_mineru.py`：MinerU Precision Extract API 调用，含 submit-then-poll 轮询、SSL 证书验证绕过（中国网络环境）。
+- 实现 `src/parsing/build_raw_parse.py`：content_list.json → raw_parse.json 标准化，含完整 24 种 MinerU BlockType 枚举和确定性 keep/drop 分类。
+- 实现 `src/parsing/build_source.py`：raw_parse.json → source_blocks.jsonl + document_structure.json，含 section 检测和 paragraph/figure/table 三分类。
+- 用真实论文 real_paper_001 跑通完整解析链路：248 blocks → 123 kept → 91 paragraphs + 32 figures + 0 tables，14 sections。
+- 设计完整字典体系 `contracts/dictionaries.yaml` v0.2.0（16 个字典，参考 EvidenceNet + Mistral-OCR 模式）。
+- 更新 `contracts/fields.yaml`：source_block 新增 section_type/figure_number；evidence_unit 完全重写为线粒体热医学领域字段。
+- 实现 `src/evidence/extract_evidence.py`：source_blocks → evidence_units（直接 HTTP 调 DeepSeek，零第三方依赖）。
+- 新增 `prompts/evidence_extraction.txt`：证据提取 prompt 模板。
+- 用 DeepSeek-chat 跑通 real_paper_001：27 groups → 5 batches → 63 evidence units（mechanism_pathway:30, detection_method:18, thermogenesis_modulation:13, disease_association:2）。
+
+### Changed
+
+- 项目目录从 `D:\codex新\v2_lit_review` 迁移到 `D:\融合版\853`。
+- `_project/HANDOFF.md` 目录路径已更新。
+- `build_source.py` 新增 section_type 和 figure_number。
+- `evidence_unit` schema 从通用 PICO 改为线粒体热医学领域专用。
 
 ### Context
 
