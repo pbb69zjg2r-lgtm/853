@@ -68,15 +68,15 @@ def call_llm_api(system_prompt: str, user_prompt: str) -> str:
 def build_batch_prompt(packs: list[dict]) -> str:
     parts = []
     for i, p in enumerate(packs):
+        items = p.get("evidence_items", [])
         parts.append(f"## Entry {i+1}")
         parts.append(f"Task: {p['task_type']}")
         parts.append(f"Expected output: {p['expected_output']}")
-        parts.append(f"\nAnchor source text:\n{p['anchor_source_text']}")
-
-        if p["related_evidence"]:
-            parts.append("\nRelated evidence:")
-            for r in p["related_evidence"]:
-                parts.append(f"- [{r['evidence_type']}] {r['source_text']}")
+        parts.append(f"\nEvidence ({len(items)} unit(s)):")
+        for item in items:
+            relations = item.get("intra_cluster_relations", [])
+            rel_str = f" [relations: {', '.join(relations)}]" if relations else ""
+            parts.append(f"- [{item['evidence_type']}]{rel_str} {item['source_text']}")
         parts.append("")
     return "\n".join(parts)
 
@@ -112,7 +112,7 @@ def parse_draft_output(raw: str, packs: list[dict], paper_id: str) -> list[dict]
             "task_type": pack["task_type"],
             "main_claim": entry.get("main_claim", ""),
             "structured_fields": entry.get("structured_fields", {}),
-            "evidence_links": [pack["anchor_evidence_id"]] + pack.get("related_evidence_ids", []),
+            "evidence_links": pack.get("member_evidence_ids", []),
             "status": "draft",
         }
         entries.append(de)
@@ -149,8 +149,26 @@ def generate_drafts(paper_dir: Path, paper_id: str):
 
         raw = call_llm_api(system_prompt, batch_prompt)
         entries = parse_draft_output(raw, batch, paper_id)
+        print(f"    → {len(entries)} entries", end="")
+
+        # Fallback: if entry count mismatches, retry one pack at a time
+        if len(entries) < len(batch):
+            print(f" (expected {len(batch)}, retrying individually)")
+            entries = []
+            for single_pack in batch:
+                sp = build_batch_prompt([single_pack])
+                raw2 = call_llm_api(system_prompt, sp)
+                e2 = parse_draft_output(raw2, [single_pack], paper_id)
+                if e2:
+                    entries.extend(e2)
+                else:
+                    print(f"    WARNING: failed to generate entry for {single_pack['pack_id']}, skipping")
+                time.sleep(2)
+            print(f"    → recovered {len(entries)} entries")
+        else:
+            print()
+
         all_entries.extend(entries)
-        print(f"    → {len(entries)} entries")
 
         if batch_idx < len(batches) - 1:
             time.sleep(3)
