@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-06-26 (Legacy Isolation)
+
+### Added
+
+- Added `_project/LEGACY_MAP.md` to mark current contracts as authority and old runnable modules as legacy/reference where they conflict with the confirmed V2 contracts.
+
+### Changed
+
+- Documented that `src/relations/build_relations.py`, old `04_relations/evidence_relations.json`, old evidence extraction schema, old context pack fields, and old review export shape are not current contract truth.
+- Documented the recommended migration order: `src/core/contracts.py`, contracts-driven validation, evidence extraction alignment, context/draft rewrite, verifier rewrite, review UI update, and trusted export rewrite.
+
+### Notes
+
+- No legacy code was deleted or moved in this step.
+- This is a project-organization change to reduce confusion before adding the core contracts layer.
+
+---
+
 ## 2026-06-26 (Session 4)
 
 ### Added

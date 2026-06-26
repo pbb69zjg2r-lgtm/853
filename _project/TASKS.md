@@ -8,6 +8,12 @@
 
 ## Pending
 
+- Build `src/core/contracts.py` to load `contracts/*.yaml` from one place.
+- Replace the old hard-coded validator with a contracts-driven validator.
+- Rewrite `prompts/evidence_extraction.txt` and `src/evidence/extract_evidence.py` to emit the confirmed `evidence_unit` structure.
+- Rewrite `src/context/build_context_packs.py` so it no longer requires `04_relations/evidence_relations.json` in the pre-review flow.
+- Rewrite `src/export/build_export.py` so `review_export.json` is generated only after all entries are approved/rejected.
+
 - 人工审核 real_paper_001 的 11 条 + real_paper_002 的 5 条 draft entries
 - 审核完成后跑 `build_export.py` 生成最终 review_export.json
 - 跑更多论文测试泛化性
@@ -15,6 +21,8 @@
 - 考虑只在 review 页面展示 real_paper_* 论文（过滤 mock_）
 
 ## Done
+
+- Added `_project/LEGACY_MAP.md` to separate current contracts-first truth from legacy runnable code and old run outputs.
 
 - 创建 V2 隔离目录
 - 保存完整设计确认稿

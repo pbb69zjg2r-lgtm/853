@@ -7,39 +7,113 @@ trusted_outputs:
     file: "09_export/review_export.json"
     trusted: true
     human_review_required: true
-    description: "Final machine-readable output after human review."
+    requires_review_complete: true
+    status: "trusted"
+    description: "Trusted evidence package after human review, before normalization, relation linking, database analysis, and graph building."
+    required_top_level_fields:
+      - package_id
+      - paper_id
+      - stage
+      - schema_version
+      - normalization_status
+      - relation_linking_status
+      - graph_status
+      - reviewed_entries
+      - reviewed_evidence_units
+      - review_audit
+    forbidden_fields:
+      - normalized_entity_id
+      - canonical_entity_name
+      - graph_edges
+      - cross_paper_relation
+      - dedup_merge_id
 
 candidate_outputs:
   evidence_units:
     file: "03_evidence/evidence_units.jsonl"
     trusted: false
     human_review_required: true
-    description: "Evidence candidates and structured evidence nodes."
-  evidence_relations:
-    file: "04_relations/evidence_relations.json"
-    trusted: false
-    human_review_required: true
-    description: "Candidate relations among evidence units."
+    status: "candidate / unreviewed"
+    description: "Lightweight evidence nodes extracted by the LLM. These are candidate evidence units and cannot be used directly for downstream database analysis."
+    required_fields:
+      - evidence_id
+      - paper_id
+      - evidence_type
+      - claim
+      - structured_fields
+      - raw_entities
+      - experimental_model
+      - condition_context
+      - source_trace
+      - polarity
+      - statistics
+      - measurement
+      - extraction_meta
+      - review_coverage
+      - normalization_status
   context_packs:
     file: "05_context/context_packs.jsonl"
     trusted: false
     human_review_required: false
-    description: "LLM input packages built from evidence and source blocks."
+    status: "candidate"
+    description: "Evidence aggregation packages that group related evidence_units for LLM-assisted draft conclusion generation."
+    required_fields:
+      - pack_id
+      - paper_id
+      - evidence_type
+      - member_evidence_ids
+      - anchor_evidence_ids
+      - source_block_ids
+      - pack_reason
+      - missing_context
   draft_entries:
     file: "06_draft/draft_entries.jsonl"
     trusted: false
     human_review_required: true
-    description: "Candidate structured entries generated from context packs."
+    status: "draft / needs_review"
+    description: "Aggregated candidate conclusions. These are the main human-review targets."
+    required_fields:
+      - entry_id
+      - paper_id
+      - evidence_type
+      - main_claim
+      - structured_fields
+      - evidence_links
+      - experimental_model_summary
+      - review_questions
+      - uncertainty_map
+      - status
   verifier_report:
     file: "07_verification/verifier_report.json"
     trusted: false
     human_review_required: false
-    description: "Quality report before human review."
+    status: "advisory only"
+    description: "Pre-review quality report for missing fields, missing evidence, conflicts, format issues, and recommendations. It must not directly modify data."
+    required_fields:
+      - entry_results
+      - cross_entry_issues
+      - evidence_coverage_issues
+      - schema_issues
+      - recommendations
+  review_workspace:
+    file: "08_review/review.html"
+    trusted: false
+    human_review_required: true
+    status: "human review workspace"
+    description: "Human-readable review interface for draft_entries, evidence_units, and verifier_report."
+  review_preview:
+    file: "08_review/review_preview.json"
+    trusted: false
+    human_review_required: true
+    status: "not trusted"
+    description: "Preview export for debugging output structure before review is complete. It cannot enter formal database analysis."
+
+internal_outputs:
   review_state:
     file: "08_review/review_state.json"
     trusted: false
     human_review_required: true
-    description: "Intermediate review state used to export final review_export."
+    description: "Internal review state used by the review workspace and final exporter. It is not a formal pre-review output."
 
 source_outputs:
   raw_parse:

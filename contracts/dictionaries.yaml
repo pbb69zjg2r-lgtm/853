@@ -20,14 +20,16 @@ section_type:
 
 # ============================================================
 # Evidence type — what kind of finding is this evidence unit?
-# Closed enum: these 5 types cover the core questions of the domain.
+# Closed enum: these 7 types define the current extraction scope.
 # ============================================================
 evidence_type:
-  - disease_association        # 线粒体产热异常 ↔ 疾病关联
-  - detection_method           # 检测/测量产热的方法
-  - thermogenesis_modulation   # 调控产热（药物/基因/环境干预）
-  - biomarker_panel            # 判断产热状态的蛋白/基因/代谢物标志物
-  - mechanism_pathway          # 药物/干预恢复或促进产热的通路机制
+  - disease_association
+  - detection_method
+  - thermogenesis_modulation
+  - biomarker_panel
+  - mechanism_pathway
+  - pathway_cellular_function_impact
+  - organelle_interaction_impact
 
 # ============================================================
 # Entity type — semantic class of extracted biomedical entities.
@@ -138,10 +140,8 @@ evidence_grade:
 # Review decision — human reviewer decision on an evidence unit.
 # ============================================================
 review_decision:
-  - accepted
-  - modified
+  - approved
   - rejected
-  - needs_recheck
 
 # ============================================================
 # Draft entry status — lifecycle of a draft entry.

@@ -1,5 +1,42 @@
 # Handoff
 
+## 2026-06-26 Legacy Isolation Note
+
+Before continuing implementation, read:
+
+```text
+_project/NEXT_AGENT_MEMORY.md
+_project/LEGACY_MAP.md
+```
+
+Current important distinction:
+
+```text
+contracts/* is the current authority.
+Some src/, prompts/, tests/, and runs/ files still reflect the previous runnable pipeline.
+Those legacy files are reference material, not current contract truth.
+```
+
+Do not assume the old successful pipeline is still the desired V2 flow.
+
+Known mismatches:
+
+```text
+old code still uses 04_relations/evidence_relations.json in the pre-review flow
+old evidence extraction emits source_text/entities/model_system instead of the confirmed evidence_unit structure
+old context packs use task_type/evidence_items/expected_output
+old review_export uses export_id/summary/linked_evidence/review_status
+old validator hard-codes old files
+```
+
+Recommended next implementation step:
+
+```text
+1. Add src/core/contracts.py.
+2. Replace hard-coded validation with contracts-driven validation.
+3. Then rewrite evidence/context/draft/verifier/review/export in that order.
+```
+
 更新时间：2026-06-26
 
 ## 当前状态

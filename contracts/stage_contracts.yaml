@@ -37,23 +37,11 @@ stages:
     trusted_output: false
     human_edit_allowed: false
 
-  evidence_relations:
-    producer: "src/relations"
-    inputs:
-      - "03_evidence/evidence_units.jsonl"
-      - "contracts/*"
-    outputs:
-      - "04_relations/evidence_relations.json"
-    failure_log: "logs/failures.jsonl"
-    trusted_output: false
-    human_edit_allowed: false
-
   context_packs:
     producer: "src/context"
     inputs:
       - "02_source/source_blocks.jsonl"
       - "03_evidence/evidence_units.jsonl"
-      - "04_relations/evidence_relations.json"
       - "contracts/*"
     outputs:
       - "05_context/context_packs.jsonl"
@@ -78,7 +66,6 @@ stages:
     inputs:
       - "06_draft/draft_entries.jsonl"
       - "03_evidence/evidence_units.jsonl"
-      - "04_relations/evidence_relations.json"
       - "contracts/*"
     outputs:
       - "07_verification/verifier_report.json"
@@ -98,6 +85,7 @@ stages:
     outputs:
       - "08_review/review.html"
       - "08_review/review_state.json"
+      - "08_review/review_preview.json"
     failure_log: "logs/failures.jsonl"
     trusted_output: false
     human_edit_allowed: true
@@ -115,5 +103,6 @@ stages:
       - "09_export/review_export.json"
     failure_log: "logs/failures.jsonl"
     trusted_output: true
+    requires_review_complete: true
     human_edit_allowed: false
     may_modify_upstream_outputs: false

@@ -54,129 +54,185 @@ evidence_unit:
   paper_id:
     type: string
     required: true
-  source_block_ids:
-    type: array
-    required: true
   evidence_type:
     type: enum
-    dictionary: evidence_type
+    values:
+      - disease_association
+      - detection_method
+      - thermogenesis_modulation
+      - biomarker_panel
+      - mechanism_pathway
+      - pathway_cellular_function_impact
+      - organelle_interaction_impact
     required: true
-  source_text:
+  claim:
     type: string
     required: true
-  section_type:
-    type: enum
-    dictionary: section_type
-    required: false
-
-  # --- Domain core ---
-  disease:
-    type: string
-    required: false
-  thermogenesis_phenotype:
-    type: string
-    required: false
-  mechanism:
-    type: string
-    required: false
-
-  # --- Entities ---
-  entities:
+  structured_fields:
+    type: object
+    required: true
+    description: "Evidence-type-specific fields for one of the seven scientific questions."
+  raw_entities:
     type: array
-    required: false
+    required: true
     item_schema:
-      name:
+      raw_name:
         type: string
         required: true
-      type:
+      entity_type:
         type: enum
         dictionary: entity_type
         required: true
-      normalized_id:
+      role:
         type: string
         required: false
-      canonical_name:
-        type: string
-        required: false
-
-  # --- Detection ---
-  detection_method:
-    type: string
-    required: false
-  detection_category:
-    type: enum
-    dictionary: detection_category
-    required: false
-
-  # --- Modulation ---
-  modulation:
+  experimental_model:
     type: object
-    required: false
+    required: true
     fields:
-      drug:
-        type: string
-        required: false
-      target:
-        type: string
-        required: false
-      direction:
+      model_level:
         type: enum
-        dictionary: modulation_direction
-        required: false
-      effect_description:
+        values:
+          - cell
+          - tissue
+          - organoid
+          - animal
+          - human_sample
+          - clinical_patient
+          - in_silico
+          - unknown
+        required: true
+      model_name:
         type: string
         required: false
-
-  # --- Quantitative ---
+      species:
+        type: string
+        required: false
+      tissue_or_cell_type:
+        type: string
+        required: false
+      in_vivo_or_in_vitro:
+        type: enum
+        values: [in_vivo, in_vitro, ex_vivo, in_silico, unknown]
+        required: false
+  condition_context:
+    type: object
+    required: true
+    fields:
+      dose:
+        type: string
+        required: false
+      duration:
+        type: string
+        required: false
+      temperature:
+        type: string
+        required: false
+      oxygen_condition:
+        type: string
+        required: false
+      co_treatment:
+        type: string
+        required: false
+  source_trace:
+    type: object
+    required: true
+    fields:
+      source_block_ids:
+        type: array
+        required: true
+      quote:
+        type: string
+        required: true
+      page:
+        type: integer
+        required: false
+      section:
+        type: string
+        required: false
+      figure_or_table:
+        type: string
+        required: false
+      char_start:
+        type: integer
+        required: false
+      char_end:
+        type: integer
+        required: false
+  polarity:
+    type: enum
+    values: [positive, negative, neutral, mixed, unclear]
+    required: true
   statistics:
     type: object
-    required: false
+    required: true
     fields:
       p_value:
         type: string
         required: false
-      fold_change:
+      effect_size:
         type: string
         required: false
       sample_size:
         type: integer
         required: false
-      effect_size:
-        type: string
-        required: false
-      confidence_interval:
-        type: string
-        required: false
-
-  # --- Study context ---
-  study_design:
-    type: enum
-    dictionary: study_design
-    required: false
-  model_system:
-    type: enum
-    dictionary: model_system
-    required: false
-
-  # --- Quality ---
-  score:
+  measurement:
     type: object
-    required: false
+    required: true
     fields:
-      composite:
+      method:
+        type: string
+        required: false
+      measured_variable:
+        type: string
+        required: false
+      measured_value:
+        type: string
+        required: false
+  extraction_meta:
+    type: object
+    required: true
+    fields:
+      method:
+        type: string
+        required: true
+      confidence:
         type: number
         required: false
-      grade:
+      consensus_votes:
+        type: integer
+        required: false
+      consensus_similarity:
+        type: number
+        required: false
+      prompt_version:
+        type: string
+        required: false
+  review_coverage:
+    type: object
+    required: true
+    fields:
+      status:
         type: enum
-        dictionary: evidence_grade
+        values:
+          - unreviewed
+          - reviewed_primary_support
+          - covered_by_approved_entry
+          - rejected_by_review
+          - uncovered
+          - needs_manual_check
+        required: true
+      covered_by_entry_ids:
+        type: array
         required: false
-      llm_confidence:
-        type: number
+      coverage_role:
+        type: enum
+        values: [primary, supporting, contradictory, background]
         required: false
-  review_status:
+  normalization_status:
     type: enum
-    dictionary: review_decision
-    required: false
+    values: [not_normalized]
+    required: true
 
 context_pack:
   pack_id:
@@ -185,23 +241,24 @@ context_pack:
   paper_id:
     type: string
     required: true
-  task_type:
-    type: string
+  evidence_type:
+    type: enum
+    dictionary: evidence_type
+    required: true
+  member_evidence_ids:
+    type: array
     required: true
   anchor_evidence_ids:
     type: array
     required: true
-  related_evidence_ids:
-    type: array
-    required: false
   source_block_ids:
     type: array
     required: true
+  pack_reason:
+    type: string
+    required: true
   missing_context:
     type: array
-    required: false
-  expected_output:
-    type: string
     required: true
 
 draft_entry:
@@ -211,8 +268,9 @@ draft_entry:
   paper_id:
     type: string
     required: true
-  pack_id:
-    type: string
+  evidence_type:
+    type: enum
+    dictionary: evidence_type
     required: true
   main_claim:
     type: string
@@ -223,30 +281,157 @@ draft_entry:
   evidence_links:
     type: array
     required: true
+  experimental_model_summary:
+    type: object
+    required: true
+  review_questions:
+    type: array
+    required: true
+  uncertainty_map:
+    type: object
+    required: true
   status:
     type: enum
-    dictionary: draft_entry_status
+    values: [draft, needs_review]
+    required: true
+
+verifier_report:
+  entry_results:
+    type: array
+    required: true
+  cross_entry_issues:
+    type: array
+    required: true
+  evidence_coverage_issues:
+    type: array
+    required: true
+  schema_issues:
+    type: array
+    required: true
+  recommendations:
+    type: array
     required: true
 
 review_export:
-  export_id:
-    type: string
-    required: true
-  project_id:
+  package_id:
     type: string
     required: true
   paper_id:
     type: string
     required: true
+  stage:
+    type: string
+    required: true
+  schema_version:
+    type: string
+    required: true
+  normalization_status:
+    type: enum
+    values: [not_normalized]
+    required: true
+  relation_linking_status:
+    type: enum
+    values: [not_linked]
+    required: true
+  graph_status:
+    type: enum
+    values: [not_built]
+    required: true
   reviewed_entries:
     type: array
     required: true
-  reviewed_evidence:
+    item_schema:
+      entry_id:
+        type: string
+        required: true
+      paper_id:
+        type: string
+        required: true
+      evidence_type:
+        type: enum
+        dictionary: evidence_type
+        required: true
+      reviewed_claim:
+        type: string
+        required: true
+      structured_fields:
+        type: object
+        required: true
+      evidence_links:
+        type: array
+        required: true
+      experimental_model_summary:
+        type: object
+        required: true
+      review:
+        type: object
+        required: true
+        fields:
+          decision:
+            type: enum
+            values: [approved, rejected]
+            required: true
+  reviewed_evidence_units:
     type: array
     required: true
-  review_decisions:
-    type: array
+    item_schema:
+      evidence_id:
+        type: string
+        required: true
+      paper_id:
+        type: string
+        required: true
+      evidence_type:
+        type: enum
+        dictionary: evidence_type
+        required: true
+      claim:
+        type: string
+        required: true
+      structured_fields:
+        type: object
+        required: true
+      raw_entities:
+        type: array
+        required: true
+      experimental_model:
+        type: object
+        required: true
+      condition_context:
+        type: object
+        required: true
+      source_trace:
+        type: object
+        required: true
+      review_coverage:
+        type: object
+        required: true
+      normalization_status:
+        type: enum
+        values: [not_normalized]
+        required: true
+  review_audit:
+    type: object
     required: true
-  audit_log:
-    type: array
-    required: false
+    fields:
+      reviewer:
+        type: string
+        required: true
+      reviewed_at:
+        type: string
+        required: true
+      entry_count:
+        type: integer
+        required: true
+      approved_count:
+        type: integer
+        required: true
+      rejected_count:
+        type: integer
+        required: true
+      evidence_coverage_summary:
+        type: object
+        required: true
+      notes:
+        type: string
+        required: true

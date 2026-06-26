@@ -1,5 +1,37 @@
 # Status
 
+## 2026-06-26 Legacy Isolation Update
+
+Current status:
+
+```text
+contracts have been updated to the new confirmed design.
+src, prompts, tests, and old run outputs still mostly follow the previous runnable pipeline.
+```
+
+Important:
+
+```text
+_project/LEGACY_MAP.md is now the boundary map.
+Use contracts/* as the current authority.
+Use legacy code and old runs only as reference, not as current contract truth.
+```
+
+Current high-risk drift:
+
+```text
+old code still depends on 04_relations/evidence_relations.json
+old evidence extraction prompt still emits old evidence_unit fields
+old export still emits old review_export shape
+old validator still hard-codes old file list
+```
+
+Next recommended step:
+
+```text
+create src/core/contracts.py, then replace hard-coded validation with a contracts-driven validator.
+```
+
 更新时间：2026-06-26
 
 ## 阶段
